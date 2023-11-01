@@ -1,0 +1,11 @@
+C:\Users\ognjen.radovanovic\Desktop\PROJFINAL\TimeSheet\TimeSheet.Domain\bin\Debug\net6.0\TimeSheet.Domain.deps.json
+C:\Users\ognjen.radovanovic\Desktop\PROJFINAL\TimeSheet\TimeSheet.Domain\bin\Debug\net6.0\TimeSheet.Domain.dll
+C:\Users\ognjen.radovanovic\Desktop\PROJFINAL\TimeSheet\TimeSheet.Domain\bin\Debug\net6.0\TimeSheet.Domain.pdb
+C:\Users\ognjen.radovanovic\Desktop\PROJFINAL\TimeSheet\TimeSheet.Domain\obj\Debug\net6.0\TimeSheet.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ognjen.radovanovic\Desktop\PROJFINAL\TimeSheet\TimeSheet.Domain\obj\Debug\net6.0\TimeSheet.Domain.AssemblyInfoInputs.cache
+C:\Users\ognjen.radovanovic\Desktop\PROJFINAL\TimeSheet\TimeSheet.Domain\obj\Debug\net6.0\TimeSheet.Domain.AssemblyInfo.cs
+C:\Users\ognjen.radovanovic\Desktop\PROJFINAL\TimeSheet\TimeSheet.Domain\obj\Debug\net6.0\TimeSheet.Domain.csproj.CoreCompileInputs.cache
+C:\Users\ognjen.radovanovic\Desktop\PROJFINAL\TimeSheet\TimeSheet.Domain\obj\Debug\net6.0\TimeSheet.Domain.dll
+C:\Users\ognjen.radovanovic\Desktop\PROJFINAL\TimeSheet\TimeSheet.Domain\obj\Debug\net6.0\refint\TimeSheet.Domain.dll
+C:\Users\ognjen.radovanovic\Desktop\PROJFINAL\TimeSheet\TimeSheet.Domain\obj\Debug\net6.0\TimeSheet.Domain.pdb
+C:\Users\ognjen.radovanovic\Desktop\PROJFINAL\TimeSheet\TimeSheet.Domain\obj\Debug\net6.0\ref\TimeSheet.Domain.dll
