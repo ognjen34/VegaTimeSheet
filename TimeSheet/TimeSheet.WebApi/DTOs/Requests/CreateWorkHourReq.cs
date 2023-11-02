@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TimeSheet.Domain.Models;
 
-namespace TimeSheet.Application.DTOs.Requests
+namespace TimeSheet.WebApi.DTOs.Requests
 {
     public class CreateWorkHourReq
     {

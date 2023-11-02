@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using TimeSheet.Application.DTOs.Requests;
-using TimeSheet.Application.DTOs.Responses;
+using TimeSheet.WebApi.DTOs.Requests;
+using TimeSheet.WebApi.DTOs.Responses;
 using TimeSheet.Data.Models;
 using TimeSheet.Domain.Models;
 

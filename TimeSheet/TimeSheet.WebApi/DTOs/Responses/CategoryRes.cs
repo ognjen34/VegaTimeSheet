@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TimeSheet.Application.DTOs.Responses
+namespace TimeSheet.WebApi.DTOs.Responses
 {
-    public class CountryRes
+    public class CategoryRes
     {
-        public string Id { get; set; }
+        public string Id {  get; set; }
         public string Name { get; set; }
+
     }
 }

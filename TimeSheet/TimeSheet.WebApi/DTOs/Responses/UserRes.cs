@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TimeSheet.Domain.Models;
 
-namespace TimeSheet.Application.DTOs.Responses
+namespace TimeSheet.WebApi.DTOs.Responses
 {
     public class UserRes
     {

@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TimeSheet.Domain.Interfaces.Services;
 using TimeSheet.Domain.Models;
-using TimeSheet.Application.DTOs.Requests;
-using TimeSheet.Application.DTOs.Responses;
+using TimeSheet.WebApi.DTOs.Requests;
+using TimeSheet.WebApi.DTOs.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;

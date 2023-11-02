@@ -5,11 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using TimeSheet.Domain.Models;
 
-namespace TimeSheet.Application.DTOs.Requests
+namespace TimeSheet.WebApi.DTOs.Requests
 {
-    public class UpdateClientReq
+    public class CreateClientReq
     {
-        public string Id { get; set; }
         public string Name { get; set; }
         public string Adress { get; set; }
         public string City { get; set; }

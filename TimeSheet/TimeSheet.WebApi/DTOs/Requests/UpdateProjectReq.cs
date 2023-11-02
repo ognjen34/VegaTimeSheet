@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TimeSheet.Application.DTOs.Requests
+namespace TimeSheet.WebApi.DTOs.Requests
 {
     public class UpdateProjectReq
     {

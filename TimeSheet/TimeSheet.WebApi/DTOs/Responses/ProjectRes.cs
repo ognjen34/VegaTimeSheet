@@ -5,13 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using TimeSheet.Domain.Models;
 
-namespace TimeSheet.Application.DTOs.Requests
+namespace TimeSheet.WebApi.DTOs.Responses
 {
-    public class CreateProjectReq
+    public class ProjectRes
     {
+        public string Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string ClientId { get; set; }
-        public string LeadId { get; set; }
+        public Client Client { get; set; }
+        public User Lead { get; set; }
     }
 }
