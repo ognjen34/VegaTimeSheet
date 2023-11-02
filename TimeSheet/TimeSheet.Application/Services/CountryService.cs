@@ -18,12 +18,12 @@ namespace TimeSheet.Application.Services
 
         public async Task Add(Country country)
         {
-            _countryRepository.Add(country);
+            await _countryRepository.Add(country);
         }
 
-        public async Task Delete(Country country)
+        public async Task Delete(Guid id)
         {
-            _countryRepository.Delete(country.Id.ToString());
+            await _countryRepository.Delete(id.ToString());
         }
 
         public Task<IEnumerable<Country>> GetAll()
@@ -38,7 +38,7 @@ namespace TimeSheet.Application.Services
 
         public async Task Update(Country country)
         {
-            _countryRepository.Update(country);
+            await _countryRepository.Update(country);
         }
     }
 }

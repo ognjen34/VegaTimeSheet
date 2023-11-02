@@ -14,6 +14,7 @@ namespace TimeSheet.Data.Models
         public string Adress { get; set; }
         public string City { get; set; }
         public string Zip { get; set; }
-        public Country Country { get; set; }
+        public  virtual CountryEntity Country { get; set; }
+        public string CountryId {  get; set; }
     }
 }

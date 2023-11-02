@@ -21,12 +21,12 @@ namespace TimeSheet.Application.Services
         public async Task Add(Category category)
         {
             
-            _categoryRepository.Add(category);
+            await _categoryRepository.Add(category);
         }
 
-        public async Task Delete(Category category)
+        public async Task Delete(Guid id)
         {
-            _categoryRepository.Delete(category.Id.ToString());
+            await _categoryRepository.Delete(id.ToString());
         }
 
         public Task<IEnumerable<Category>> GetAll()
@@ -41,7 +41,7 @@ namespace TimeSheet.Application.Services
 
         public async Task Update(Category category)
         {
-            _categoryRepository.Update(category);
+            await _categoryRepository.Update(category);
         }
     }
 }

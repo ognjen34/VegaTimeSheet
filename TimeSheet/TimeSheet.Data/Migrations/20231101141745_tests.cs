@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TimeSheet.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class tests : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -126,14 +126,16 @@ namespace TimeSheet.Data.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Zip = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    CountryId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                    CountryId1 = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    CountryId = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Client", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Client_Country_CountryId",
-                        column: x => x.CountryId,
+                        name: "FK_Client_Country_CountryId1",
+                        column: x => x.CountryId1,
                         principalTable: "Country",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -269,9 +271,9 @@ namespace TimeSheet.Data.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Client_CountryId",
+                name: "IX_Client_CountryId1",
                 table: "Client",
-                column: "CountryId");
+                column: "CountryId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Clients_CountryId",

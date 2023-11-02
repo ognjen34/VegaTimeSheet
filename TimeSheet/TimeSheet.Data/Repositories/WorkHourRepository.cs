@@ -1,8 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TimeSheet.Data.Data;
+using TimeSheet.Domain.Exceptions;
 using TimeSheet.Data.Models;
 using TimeSheet.Domain.Interfaces.Repositories;
 using TimeSheet.Domain.Models;
@@ -11,138 +13,73 @@ namespace TimeSheet.Data.Repositories
 {
     public class WorkHourRepository : IWorkHourRepository
     {
+        private readonly IMapper _mapper;
         private readonly DbSet<WorkHourEntity> _workHours;
-        private readonly DatabaseContex _context;
+        private readonly DatabaseContext _context;
 
-        public WorkHourRepository(DatabaseContex context)
+        public WorkHourRepository(DatabaseContext context, IMapper mapper)
         {
             _context = context;
             _workHours = context.Set<WorkHourEntity>();
+            _mapper = mapper;
         }
 
         public async Task Add(WorkHour workHour)
         {
-            try
-            {
-                await _workHours.AddAsync(new WorkHourEntity 
-                {
-                    Id = workHour.Id.ToString(),
-                    Project = workHour.Project,
-                    Category = workHour.Category,
-                    Description=workHour.Description,
-                    Date = workHour.Date,
-                    Time = workHour.Time,
-                    OverTime = workHour.OverTime ,
-                    User= workHour.User 
-                });
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Failed to add work hour.", ex);
-            }
+            WorkHourEntity workHourEntity = _mapper.Map<WorkHourEntity>(workHour);
+            await _workHours.AddAsync(workHourEntity);
+            await _context.SaveChangesAsync();
         }
 
         public async Task Delete(string id)
         {
-            try
+            WorkHourEntity workHourDb = await _workHours.FirstOrDefaultAsync(w => w.Id == id);
+            if (workHourDb == null)
             {
-                WorkHourEntity workHourDb = await _workHours.FirstOrDefaultAsync(w => w.Id == id);
-                if (workHourDb == null)
-                    throw new Exception("NotFound");
+                throw new ResourceNotFoundException("Work hour not found");
+            }
 
-                _workHours.Remove(workHourDb);
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Failed to delete work hour.", ex);
-            }
+            _workHours.Remove(workHourDb);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<WorkHour>> GetAll()
         {
-            try
-            {
-                List<WorkHourEntity> workHours = await _workHours.ToListAsync();
+            List<WorkHourEntity> workHourEntities = await _workHours.ToListAsync();
+            List<WorkHour> result = workHourEntities.Select(workHourEntity => _mapper.Map<WorkHour>(workHourEntity)).ToList();
 
-                List<WorkHour> result = new List<WorkHour>();
-                foreach (WorkHourEntity workHourEntity in workHours)
-                {
-                    WorkHour workHour = new WorkHour
-                    {
-                        Id = Guid.Parse(workHourEntity.Id),
-                        Project = workHourEntity.Project,
-                        Category = workHourEntity.Category,
-                        Description = workHourEntity.Description,
-                        Date = workHourEntity.Date,
-                        Time = workHourEntity.Time,
-                        OverTime = workHourEntity.OverTime,
-                        User = workHourEntity.User
-                    };
-                    result.Add(workHour);
-                }
-
-                return result;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Failed to retrieve work hours.", ex);
-            }
+            return result;
         }
 
         public async Task<WorkHour> GetById(string id)
         {
-            try
-            {
-                WorkHourEntity workHourEntity = await _workHours.FirstOrDefaultAsync(w => w.Id == id.ToString());
+            WorkHourEntity workHourEntity = await _workHours.FirstOrDefaultAsync(w => w.Id == id);
 
-                if (workHourEntity != null)
-                {
-                    return new WorkHour
-                    {
-                        Id = Guid.Parse(workHourEntity.Id),
-                        Project = workHourEntity.Project,
-                        Category = workHourEntity.Category,
-                        Description = workHourEntity.Description,
-                        Date = workHourEntity.Date,
-                        Time = workHourEntity.Time,
-                        OverTime = workHourEntity.OverTime,
-                        User = workHourEntity.User
-                    }; ;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception ex)
+            if (workHourEntity != null)
             {
-                throw new Exception("Failed to get work hour by ID.", ex);
+                return _mapper.Map<WorkHour>(workHourEntity);
+            }
+            else
+            {
+                throw new ResourceNotFoundException("Work hour not found");
             }
         }
 
         public async Task Update(WorkHour workHour)
         {
-            try
+            WorkHourEntity workHourEntity = await _workHours.FirstOrDefaultAsync(w => w.Id == workHour.Id.ToString());
+            if (workHourEntity == null)
             {
-                WorkHourEntity workHourDb = await _workHours.FirstOrDefaultAsync(w => w.Id == workHour.Id.ToString());
-                if (workHourDb == null)
-                    throw new Exception("NotFound");
+                throw new ResourceNotFoundException("Work hour not found");
+            }
 
-                workHourDb.Project = workHour.Project;
-                workHourDb.Category = workHour.Category;
-                workHourDb.Description = workHour.Description;
-                workHourDb.Date = workHour.Date;
-                workHourDb.Time = workHour.Time;
-                workHourDb.OverTime = workHour.OverTime;
-                workHourDb.User = workHour.User;
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Failed to update work hour.", ex);
-            }
+            workHourEntity.Project = _mapper.Map<ProjectEntity>(workHour.Project);
+            workHourEntity.User = _mapper.Map<UserEntity>(workHour.User);
+            workHourEntity.Description = workHour.Description;
+            workHourEntity.Date = workHour.Date;   
+            workHourEntity.Category = _mapper.Map<CategoryEntity>(workHour.Category);
+
+            await _context.SaveChangesAsync();
         }
     }
 }

@@ -14,5 +14,6 @@ namespace TimeSheet.Domain.Interfaces.Repositories
         Task Add(User project);
         Task Update(User project);
         Task Delete(string id);
+        Task<User> GetByEmailAndPassword(string email,string password);
     }
 }

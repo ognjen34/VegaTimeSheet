@@ -1,8 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TimeSheet.Data.Data;
+using TimeSheet.Domain.Exceptions;
 using TimeSheet.Data.Models;
 using TimeSheet.Domain.Interfaces.Repositories;
 using TimeSheet.Domain.Models;
@@ -12,101 +14,67 @@ namespace TimeSheet.Data.Repositories
     public class CountryRepository : ICountryRepository
     {
         private readonly DbSet<CountryEntity> _countries;
-        private readonly DatabaseContex _context;
+        private readonly DatabaseContext _context;
+        private readonly IMapper _mapper;
 
-        public CountryRepository(DatabaseContex context)
+        public CountryRepository(DatabaseContext context, IMapper mapper)
         {
             _context = context;
             _countries = context.Set<CountryEntity>();
+            _mapper = mapper;
         }
 
         public async Task Add(Country country)
         {
-            try
-            {
-                await _countries.AddAsync(new CountryEntity { Id = country.Id.ToString(), Name = country.Name });
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Failed to add country.", ex);
-            }
+            CountryEntity countryEntity = _mapper.Map<CountryEntity>(country);
+            await _countries.AddAsync(countryEntity);
+            await _context.SaveChangesAsync();
         }
 
         public async Task Delete(string id)
         {
-            try
+            CountryEntity countryDb = await _countries.FirstOrDefaultAsync(c => c.Id == id);
+            if (countryDb == null)
             {
-                CountryEntity countryDb = await _countries.FirstOrDefaultAsync(p => p.Id == id);
-                if (countryDb == null)
-                    throw new Exception("NotFound");
+                throw new ResourceNotFoundException("Country not found");
+            }
 
-                _countries.Remove(countryDb);
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Failed to delete country.", ex);
-            }
+            _countries.Remove(countryDb);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Country>> GetAll()
         {
-            try
-            {
-                List<CountryEntity> countries = await _countries.ToListAsync();
+            List<CountryEntity> countryEntities = await _countries.ToListAsync();
+            List<Country> result = countryEntities.Select(countryEntity => _mapper.Map<Country>(countryEntity)).ToList();
 
-                List<Country> result = new List<Country>();
-                foreach (CountryEntity countryEntity in countries)
-                {
-                    Country country = new Country() { Id = Guid.Parse(countryEntity.Id), Name = countryEntity.Name };
-                    result.Add(country);
-                }
-
-                return result;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Failed to retrieve countries.", ex);
-            }
+            return result;
         }
 
         public async Task<Country> GetById(string id)
         {
-            try
-            {
-                CountryEntity countryDb = await _countries.FirstOrDefaultAsync(p => p.Id == id);
+            CountryEntity countryEntity = await _countries.FirstOrDefaultAsync(c => c.Id == id);
 
-                if (countryDb != null)
-                {
-                    return new Country { Id = Guid.Parse(countryDb.Id), Name = countryDb.Name };
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception ex)
+            if (countryEntity != null)
             {
-                throw new Exception("Failed to get country by ID.", ex);
+                return _mapper.Map<Country>(countryEntity);
+            }
+            else
+            {
+                throw new ResourceNotFoundException("Country not found");
             }
         }
 
         public async Task Update(Country country)
         {
-            try
+            CountryEntity countryEntity = await _countries.FirstOrDefaultAsync(c => c.Id == country.Id.ToString());
+            if (countryEntity == null)
             {
-                CountryEntity countryDb = await _countries.FirstOrDefaultAsync(p => p.Id == country.Id.ToString());
-                if (countryDb == null)
-                    throw new Exception("NotFound");
+                throw new ResourceNotFoundException("Country not found");
+            }
 
-                countryDb.Name = country.Name;
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Failed to update country.", ex);
-            }
+            countryEntity.Name = country.Name;
+            await _context.SaveChangesAsync();
         }
     }
 }

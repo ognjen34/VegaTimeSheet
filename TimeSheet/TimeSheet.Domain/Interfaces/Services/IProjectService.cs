@@ -13,6 +13,6 @@ namespace TimeSheet.Domain.Interfaces.Services
         Task<IEnumerable<Project>> GetAll();
         Task Add(Project project);
         Task Update(Project project);
-        Task Delete(Project project);
+        Task Delete(Guid id);
     }
 }

@@ -7,6 +7,7 @@ using TimeSheet.Data.Data;
 using TimeSheet.Data.Models;
 using TimeSheet.Domain.Interfaces.Repositories;
 using TimeSheet.Domain.Models;
+using TimeSheet.Domain.Exceptions;
 
 namespace TimeSheet.Data.Repositories
 {
@@ -14,9 +15,9 @@ namespace TimeSheet.Data.Repositories
     {
         private readonly IMapper _mapper;
         private readonly DbSet<UserEntity> _users;
-        private readonly DatabaseContex _context;
+        private readonly DatabaseContext _context;
 
-        public UserRepository(DatabaseContex context, IMapper mapper)
+        public UserRepository(DatabaseContext context, IMapper mapper)
         {
             _context = context;
             _users = context.Set<UserEntity>();
@@ -25,92 +26,78 @@ namespace TimeSheet.Data.Repositories
 
         public async Task Add(User user)
         {
-            try
+            UserEntity existingUser = await _users.FirstOrDefaultAsync(p => p.Email == user.Email);
+            if (existingUser != null) 
             {
-                UserEntity userEntity = _mapper.Map<UserEntity>(user);
-                await _users.AddAsync(userEntity);
-                await _context.SaveChangesAsync();
+                throw new EmailAlreadyExistException($"{user.Email} is already in use");
             }
-            catch (Exception ex)
-            {
-                throw new Exception("Failed to add user.", ex);
-            }
+            UserEntity userEntity = _mapper.Map<UserEntity>(user);
+            string salt = "$2a$12$abcdefghijklmno1234567";
+            userEntity.Password = BCrypt.Net.BCrypt.HashPassword(userEntity.Password, salt);
+            await _users.AddAsync(userEntity);
+            await _context.SaveChangesAsync();
         }
 
         public async Task Delete(string id)
         {
-            try
+            UserEntity userDb = await _users.FirstOrDefaultAsync(p => p.Id == id);
+            if (userDb == null)
             {
-                UserEntity userDb = await _users.FirstOrDefaultAsync(p => p.Id == id);
-                if (userDb == null)
-                    throw new Exception("NotFound");
+                throw new ResourceNotFoundException("User not found");
+            }
 
-                _users.Remove(userDb);
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Failed to delete user.", ex);
-            }
+            _users.Remove(userDb);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<User>> GetAll()
         {
-            try
-            {
-                List<UserEntity> users = await _users.ToListAsync();
-
-                List<User> result = users.Select(userEntity => _mapper.Map<UserEntity, User>(userEntity)).ToList();
-
-                return result;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Failed to retrieve users.", ex);
-            }
+            List<UserEntity> users = await _users.ToListAsync();
+            List<User> result = users.Select(userEntity => _mapper.Map<User>(userEntity)).ToList();
+            return result;
         }
 
         public async Task<User> GetById(string id)
         {
-            try
+            UserEntity userEntity = await _users.FirstOrDefaultAsync(p => p.Id == id.ToString());
+            if (userEntity == null)
             {
-                UserEntity userEntity = await _users.FirstOrDefaultAsync(p => p.Id == id.ToString());
+                throw new ResourceNotFoundException("User not found");
+            }
+            return _mapper.Map<User>(userEntity);
+        }
 
-                if (userEntity != null)
-                {
-                    return _mapper.Map<User>(userEntity);
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception ex)
+        public async Task<User> GetByEmailAndPassword(string email,string password)
+        {
+            string salt = "$2a$12$abcdefghijklmno1234567";
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password, salt);
+            UserEntity userEntity = await _users.FirstOrDefaultAsync(p => p.Email == email && p.Password == hashedPassword);
+
+            
+            if (userEntity == null)
             {
-                throw new Exception("Failed to get user by ID.", ex);
+                throw new ResourceNotFoundException("Wrong Credentials");
             }
+            return _mapper.Map<User>(userEntity);
+
         }
 
         public async Task Update(User user)
         {
-            try
+            UserEntity userEntity = await _users.FirstOrDefaultAsync(p => p.Id == user.Id.ToString());
+            if (userEntity == null)
             {
-                UserEntity userEntity = await _users.FirstOrDefaultAsync(p => p.Id == user.Id.ToString());
-                if (userEntity == null)
-                    throw new Exception("NotFound");
-
-                userEntity.Name = user.Name;
-                userEntity.Email = user.Email;
-                userEntity.Password = user.Password;
-                userEntity.Status = user.Status;
-                userEntity.Role = user.Role;
-
-                await _context.SaveChangesAsync();
+                throw new ResourceNotFoundException("User not found");
             }
-            catch (Exception ex)
-            {
-                throw  new Exception("Failed to update user.", ex);
-            }
+            string salt = "$2a$12$abcdefghijklmno1234567";
+            userEntity.Name = user.Name;
+            userEntity.Email = user.Email;
+            userEntity.Password = BCrypt.Net.BCrypt.HashPassword(user.Password, salt);
+            userEntity.Status = user.Status;
+            userEntity.Role = user.Role;
+
+            await _context.SaveChangesAsync();
         }
+
     }
 }

@@ -10,12 +10,15 @@ namespace TimeSheet.Data.Models
     public class WorkHourEntity
     {
         public string Id { get; set; }
-        public Project Project { get; set; }
-        public Category Category { get; set; }
         public string Description { get; set; }
         public DateTime Date { get; set; }
         public float Time { get; set; }
         public float OverTime { get; set; }
-        public User User { get; set; }
+        public string UserId {  get; set; }
+        public string ProjectId { get; set; }
+        public string CategoryId { get; set; }
+        public virtual UserEntity User { get; set; }
+        public virtual ProjectEntity Project { get; set; }
+        public virtual CategoryEntity Category { get; set; }
     }
 }

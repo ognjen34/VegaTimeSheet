@@ -13,6 +13,7 @@ namespace TimeSheet.Domain.Interfaces.Services
         Task<IEnumerable<User>> GetAll();
         Task Add(User user);
         Task Update(User user);
-        Task Delete(User user);
+        Task Delete(Guid id);
+        Task<User> Login (string username, string password);
     }
 }

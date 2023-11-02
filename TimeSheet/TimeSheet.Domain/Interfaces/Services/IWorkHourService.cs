@@ -13,6 +13,6 @@ namespace TimeSheet.Domain.Interfaces.Services
         Task<IEnumerable<WorkHour>> GetAll();
         Task Add(WorkHour workHour);
         Task Update(WorkHour workHour);
-        Task Delete(WorkHour workHour);
+        Task Delete(Guid id);
     }
 }

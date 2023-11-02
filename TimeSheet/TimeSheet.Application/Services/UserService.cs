@@ -19,12 +19,12 @@ namespace TimeSheet.Application.Services
         public async Task Add(User user)
         {
             
-            _userRepository.Add(user);
+            await _userRepository.Add(user);
         }
 
-        public async Task Delete(User user)
+        public async Task Delete(Guid id)
         {
-            _userRepository.Delete(user.Id.ToString());
+            await _userRepository.Delete(id.ToString());
         }
 
         public Task<IEnumerable<User>> GetAll()
@@ -35,6 +35,11 @@ namespace TimeSheet.Application.Services
         public Task<User> GetById(Guid id)
         {
             return _userRepository.GetById(id.ToString());
+        }
+
+        public Task<User> Login(string username, string password)
+        {
+            return _userRepository.GetByEmailAndPassword(username, password);
         }
 
         public  Task Update(User user)

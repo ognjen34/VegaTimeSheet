@@ -13,6 +13,6 @@ namespace TimeSheet.Domain.Interfaces.Services
         Task<IEnumerable<Country>> GetAll();
         Task Add(Country country);
         Task Update(Country country);
-        Task Delete(Country country);
+        Task Delete(Guid id);
     }
 }

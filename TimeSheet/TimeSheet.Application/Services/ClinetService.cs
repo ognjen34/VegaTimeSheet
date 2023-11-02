@@ -10,20 +10,24 @@ namespace TimeSheet.Application.Services
     public class ClientService : IClientService
     {
         private readonly IClientRepository _clientRepository;
+        private readonly ICountryService _countryService;
 
-        public ClientService(IClientRepository clientRepository)
+
+        public ClientService(IClientRepository clientRepository , ICountryService countryService)
         {
             _clientRepository = clientRepository;
+            _countryService = countryService;
         }
 
         public async Task Add(Client client)
         {
-            _clientRepository.Add(client);
+            client.Country = await _countryService.GetById(client.CountryId);
+            await _clientRepository.Add(client);
         }
 
-        public async Task Delete(Client client)
+        public async Task Delete(Guid id)
         {
-            _clientRepository.Delete(client.Id.ToString());
+            await _clientRepository.Delete(id.ToString());
         }
 
         public Task<IEnumerable<Client>> GetAll()
@@ -38,7 +42,7 @@ namespace TimeSheet.Application.Services
 
         public async Task Update(Client client)
         {
-            _clientRepository.Update(client);
+            await _clientRepository.Update(client);
         }
     }
 }

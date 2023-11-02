@@ -4,18 +4,45 @@ using TimeSheet.Data.Data;
 using TimeSheet.Data.Repositories;
 using TimeSheet.Domain.Interfaces.Repositories;
 using TimeSheet.Domain.Interfaces.Services;
-using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.OpenApi.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
 
-// Configure the database context (MyContex)
-builder.Services.AddDbContext<DatabaseContex>(options =>
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
+});
+
+builder.Services.AddScoped<DatabaseContext>();
+
+builder.Services.AddDbContext<DatabaseContext>(options =>
 {
     options.UseMySql("Server=localhost;Database=VegaSourcing;User=ognjen;Password=ognjen34;", new MySqlServerVersion(new Version(8, 0, 21)));
 });
@@ -36,6 +63,24 @@ builder.Services.AddScoped<IWorkHourService, WorkHourService>();
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("testvegatestvegatestvega"))
+        };
+    });
+
+builder.Services.AddAuthorization(o =>
+{
+    o.AddPolicy("AuthorizedOnly", p => p.RequireRole("Admin", "Worker"));
+    o.AddPolicy("AdminOnly", p => p.RequireRole("Admin"));
+});
 
 var configuration = builder.Configuration;
 builder.Services.AddSingleton<IConfiguration>(configuration);
@@ -43,7 +88,6 @@ builder.Services.AddSingleton<IConfiguration>(configuration);
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -51,6 +95,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseAuthorization();
+
+app.UseAuthentication(); 
+app.UseAuthorization(); 
+
 app.MapControllers();
 app.Run();

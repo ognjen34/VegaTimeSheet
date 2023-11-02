@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace TimeSheet.Domain.Models
 {
     public class Project
@@ -13,6 +8,8 @@ namespace TimeSheet.Domain.Models
         public string Description { get; set; }
         public Client Client { get; set; }
         public User Lead {  get; set; }
+        public Guid LeadId { get; set; }
+        public Guid ClientId {  get; set; }
 
     }
 }

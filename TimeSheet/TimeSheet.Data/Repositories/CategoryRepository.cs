@@ -1,7 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TimeSheet.Data.Data;
+using TimeSheet.Domain.Exceptions;
 using TimeSheet.Data.Models;
 using TimeSheet.Domain.Interfaces.Repositories;
 using TimeSheet.Domain.Models;
@@ -11,104 +14,67 @@ namespace TimeSheet.Data.Repositories
     public class CategoryRepository : ICategoryRepository
     {
         private readonly DbSet<CategoryEntity> _categories;
-        private readonly DatabaseContex _context;
+        private readonly DatabaseContext _context;
+        private readonly IMapper _mapper;
 
-        public CategoryRepository(DatabaseContex context)
+        public CategoryRepository(DatabaseContext context, IMapper mapper)
         {
             _context = context;
             _categories = context.Set<CategoryEntity>();
+            _mapper = mapper;
         }
 
         public async Task Add(Category category)
         {
-            try
-            {
-                await _categories.AddAsync(new CategoryEntity { Id = category.Id.ToString(), Name = category.Name });
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Failed to add category.", ex);
-            }
+            CategoryEntity categoryEntity = _mapper.Map<CategoryEntity>(category);
+            await _categories.AddAsync(categoryEntity);
+            await _context.SaveChangesAsync();
         }
 
         public async Task Delete(string id)
         {
-            try
+            CategoryEntity categoryDb = await _categories.FirstOrDefaultAsync(c => c.Id == id);
+            if (categoryDb == null)
             {
-                CategoryEntity categoryDb = await _categories.FirstOrDefaultAsync(p => p.Id == id);
-                if (categoryDb == null)
-                    throw new Exception("NotFound");
-
-                _categories.Remove(categoryDb);
-                await _context.SaveChangesAsync();
+                throw new ResourceNotFoundException("Category not found");
             }
-            catch (Exception ex)
-            {
 
-                throw new Exception("Failed to update category.", ex);
-            }
+            _categories.Remove(categoryDb);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Category>> GetAll()
         {
-            try
-            {
-                List<CategoryEntity> countries = await _categories.ToListAsync();
-
-                List<Category> result = new List<Category>();
-                foreach (CategoryEntity categoryEntity in countries) 
-                {
-                    Category category = new Category() { Id = Guid.Parse(categoryEntity.Id), Name = categoryEntity.Name };
-                    result.Add(category);
-                }
-
-                return result;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Failed to retrieve countries.", ex);
-            }
+            List<CategoryEntity> categoryEntities = await _categories.ToListAsync();
+            List<Category> result = categoryEntities.Select(categoryEntitie => _mapper.Map<Category>(categoryEntitie)).ToList();
+            return result;
         }
 
         public async Task<Category> GetById(string id)
         {
-            try
-            {
-                CategoryEntity categoryDb = await _categories.FirstOrDefaultAsync(p => p.Id == id);
+            CategoryEntity categoryEntity = await _categories.FirstOrDefaultAsync(c => c.Id == id);
 
-                if (categoryDb != null)
-                {
-                    return new Category { Id = Guid.Parse(categoryDb.Id), Name = categoryDb.Name };
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception ex)
+            if (categoryEntity != null)
             {
-                throw new Exception("Failed to get category by ID.", ex);
+                Category category = _mapper.Map<Category>(categoryEntity);
+                return category;
+            }
+            else
+            {
+                throw new ResourceNotFoundException("Category not found");
             }
         }
 
         public async Task Update(Category category)
         {
-            try
+            CategoryEntity categoryEntity = await _categories.FirstOrDefaultAsync(c => c.Id == category.Id.ToString());
+            if (categoryEntity == null)
             {
-                CategoryEntity categoryDb = await _categories.FirstOrDefaultAsync(p => p.Id == category.Id.ToString());
-                if (categoryDb == null)
-                    throw new Exception("NotFound");
+                throw new ResourceNotFoundException("Category not found");
+            }
 
-                categoryDb.Name = category.Name;
-                await _context.SaveChangesAsync(); 
-            }
-            catch (Exception ex)
-            {
-               
-                throw new Exception("Failed to update category.", ex);
-            }
+            categoryEntity.Name = category.Name;
+            await _context.SaveChangesAsync();
         }
-
     }
 }

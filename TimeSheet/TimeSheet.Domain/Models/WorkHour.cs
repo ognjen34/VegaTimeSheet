@@ -16,5 +16,8 @@ namespace TimeSheet.Domain.Models
         public float Time {  get; set; }
         public float OverTime { get; set; }
         public User User { get; set; }
+        public Guid UserId { get; set; }
+        public Guid ProjectId { get; set; }
+        public Guid CategoryId { get; set; }
     }
 }

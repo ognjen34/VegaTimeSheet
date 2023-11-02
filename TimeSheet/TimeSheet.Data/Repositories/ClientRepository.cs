@@ -1,8 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TimeSheet.Data.Data;
+using TimeSheet.Domain.Exceptions;
 using TimeSheet.Data.Models;
 using TimeSheet.Domain.Interfaces.Repositories;
 using TimeSheet.Domain.Models;
@@ -12,128 +14,73 @@ namespace TimeSheet.Data.Repositories
     public class ClientRepository : IClientRepository
     {
         private readonly DbSet<ClientEntity> _clients;
-        private readonly DatabaseContex _context;
+        private readonly DatabaseContext _context;
+        private readonly IMapper _mapper;
+        private readonly ICountryRepository _countryRepository;
 
-        public ClientRepository(DatabaseContex context)
+        public ClientRepository(DatabaseContext context, IMapper mapper)
         {
             _context = context;
             _clients = context.Set<ClientEntity>();
+            _mapper = mapper;
         }
 
         public async Task Add(Client client)
         {
-            try
-            {
-                await _clients.AddAsync(new ClientEntity 
-                {
-                    Id = client.Id.ToString(), 
-                    Name = client.Name,
-                    Adress = client.Adress,
-                    City = client.City,Zip = client.Zip,
-                    Country= client.Country
-                });
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Failed to add client.", ex);
-            }
+
+
+            ClientEntity clientEntity = _mapper.Map<ClientEntity>(client);
+
+            await _clients.AddAsync(clientEntity);
+            await _context.SaveChangesAsync();
         }
 
         public async Task Delete(string id)
         {
-            try
+            ClientEntity clientDb = await _clients.FirstOrDefaultAsync(c => c.Id == id);
+            if (clientDb == null)
             {
-                ClientEntity clientDb = await _clients.FirstOrDefaultAsync(c => c.Id == id);
-                if (clientDb == null)
-                    throw new Exception("NotFound");
+                throw new ResourceNotFoundException("Client not found");
+            }
 
-                _clients.Remove(clientDb);
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Failed to delete client.", ex);
-            }
+            _clients.Remove(clientDb);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Client>> GetAll()
         {
-            try
-            {
-                List<ClientEntity> clients = await _clients.ToListAsync();
-
-                List<Client> result = new List<Client>();
-                foreach (ClientEntity clientEntity in clients)
-                {
-                    Client client = new Client
-                    {
-                        Id = Guid.Parse(clientEntity.Id),
-                        Name = clientEntity.Name,
-                        Adress = clientEntity.Adress,
-                        City = clientEntity.City,
-                        Zip = clientEntity.Zip,
-                        Country = clientEntity.Country
-                    };
-                    result.Add(client);
-                }
-
-                return result;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Failed to retrieve clients.", ex);
-            }
+            List<ClientEntity> clientEntities = await _clients.ToListAsync();
+            List<Client> result = clientEntities.Select(clientEntity => _mapper.Map<Client>(clientEntity)).ToList();
+            return result;
         }
 
         public async Task<Client> GetById(string id)
         {
-            try
-            {
-                ClientEntity clientEntity = await _clients.FirstOrDefaultAsync(c => c.Id == id.ToString());
+            ClientEntity clientEntity = await _clients.FirstOrDefaultAsync(c => c.Id == id);
+            
+           
 
-                if (clientEntity != null)
-                {
-                    return new Client
-                    {
-                        Id = Guid.Parse(clientEntity.Id),
-                        Name = clientEntity.Name,
-                        Adress = clientEntity.Adress,
-                        City = clientEntity.City,
-                        Zip = clientEntity.Zip,
-                        Country = clientEntity.Country
-                    }; ;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception ex)
+
+            if (clientEntity != null)
             {
-                throw new Exception("Failed to get client by ID.", ex);
+                return _mapper.Map<Client>(clientEntity);
+            }
+            else
+            {
+                throw new ResourceNotFoundException("Client not found");
             }
         }
 
         public async Task Update(Client client)
         {
-            try
+            ClientEntity clientEntity = await _clients.FirstOrDefaultAsync(c => c.Id == client.Id.ToString());
+            if (clientEntity == null)
             {
-                ClientEntity clientDb = await _clients.FirstOrDefaultAsync(c => c.Id == client.Id.ToString());
-                if (clientDb == null)
-                    throw new Exception("NotFound");
-
-                clientDb.Name = client.Name;
-                clientDb.City = client.City;
-                clientDb.Zip = client.Zip;
-                clientDb.Country = client.Country;
-
-                await _context.SaveChangesAsync();
+                throw new ResourceNotFoundException("Client not found");
             }
-            catch (Exception ex)
-            {
-                throw new Exception("Failed to update client.", ex);
-            }
+
+            _mapper.Map(client, clientEntity);
+            await _context.SaveChangesAsync();
         }
     }
 }

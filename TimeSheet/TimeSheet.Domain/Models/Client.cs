@@ -14,5 +14,10 @@ namespace TimeSheet.Domain.Models
         public string City { get; set; }
         public string Zip {  get; set; }
         public Country Country { get; set; }
+        public Guid CountryId { get; set; }
+
+
+
+
     }
 }

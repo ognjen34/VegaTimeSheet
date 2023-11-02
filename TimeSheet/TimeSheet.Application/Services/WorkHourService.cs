@@ -18,12 +18,12 @@ namespace TimeSheet.Application.Services
 
         public async Task Add(WorkHour workHour)
         {
-            _workHourRepository.Add(workHour);
+            await _workHourRepository.Add(workHour);
         }
 
-        public async Task Delete(WorkHour workHour)
+        public async Task Delete(Guid id)
         {
-            _workHourRepository.Delete(workHour.Id.ToString());
+            _workHourRepository.Delete(id.ToString());
         }
 
         public Task<IEnumerable<WorkHour>> GetAll()
