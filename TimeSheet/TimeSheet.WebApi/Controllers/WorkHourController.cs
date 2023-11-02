@@ -3,9 +3,10 @@ using TimeSheet.Domain.Interfaces.Services;
 using TimeSheet.Domain.Models;
 using TimeSheet.Application.DTOs.Requests;
 using TimeSheet.Application.DTOs.Responses;
-using TimeSheet.Domain.Exceptions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
-using Microsoft.AspNetCore.Authorization; // If you need authorization attributes
 
 namespace TimeSheet.WebApi.Controllers
 {
@@ -26,15 +27,7 @@ namespace TimeSheet.WebApi.Controllers
         public async Task<IActionResult> CreateWorkHour([FromBody] CreateWorkHourReq workHour)
         {
             WorkHour response = _mapper.Map<WorkHour>(workHour);
-            try
-            {
-                await _workHourService.Add(response);
-            }
-            catch (Exception ex) // Handle specific exceptions here
-            {
-                return BadRequest(ex.Message);
-            }
-
+            await _workHourService.Add(response);
             return Ok(_mapper.Map<WorkHourRes>(response));
         }
 
@@ -42,15 +35,7 @@ namespace TimeSheet.WebApi.Controllers
         public async Task<IActionResult> UpdateWorkHour([FromBody] UpdateWorkHourReq updatedWorkHour)
         {
             WorkHour workHour = _mapper.Map<WorkHour>(updatedWorkHour);
-            try
-            {
-                await _workHourService.Update(workHour);
-            }
-            catch (Exception ex) // Handle specific exceptions here
-            {
-                return BadRequest(ex.Message);
-            }
-
+            await _workHourService.Update(workHour);
             return Ok("Work Hour Updated!");
         }
 
@@ -58,38 +43,22 @@ namespace TimeSheet.WebApi.Controllers
         public async Task<ActionResult> GetAllWorkHours()
         {
             IEnumerable<WorkHour> workHours = await _workHourService.GetAll();
-
             IEnumerable<WorkHourRes> response = workHours.Select(_mapper.Map<WorkHourRes>).ToList();
-
             return Ok(response);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult> GetWorkHourById(Guid id)
         {
-            try
-            {
-                WorkHour workHour = await _workHourService.GetById(id);
-                WorkHourRes response = _mapper.Map<WorkHourRes>(workHour);
-                return Ok(response);
-            }
-            catch (Exception ex) // Handle specific exceptions here
-            {
-                return NotFound(ex.Message);
-            }
+            WorkHour workHour = await _workHourService.GetById(id);
+            WorkHourRes response = _mapper.Map<WorkHourRes>(workHour);
+            return Ok(response);
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteWorkHour(Guid id)
         {
-            try
-            {
-                await _workHourService.Delete(id);
-            }
-            catch (Exception ex) // Handle specific exceptions here
-            {
-                return NotFound(ex.Message);
-            }
+            await _workHourService.Delete(id);
             return Ok("Work Hour Deleted!");
         }
     }

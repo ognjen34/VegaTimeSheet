@@ -16,6 +16,7 @@ namespace TimeSheet.Data.Models
         public  string LeadId {  get; set; }
         public virtual ClientEntity Client { get; set; }
         public virtual UserEntity Lead { get; set; }
+       
 
     }
 }

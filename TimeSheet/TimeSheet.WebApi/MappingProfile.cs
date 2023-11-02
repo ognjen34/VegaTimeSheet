@@ -34,14 +34,23 @@ public class MappingProfile : Profile
 
         CreateMap<CreateUserReq, User>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(_ => Guid.NewGuid()));
+        CreateMap<CreateCategoryReq, Category>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(_ => Guid.NewGuid()));
         CreateMap<CreateCountryReq, Country>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(_ => Guid.NewGuid()));
         CreateMap<CreateClientReq, Client>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(_ => Guid.NewGuid()));
+        CreateMap<CreateWorkHourReq, WorkHour>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(_ => Guid.NewGuid()));
+        CreateMap<CreateProjectReq, Project>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(_ => Guid.NewGuid()));
 
         CreateMap<User, UserRes>();
+        CreateMap<Category, CategoryRes>();
         CreateMap<Country, CountryRes>();
         CreateMap<Client, ClientRes>();
+        CreateMap<WorkHour, WorkHourRes>();
+        CreateMap<Project, ProjectRes>();
 
 
         CreateMap<UpdateUserReq, User>()

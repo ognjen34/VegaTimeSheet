@@ -21,7 +21,6 @@ namespace TimeSheet.Application.Services
 
         public async Task Add(Client client)
         {
-            client.Country = await _countryService.GetById(client.CountryId);
             await _clientRepository.Add(client);
         }
 

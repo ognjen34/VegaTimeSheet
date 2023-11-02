@@ -3,9 +3,11 @@ using TimeSheet.Domain.Interfaces.Services;
 using TimeSheet.Domain.Models;
 using TimeSheet.Application.DTOs.Requests;
 using TimeSheet.Application.DTOs.Responses;
-using TimeSheet.Domain.Exceptions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
-using Microsoft.AspNetCore.Authorization; // If you need authorization attributes
+using Microsoft.AspNetCore.Authorization;
 
 namespace TimeSheet.WebApi.Controllers
 {
@@ -26,15 +28,7 @@ namespace TimeSheet.WebApi.Controllers
         public async Task<IActionResult> CreateClient([FromBody] CreateClientReq client)
         {
             Client response = _mapper.Map<Client>(client);
-            try
-            {
-                await _clientService.Add(response);
-            }
-            catch (Exception ex) 
-            {
-                return BadRequest(ex.Message);
-            }
-
+            await _clientService.Add(response);
             return Ok(_mapper.Map<ClientRes>(response));
         }
 
@@ -42,15 +36,7 @@ namespace TimeSheet.WebApi.Controllers
         public async Task<IActionResult> UpdateClient([FromBody] UpdateClientReq updatedClient)
         {
             Client client = _mapper.Map<Client>(updatedClient);
-            try
-            {
-                await _clientService.Update(client);
-            }
-            catch (Exception ex) 
-            {
-                return BadRequest(ex.Message);
-            }
-
+            await _clientService.Update(client);
             return Ok("Client Updated!");
         }
 
@@ -58,38 +44,22 @@ namespace TimeSheet.WebApi.Controllers
         public async Task<ActionResult> GetAllClients()
         {
             IEnumerable<Client> clients = await _clientService.GetAll();
-
             IEnumerable<ClientRes> response = clients.Select(_mapper.Map<ClientRes>).ToList();
-
             return Ok(response);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult> GetClientById(Guid id)
         {
-            try
-            {
-                Client client = await _clientService.GetById(id);
-                ClientRes response = _mapper.Map<ClientRes>(client);
-                return Ok(response);
-            }
-            catch (Exception ex) 
-            {
-                return NotFound(ex.Message);
-            }
+            Client client = await _clientService.GetById(id);
+            ClientRes response = _mapper.Map<ClientRes>(client);
+            return Ok(response);
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteClient(Guid id)
         {
-            try
-            {
-                await _clientService.Delete(id);
-            }
-            catch (Exception ex) 
-            {
-                return NotFound(ex.Message);
-            }
+            await _clientService.Delete(id);
             return Ok("Client Deleted!");
         }
     }

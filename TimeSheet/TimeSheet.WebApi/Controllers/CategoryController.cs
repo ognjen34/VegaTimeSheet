@@ -3,7 +3,9 @@ using TimeSheet.Domain.Interfaces.Services;
 using TimeSheet.Domain.Models;
 using TimeSheet.Application.DTOs.Requests;
 using TimeSheet.Application.DTOs.Responses;
-using TimeSheet.Domain.Exceptions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 
 namespace TimeSheet.WebApi.Controllers
@@ -25,56 +27,30 @@ namespace TimeSheet.WebApi.Controllers
         public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryReq category)
         {
             Category response = _mapper.Map<Category>(category);
-            try
-            {
-                await _categoryService.Add(response);
-            }
-            catch (Exception ex) // Handle specific exceptions here
-            {
-                return BadRequest(ex.Message);
-            }
-
+            await _categoryService.Add(response);
             return Ok(_mapper.Map<CategoryRes>(response));
         }
-
-      
 
         [HttpGet("list")]
         public async Task<ActionResult> GetAllCategories()
         {
             IEnumerable<Category> categories = await _categoryService.GetAll();
-
             IEnumerable<CategoryRes> response = categories.Select(_mapper.Map<CategoryRes>).ToList();
-
             return Ok(response);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult> GetCategoryById(Guid id)
         {
-            try
-            {
-                Category category = await _categoryService.GetById(id);
-                CategoryRes response = _mapper.Map<CategoryRes>(category);
-                return Ok(response);
-            }
-            catch (Exception ex) // Handle specific exceptions here
-            {
-                return NotFound(ex.Message);
-            }
+            Category category = await _categoryService.GetById(id);
+            CategoryRes response = _mapper.Map<CategoryRes>(category);
+            return Ok(response);
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteCategory(Guid id)
         {
-            try
-            {
-                await _categoryService.Delete(id);
-            }
-            catch (Exception ex) // Handle specific exceptions here
-            {
-                return NotFound(ex.Message);
-            }
+            await _categoryService.Delete(id);
             return Ok("Category Deleted!");
         }
     }

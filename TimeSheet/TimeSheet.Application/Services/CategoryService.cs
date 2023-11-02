@@ -18,10 +18,10 @@ namespace TimeSheet.Application.Services
             _categoryRepository = categoryRepository;
         }
 
-        public async Task Add(Category category)
+        public  Task Add(Category category)
         {
             
-            await _categoryRepository.Add(category);
+            return _categoryRepository.Add(category);
         }
 
         public async Task Delete(Guid id)

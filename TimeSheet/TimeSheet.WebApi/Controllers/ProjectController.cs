@@ -3,14 +3,15 @@ using TimeSheet.Domain.Interfaces.Services;
 using TimeSheet.Domain.Models;
 using TimeSheet.Application.DTOs.Requests;
 using TimeSheet.Application.DTOs.Responses;
-using TimeSheet.Domain.Exceptions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
-using Microsoft.AspNetCore.Authorization; // If you need authorization attributes
 
 namespace TimeSheet.WebApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("project")]
     public class ProjectController : ControllerBase
     {
         private readonly IProjectService _projectService;
@@ -26,15 +27,7 @@ namespace TimeSheet.WebApi.Controllers
         public async Task<IActionResult> CreateProject([FromBody] CreateProjectReq project)
         {
             Project response = _mapper.Map<Project>(project);
-            try
-            {
-                await _projectService.Add(response);
-            }
-            catch (Exception ex) // Handle specific exceptions here
-            {
-                return BadRequest(ex.Message);
-            }
-
+            await _projectService.Add(response);
             return Ok(_mapper.Map<ProjectRes>(response));
         }
 
@@ -42,15 +35,7 @@ namespace TimeSheet.WebApi.Controllers
         public async Task<IActionResult> UpdateProject([FromBody] UpdateProjectReq updatedProject)
         {
             Project project = _mapper.Map<Project>(updatedProject);
-            try
-            {
-                await _projectService.Update(project);
-            }
-            catch (Exception ex) // Handle specific exceptions here
-            {
-                return BadRequest(ex.Message);
-            }
-
+            await _projectService.Update(project);
             return Ok("Project Updated!");
         }
 
@@ -58,38 +43,22 @@ namespace TimeSheet.WebApi.Controllers
         public async Task<ActionResult> GetAllProjects()
         {
             IEnumerable<Project> projects = await _projectService.GetAll();
-
             IEnumerable<ProjectRes> response = projects.Select(_mapper.Map<ProjectRes>).ToList();
-
             return Ok(response);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult> GetProjectById(Guid id)
         {
-            try
-            {
-                Project project = await _projectService.GetById(id);
-                ProjectRes response = _mapper.Map<ProjectRes>(project);
-                return Ok(response);
-            }
-            catch (Exception ex) // Handle specific exceptions here
-            {
-                return NotFound(ex.Message);
-            }
+            Project project = await _projectService.GetById(id);
+            ProjectRes response = _mapper.Map<ProjectRes>(project);
+            return Ok(response);
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteProject(Guid id)
         {
-            try
-            {
-                await _projectService.Delete(id);
-            }
-            catch (Exception ex) // Handle specific exceptions here
-            {
-                return NotFound(ex.Message);
-            }
+            await _projectService.Delete(id);
             return Ok("Project Deleted!");
         }
     }

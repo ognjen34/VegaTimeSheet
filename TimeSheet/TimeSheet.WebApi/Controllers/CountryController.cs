@@ -3,9 +3,11 @@ using TimeSheet.Domain.Interfaces.Services;
 using TimeSheet.Domain.Models;
 using TimeSheet.Application.DTOs.Requests;
 using TimeSheet.Application.DTOs.Responses;
-using TimeSheet.Domain.Exceptions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
-using Microsoft.AspNetCore.Authorization; // If you need authorization attributes
+using Microsoft.AspNetCore.Authorization;
 
 namespace TimeSheet.WebApi.Controllers
 {
@@ -26,55 +28,30 @@ namespace TimeSheet.WebApi.Controllers
         public async Task<IActionResult> CreateCountry([FromBody] CreateCountryReq country)
         {
             Country response = _mapper.Map<Country>(country);
-            try
-            {
-                await _countryService.Add(response);
-            }
-            catch (Exception ex) // Handle specific exceptions here
-            {
-                return BadRequest(ex.Message);
-            }
-
+            await _countryService.Add(response);
             return Ok(_mapper.Map<CountryRes>(response));
         }
-
 
         [HttpGet("list")]
         public async Task<ActionResult> GetAllCountries()
         {
             IEnumerable<Country> countries = await _countryService.GetAll();
-
             IEnumerable<CountryRes> response = countries.Select(_mapper.Map<CountryRes>).ToList();
-
             return Ok(response);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult> GetCountryById(Guid id)
         {
-            try
-            {
-                Country country = await _countryService.GetById(id);
-                CountryRes response = _mapper.Map<CountryRes>(country);
-                return Ok(response);
-            }
-            catch (Exception ex) // Handle specific exceptions here
-            {
-                return NotFound(ex.Message);
-            }
+            Country country = await _countryService.GetById(id);
+            CountryRes response = _mapper.Map<CountryRes>(country);
+            return Ok(response);
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteCountry(Guid id)
         {
-            try
-            {
-                await _countryService.Delete(id);
-            }
-            catch (Exception ex) // Handle specific exceptions here
-            {
-                return NotFound(ex.Message);
-            }
+            await _countryService.Delete(id);
             return Ok("Country Deleted!");
         }
     }

@@ -16,9 +16,9 @@ namespace TimeSheet.Application.Services
             _projectRepository = projectRepository;
         }
 
-        public async Task Add(Project project)
+        public Task Add(Project project)
         {
-            _projectRepository.Add(project);
+            return _projectRepository.Add(project);
         }
 
         public async Task Delete(Guid id)
