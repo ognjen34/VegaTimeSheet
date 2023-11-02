@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "TTtidVwzLCJBX3lvOkwdueha4b5A8xh+TpFEaR4Hg+Ndd1v0Lr4yI1Af0rvqTiI2yG8dLGF3b/WzVTZVJujJbQ==",
+  "dgSpecHash": "pSxL20CPKpYrDVhITvt8qkGpEuTTgMs0HMx/IQQJ+apFk7/ZmkGdwu+OwpTgESEQQFWcAFJfuPSQLv1njryFyg==",
   "success": true,
   "projectFilePath": "C:\\Users\\ognjen.radovanovic\\Desktop\\PROJFINAL\\TimeSheet\\TimeSheet.WebApi\\TimeSheet.WebApi.csproj",
   "expectedPackageFiles": [
@@ -11,6 +11,7 @@
     "C:\\Users\\ognjen.radovanovic\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\ognjen.radovanovic\\.nuget\\packages\\castle.core\\5.1.0\\castle.core.5.1.0.nupkg.sha512",
     "C:\\Users\\ognjen.radovanovic\\.nuget\\packages\\dinktopdf\\1.0.8\\dinktopdf.1.0.8.nupkg.sha512",
+    "C:\\Users\\ognjen.radovanovic\\.nuget\\packages\\htmltopdfconverter.core\\2.0.0\\htmltopdfconverter.core.2.0.0.nupkg.sha512",
     "C:\\Users\\ognjen.radovanovic\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\ognjen.radovanovic\\.nuget\\packages\\microsoft.aspnetcore.authentication\\2.2.0\\microsoft.aspnetcore.authentication.2.2.0.nupkg.sha512",
     "C:\\Users\\ognjen.radovanovic\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",
@@ -129,6 +130,7 @@
     "C:\\Users\\ognjen.radovanovic\\.nuget\\packages\\system.runtime.handles\\4.3.0\\system.runtime.handles.4.3.0.nupkg.sha512",
     "C:\\Users\\ognjen.radovanovic\\.nuget\\packages\\system.runtime.interopservices\\4.3.0\\system.runtime.interopservices.4.3.0.nupkg.sha512",
     "C:\\Users\\ognjen.radovanovic\\.nuget\\packages\\system.runtime.interopservices.runtimeinformation\\4.0.0\\system.runtime.interopservices.runtimeinformation.4.0.0.nupkg.sha512",
+    "C:\\Users\\ognjen.radovanovic\\.nuget\\packages\\system.runtime.loader\\4.3.0\\system.runtime.loader.4.3.0.nupkg.sha512",
     "C:\\Users\\ognjen.radovanovic\\.nuget\\packages\\system.runtime.numerics\\4.0.1\\system.runtime.numerics.4.0.1.nupkg.sha512",
     "C:\\Users\\ognjen.radovanovic\\.nuget\\packages\\system.security.accesscontrol\\6.0.0\\system.security.accesscontrol.6.0.0.nupkg.sha512",
     "C:\\Users\\ognjen.radovanovic\\.nuget\\packages\\system.security.cryptography.algorithms\\4.2.0\\system.security.cryptography.algorithms.4.2.0.nupkg.sha512",

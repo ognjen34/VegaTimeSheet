@@ -17,11 +17,9 @@ namespace TimeSheet.Application.Services
 
         public byte[] GeneratePdf(Report report)
         {
-            string html = string.Empty;
-            foreach (ReportInstance ri in report.ReportInstance)
-            {
-                html += $"Date: {ri.Date.ToString()} Worker: {ri.TeamMember} Client: {ri.ProjectName} Category: {ri.CategoryName} Time: {ri.Time}";
-            }
+            string html = string.Join("<br>", report.ReportInstance.Select(ri =>
+                    $"Date: {ri.Date.ToString()} Worker: {ri.TeamMember} Client: {ri.ProjectName} Category: {ri.CategoryName} Time: {ri.Time}"));
+
             var document = new HtmlToPdfDocument
             {
                 GlobalSettings = {

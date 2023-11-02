@@ -126,6 +126,34 @@
           }
         }
       },
+      "HtmlToPdfConverter.Core/2.0.0": {
+        "type": "package",
+        "dependencies": {
+          "DinkToPdf": "1.0.8",
+          "Microsoft.Extensions.DependencyInjection": "5.0.1",
+          "System.Runtime.Loader": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/HtmlToPdfConverter.Core.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/HtmlToPdfConverter.Core.dll": {}
+        },
+        "runtimeTargets": {
+          "runtimes/linux-x64/native/libwkhtmltox.so": {
+            "assetType": "native",
+            "rid": "linux-x64"
+          },
+          "runtimes/osx-x64/native/libwkhtmltox.dylib": {
+            "assetType": "native",
+            "rid": "osx-x64"
+          },
+          "runtimes/win-x64/native/libwkhtmltox.dll": {
+            "assetType": "native",
+            "rid": "win-x64"
+          }
+        }
+      },
       "Humanizer.Core/2.14.1": {
         "type": "package",
         "compile": {
@@ -2166,6 +2194,22 @@
           }
         }
       },
+      "System.Runtime.Loader/4.3.0": {
+        "type": "package",
+        "dependencies": {
+          "System.IO": "4.3.0",
+          "System.Reflection": "4.3.0",
+          "System.Runtime": "4.3.0"
+        },
+        "compile": {
+          "ref/netstandard1.5/System.Runtime.Loader.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard1.5/System.Runtime.Loader.dll": {}
+        }
+      },
       "System.Runtime.Numerics/4.0.1": {
         "type": "package",
         "dependencies": {
@@ -2949,6 +2993,21 @@
         "lib/netstandard1.6/DinkToPdf.dll",
         "lib/netstandard1.6/DinkToPdf.pdb",
         "lib/netstandard1.6/DinkToPdf.xml"
+      ]
+    },
+    "HtmlToPdfConverter.Core/2.0.0": {
+      "sha512": "Pb19CIPK3QF6HdsH8VZ2rjvioCKOReXL5m3XO8rcaP3LUgynCGnJkQy/suZ+tdHRcDwGi26rnvaSAXyXfVwp2w==",
+      "type": "package",
+      "path": "htmltopdfconverter.core/2.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "htmltopdfconverter.core.2.0.0.nupkg.sha512",
+        "htmltopdfconverter.core.nuspec",
+        "lib/netstandard2.0/HtmlToPdfConverter.Core.dll",
+        "runtimes/linux-x64/native/libwkhtmltox.so",
+        "runtimes/osx-x64/native/libwkhtmltox.dylib",
+        "runtimes/win-x64/native/libwkhtmltox.dll"
       ]
     },
     "Humanizer.Core/2.14.1": {
@@ -7008,6 +7067,38 @@
         "system.runtime.interopservices.runtimeinformation.nuspec"
       ]
     },
+    "System.Runtime.Loader/4.3.0": {
+      "sha512": "DHMaRn8D8YCK2GG2pw+UzNxn/OHVfaWx7OTLBD/hPegHZZgcZh3H6seWegrC4BYwsfuGrywIuT+MQs+rPqRLTQ==",
+      "type": "package",
+      "path": "system.runtime.loader/4.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "ThirdPartyNotices.txt",
+        "dotnet_library_license.txt",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net462/_._",
+        "lib/netstandard1.5/System.Runtime.Loader.dll",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
+        "ref/netstandard1.5/System.Runtime.Loader.dll",
+        "ref/netstandard1.5/System.Runtime.Loader.xml",
+        "ref/netstandard1.5/de/System.Runtime.Loader.xml",
+        "ref/netstandard1.5/es/System.Runtime.Loader.xml",
+        "ref/netstandard1.5/fr/System.Runtime.Loader.xml",
+        "ref/netstandard1.5/it/System.Runtime.Loader.xml",
+        "ref/netstandard1.5/ja/System.Runtime.Loader.xml",
+        "ref/netstandard1.5/ko/System.Runtime.Loader.xml",
+        "ref/netstandard1.5/ru/System.Runtime.Loader.xml",
+        "ref/netstandard1.5/zh-hans/System.Runtime.Loader.xml",
+        "ref/netstandard1.5/zh-hant/System.Runtime.Loader.xml",
+        "system.runtime.loader.4.3.0.nupkg.sha512",
+        "system.runtime.loader.nuspec"
+      ]
+    },
     "System.Runtime.Numerics/4.0.1": {
       "sha512": "+XbKFuzdmLP3d1o9pdHu2nxjNr2OEPqGzKeegPLCUMM71a0t50A/rOcIRmGs9wR7a8KuHX6hYs/7/TymIGLNqg==",
       "type": "package",
@@ -8365,6 +8456,7 @@
       "AutoMapper >= 12.0.1",
       "AutoMapper.Extensions.Microsoft.DependencyInjection >= 12.0.1",
       "DinkToPdf >= 1.0.8",
+      "HtmlToPdfConverter.Core >= 2.0.0",
       "Microsoft.AspNetCore.Authentication.Cookies >= 2.2.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 6.0.24",
       "Microsoft.EntityFrameworkCore >= 7.0.13",
@@ -8446,6 +8538,10 @@
           "DinkToPdf": {
             "target": "Package",
             "version": "[1.0.8, )"
+          },
+          "HtmlToPdfConverter.Core": {
+            "target": "Package",
+            "version": "[2.0.0, )"
           },
           "Microsoft.AspNetCore.Authentication.Cookies": {
             "target": "Package",

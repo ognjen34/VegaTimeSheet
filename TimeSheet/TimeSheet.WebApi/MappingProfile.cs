@@ -45,6 +45,14 @@ public class MappingProfile : Profile
         CreateMap<CreateProjectReq, Project>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(_ => Guid.NewGuid()));
 
+        CreateMap<Report, ReportResponse>();
+        CreateMap<ReportResponse, Report>();
+
+        CreateMap<ReportInstanceDTO, ReportInstance>();
+        CreateMap<ReportInstance, ReportInstanceDTO>();
+
+
+
         CreateMap<User, UserRes>();
         CreateMap<Category, CategoryRes>();
         CreateMap<Country, CountryRes>();

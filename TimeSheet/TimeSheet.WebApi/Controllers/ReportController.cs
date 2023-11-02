@@ -29,15 +29,15 @@ namespace TimeSheet.WebApi.Controllers
             IEnumerable<WorkHour> workHours= await _workHourService.GetUsersWorkHoursForReports(reportRequest.UserId,reportRequest.ClientId,reportRequest.ProjectId, reportRequest.CategoryId,reportRequest.StartDate,reportRequest.EndDate);
             Report report = new Report();
             report.ReportInstance = workHours.Select(workHour => _mapper.Map<ReportInstance>(workHour)).ToList();
-            return Ok(report);
+            return Ok(_mapper.Map<ReportResponse>(report));
         }
 
         [HttpPost("download")]
-        public async Task<IActionResult> DownloadPDF([FromBody] Report report)
+        public async Task<IActionResult> DownloadPDF([FromBody] ReportResponse report)
         {
 
 
-            var pdfBytes = _pdfGenerationService.GeneratePdf(report);
+            var pdfBytes = _pdfGenerationService.GeneratePdf(_mapper.Map<Report>(report));
 
             Response.Headers.Add("Content-Disposition", "attachment; filename=report.pdf");
             return File(pdfBytes, "application/pdf");

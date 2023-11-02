@@ -1,15 +1,13 @@
-﻿namespace TimeSheet.WebApi.DTOs.Responses
+﻿using TimeSheet.Domain.Models;
+
+namespace TimeSheet.WebApi.DTOs.Responses
 {
     public class ReportResponse
     {
-        public DateOnly Date {  get; set; }
-        public string TeamMember {  get; set; }
-        public string ProjectName {  get; set; }
-        public string CategoryName { get; set; }
-        public string Description { get; set; }
-        public float Time {  get; set; }
-
-
-
+        public List<ReportInstanceDTO> ReportInstance { get; set; }
+        public ReportResponse()
+        {
+            ReportInstance = new List<ReportInstanceDTO>();
+        }
     }
 }
