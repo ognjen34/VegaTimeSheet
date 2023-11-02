@@ -11,7 +11,7 @@ namespace TimeSheet.Data.Models
     {
         public string Id { get; set; }
         public string Description { get; set; }
-        public DateTime Date { get; set; }
+        public DateOnly Date { get; set; }
         public float Time { get; set; }
         public float OverTime { get; set; }
         public string UserId {  get; set; }

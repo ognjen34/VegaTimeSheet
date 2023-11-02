@@ -11,7 +11,7 @@ using AutoMapper;
 namespace TimeSheet.WebApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("categories")]
     public class CategoryController : ControllerBase
     {
         private readonly ICategoryService _categoryService;
@@ -23,7 +23,7 @@ namespace TimeSheet.WebApi.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost("create")]
+        [HttpPost("")]
         public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryReq category)
         {
             Category response = _mapper.Map<Category>(category);
@@ -31,7 +31,7 @@ namespace TimeSheet.WebApi.Controllers
             return Ok(_mapper.Map<CategoryRes>(response));
         }
 
-        [HttpGet("list")]
+        [HttpGet("")]
         public async Task<ActionResult> GetAllCategories()
         {
             IEnumerable<Category> categories = await _categoryService.GetAll();

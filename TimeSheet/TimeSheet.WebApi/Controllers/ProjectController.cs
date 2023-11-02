@@ -11,7 +11,7 @@ using AutoMapper;
 namespace TimeSheet.WebApi.Controllers
 {
     [ApiController]
-    [Route("project")]
+    [Route("projects")]
     public class ProjectController : ControllerBase
     {
         private readonly IProjectService _projectService;
@@ -23,7 +23,7 @@ namespace TimeSheet.WebApi.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost("create")]
+        [HttpPost("")]
         public async Task<IActionResult> CreateProject([FromBody] CreateProjectReq project)
         {
             Project response = _mapper.Map<Project>(project);
@@ -31,7 +31,7 @@ namespace TimeSheet.WebApi.Controllers
             return Ok(_mapper.Map<ProjectRes>(response));
         }
 
-        [HttpPut("update")]
+        [HttpPut("")]
         public async Task<IActionResult> UpdateProject([FromBody] UpdateProjectReq updatedProject)
         {
             Project project = _mapper.Map<Project>(updatedProject);
@@ -39,7 +39,7 @@ namespace TimeSheet.WebApi.Controllers
             return Ok("Project Updated!");
         }
 
-        [HttpGet("list")]
+        [HttpGet("")]
         public async Task<ActionResult> GetAllProjects()
         {
             IEnumerable<Project> projects = await _projectService.GetAll();

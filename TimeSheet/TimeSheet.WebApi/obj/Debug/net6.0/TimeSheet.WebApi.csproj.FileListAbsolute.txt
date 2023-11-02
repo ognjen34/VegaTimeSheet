@@ -99,3 +99,4 @@ C:\Users\ognjen.radovanovic\Desktop\PROJFINAL\TimeSheet\TimeSheet.WebApi\bin\Deb
 C:\Users\ognjen.radovanovic\Desktop\PROJFINAL\TimeSheet\TimeSheet.WebApi\bin\Debug\net6.0\BCrypt.Net-Next.dll
 C:\Users\ognjen.radovanovic\Desktop\PROJFINAL\TimeSheet\TimeSheet.WebApi\bin\Debug\net6.0\Castle.Core.dll
 C:\Users\ognjen.radovanovic\Desktop\PROJFINAL\TimeSheet\TimeSheet.WebApi\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Proxies.dll
+C:\Users\ognjen.radovanovic\Desktop\PROJFINAL\TimeSheet\TimeSheet.WebApi\bin\Debug\net6.0\DinkToPdf.dll

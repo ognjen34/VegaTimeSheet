@@ -11,7 +11,8 @@ using TimeSheet.Domain.Models;
 
 namespace TimeSheet.Data.Repositories
 {
-    public class WorkHourRepository : IWorkHourRepository
+    public class WorkHourRepository : 
+        IWorkHourRepository
     {
         private readonly IMapper _mapper;
         private readonly DbSet<WorkHourEntity> _workHours;
@@ -63,6 +64,54 @@ namespace TimeSheet.Data.Repositories
             {
                 throw new ResourceNotFoundException("Work hour not found");
             }
+        }
+
+        public async Task<IEnumerable<WorkHour>> GetUsersWorkHoursForDateRange(Guid userId, DateOnly startDate,DateOnly endDate)
+        {
+            
+
+            List<WorkHourEntity> userWorkHoursEntity = await _workHours
+                .Where(wh => wh.UserId == userId.ToString() && wh.Date >= startDate && wh.Date <= endDate && wh.User.Id == userId.ToString())
+                .ToListAsync();
+
+            IEnumerable<WorkHour> result = userWorkHoursEntity
+                .Select(workHourEntity => _mapper.Map<WorkHour>(workHourEntity))
+                .ToList();
+
+            return result;
+        }
+
+        public async Task<IEnumerable<WorkHour>> GetUsersWorkHoursForReports(string? userId, string? clientId, string? projectId, string? categoryId, DateOnly startDate, DateOnly endDate)
+        {
+            var query = _workHours.Where(wh => wh.Date >= startDate && wh.Date <= endDate);
+
+            if (userId != null)
+            {
+                query = query.Where(wh => wh.User.Id == userId.ToString());
+            }
+
+            if (clientId != null)
+            {
+                query = query.Where(wh => wh.Project.Client.Id == clientId.ToString());
+            }
+
+            if (projectId != null)
+            {
+                query = query.Where(wh => wh.Project.Id == projectId.ToString());
+            }
+
+            if (categoryId != null)
+            {
+                query = query.Where(wh => wh.Category.Id == categoryId.ToString());
+            }
+
+            List<WorkHourEntity> userWorkHoursEntity = await query.ToListAsync();
+
+            IEnumerable<WorkHour> result = userWorkHoursEntity
+                .Select(workHourEntity => _mapper.Map<WorkHour>(workHourEntity))
+                .ToList();
+
+            return result;
         }
 
         public async Task Update(WorkHour workHour)

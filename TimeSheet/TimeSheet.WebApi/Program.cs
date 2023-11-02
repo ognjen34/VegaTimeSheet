@@ -9,7 +9,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
 using TimeSheet.WebApi.Middlewares;
-
+using DinkToPdf.Contracts;
+using DinkToPdf;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -61,9 +62,14 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IWorkHourRepository, WorkHourRepository>();
 builder.Services.AddScoped<IWorkHourService, WorkHourService>();
+builder.Services.AddScoped<IMonthlyHoursService, MonthlyHoursService>();
+builder.Services.AddScoped<IPdfGenerationService, PdfGenerationService>();
+
+
 
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddControllersWithViews();
+builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -98,6 +104,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseMiddleware<ExceptionHandlingMiddleware>();
+
 app.UseAuthentication(); 
 app.UseAuthorization(); 
 

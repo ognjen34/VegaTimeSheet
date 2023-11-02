@@ -11,7 +11,7 @@ using AutoMapper;
 namespace TimeSheet.WebApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("workhours")]
     public class WorkHourController : ControllerBase
     {
         private readonly IWorkHourService _workHourService;
@@ -23,7 +23,7 @@ namespace TimeSheet.WebApi.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost("create")]
+        [HttpPost("")]
         public async Task<IActionResult> CreateWorkHour([FromBody] CreateWorkHourReq workHour)
         {
             WorkHour response = _mapper.Map<WorkHour>(workHour);
@@ -31,7 +31,7 @@ namespace TimeSheet.WebApi.Controllers
             return Ok(_mapper.Map<WorkHourRes>(response));
         }
 
-        [HttpPut("update")]
+        [HttpPut("")]
         public async Task<IActionResult> UpdateWorkHour([FromBody] UpdateWorkHourReq updatedWorkHour)
         {
             WorkHour workHour = _mapper.Map<WorkHour>(updatedWorkHour);
@@ -39,7 +39,7 @@ namespace TimeSheet.WebApi.Controllers
             return Ok("Work Hour Updated!");
         }
 
-        [HttpGet("list")]
+        [HttpGet("")]
         public async Task<ActionResult> GetAllWorkHours()
         {
             IEnumerable<WorkHour> workHours = await _workHourService.GetAll();

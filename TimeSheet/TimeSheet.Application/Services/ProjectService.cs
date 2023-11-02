@@ -21,9 +21,9 @@ namespace TimeSheet.Application.Services
             return _projectRepository.Add(project);
         }
 
-        public async Task Delete(Guid id)
+        public  Task Delete(Guid id)
         {
-            _projectRepository.Delete(id.ToString());
+            return _projectRepository.Delete(id.ToString());
         }
 
         public Task<IEnumerable<Project>> GetAll()

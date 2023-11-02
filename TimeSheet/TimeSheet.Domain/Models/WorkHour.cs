@@ -12,7 +12,7 @@ namespace TimeSheet.Domain.Models
         public Project Project { get; set; }
         public Category Category { get; set; }
         public string  Description { get; set; }
-        public DateTime Date { get; set; }
+        public DateOnly Date { get; set; }
         public float Time {  get; set; }
         public float OverTime { get; set; }
         public User User { get; set; }

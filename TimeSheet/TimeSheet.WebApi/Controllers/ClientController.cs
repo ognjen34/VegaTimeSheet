@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace TimeSheet.WebApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("clients")]
     public class ClientController : ControllerBase
     {
         private readonly IClientService _clientService;
@@ -24,7 +24,7 @@ namespace TimeSheet.WebApi.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost("create")]
+        [HttpPost("")]
         public async Task<IActionResult> CreateClient([FromBody] CreateClientReq client)
         {
             Client response = _mapper.Map<Client>(client);
@@ -32,7 +32,7 @@ namespace TimeSheet.WebApi.Controllers
             return Ok(_mapper.Map<ClientRes>(response));
         }
 
-        [HttpPut("update")]
+        [HttpPut("")]
         public async Task<IActionResult> UpdateClient([FromBody] UpdateClientReq updatedClient)
         {
             Client client = _mapper.Map<Client>(updatedClient);
@@ -40,7 +40,7 @@ namespace TimeSheet.WebApi.Controllers
             return Ok("Client Updated!");
         }
 
-        [HttpGet("list")]
+        [HttpGet("")]
         public async Task<ActionResult> GetAllClients()
         {
             IEnumerable<Client> clients = await _clientService.GetAll();

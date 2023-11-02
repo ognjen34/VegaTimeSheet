@@ -135,6 +135,9 @@ namespace TimeSheet.Data.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
+                    b.Property<float>("WorkingHours")
+                        .HasColumnType("float");
+
                     b.HasKey("Id");
 
                     b.ToTable("Users");
@@ -149,8 +152,8 @@ namespace TimeSheet.Data.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime(6)");
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date");
 
                     b.Property<string>("Description")
                         .IsRequired()

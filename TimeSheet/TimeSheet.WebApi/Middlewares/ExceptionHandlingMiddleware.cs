@@ -31,23 +31,18 @@ namespace TimeSheet.WebApi.Middlewares
 
             if (exception is ResourceNotFoundException)
             {
-                context.Response.StatusCode = StatusCodes.Status404NotFound;
-                context.Response.ContentType = "application/json";
-                return context.Response.WriteAsync($"Error : {exception.Message}");
+                context.Response.StatusCode = StatusCodes.Status404NotFound;        
             }
             else if (exception is EmailAlreadyExistException)
             {
-                context.Response.StatusCode = StatusCodes.Status400BadRequest;
-                context.Response.ContentType = "application/json";
-                return context.Response.WriteAsync($"Error : {exception.Message}");
+                context.Response.StatusCode = StatusCodes.Status400BadRequest;              
             }
             else
             {
-                
-                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-                context.Response.ContentType = "application/json";
-                return context.Response.WriteAsync("{\"error\": \"An error occurred.\"}");
+                context.Response.StatusCode = StatusCodes.Status500InternalServerError;              
             }
+            context.Response.ContentType = "application/json";
+            return context.Response.WriteAsync($"Error : {exception.Message}");
         }
     }
 }

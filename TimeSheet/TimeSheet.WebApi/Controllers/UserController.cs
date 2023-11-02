@@ -28,7 +28,7 @@ namespace TimeSheet.WebApi.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost("register")]
+        [HttpPost("")]
         public async Task<IActionResult> AddUser([FromBody] CreateUserReq user)
         {
             User response = _mapper.Map<User>(user);
@@ -36,7 +36,7 @@ namespace TimeSheet.WebApi.Controllers
             return Ok(_mapper.Map<UserRes>(response));
         }
 
-        [HttpPut("update")]
+        [HttpPut("")]
         public async Task<IActionResult> UpdateUser([FromBody] UpdateUserReq oldUser)
         {
             User user = _mapper.Map<User>(oldUser);
@@ -56,6 +56,7 @@ namespace TimeSheet.WebApi.Controllers
 
             var claims = new List<Claim>
             {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.Name),
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.Role, user.Role.ToString()),

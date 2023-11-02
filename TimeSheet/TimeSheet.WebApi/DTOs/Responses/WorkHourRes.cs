@@ -10,12 +10,12 @@ namespace TimeSheet.WebApi.DTOs.Responses
     public class WorkHourRes
     {
         public string Id { get; set; }
-        public Project Project { get; set; }
-        public Category Category { get; set; }
+        public string ProjectName { get; set; }
+        public string CategoryName { get; set; }
         public string Description { get; set; }
-        public DateTime Date { get; set; }
+        public DateOnly Date { get; set; }
         public float Time { get; set; }
         public float OverTime { get; set; }
-        public User User { get; set; }
+        public string UserName { get; set; }
     }
 }

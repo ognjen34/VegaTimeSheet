@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace TimeSheet.WebApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("countries")]
     public class CountryController : ControllerBase
     {
         private readonly ICountryService _countryService;
@@ -24,7 +24,7 @@ namespace TimeSheet.WebApi.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost("create")]
+        [HttpPost("")]
         public async Task<IActionResult> CreateCountry([FromBody] CreateCountryReq country)
         {
             Country response = _mapper.Map<Country>(country);
@@ -32,7 +32,7 @@ namespace TimeSheet.WebApi.Controllers
             return Ok(_mapper.Map<CountryRes>(response));
         }
 
-        [HttpGet("list")]
+        [HttpGet("")]
         public async Task<ActionResult> GetAllCountries()
         {
             IEnumerable<Country> countries = await _countryService.GetAll();

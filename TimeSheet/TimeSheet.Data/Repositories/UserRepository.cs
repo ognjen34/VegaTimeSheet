@@ -95,6 +95,7 @@ namespace TimeSheet.Data.Repositories
             userEntity.Password = BCrypt.Net.BCrypt.HashPassword(user.Password, salt);
             userEntity.Status = user.Status;
             userEntity.Role = user.Role;
+            userEntity.WorkingHours = user.WorkingHours;
 
             await _context.SaveChangesAsync();
         }

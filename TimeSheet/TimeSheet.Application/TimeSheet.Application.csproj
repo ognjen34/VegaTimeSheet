@@ -7,11 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TimeSheet.Domain\TimeSheet.Domain.csproj" />
+    <PackageReference Include="DinkToPdf" Version="1.0.8" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
+    <ProjectReference Include="..\TimeSheet.Domain\TimeSheet.Domain.csproj" />
   </ItemGroup>
 
 </Project>

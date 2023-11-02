@@ -15,6 +15,7 @@ namespace TimeSheet.Domain.Models
         public string Password { get; set; }
         public Status Status { get; set; }
         public Role Role { get; set; }
+        public float WorkingHours { get; set; }
     }
 
     public enum Status { Inactive,Active}

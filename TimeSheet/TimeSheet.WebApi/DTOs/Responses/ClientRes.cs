@@ -14,6 +14,6 @@ namespace TimeSheet.WebApi.DTOs.Responses
         public string Adress { get; set; }
         public string City { get; set; }
         public string Zip { get; set; }
-        public Country Country { get; set; }
+        public CountryRes Country { get; set; }
     }
 }
