@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TimeSheet.Domain.Models;
 
 namespace TimeSheet.WebApi.DTOs.Requests
 {
-    public class CreateWorkHourReq
+    public class UpdateWorkHourRequest
     {
+        public string Id {  get; set; }
         public string ProjectId { get; set; }
         public string CategoryId { get; set; }
         public string Description { get; set; }

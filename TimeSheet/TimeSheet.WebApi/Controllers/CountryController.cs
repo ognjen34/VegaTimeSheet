@@ -25,18 +25,18 @@ namespace TimeSheet.WebApi.Controllers
         }
 
         [HttpPost("")]
-        public async Task<IActionResult> CreateCountry([FromBody] CreateCountryReq country)
+        public async Task<IActionResult> CreateCountry([FromBody] CreateCountryRequest country)
         {
             Country response = _mapper.Map<Country>(country);
             await _countryService.Add(response);
-            return Ok(_mapper.Map<CountryRes>(response));
+            return Ok(_mapper.Map<CountryResponse>(response));
         }
 
         [HttpGet("")]
         public async Task<ActionResult> GetAllCountries()
         {
             IEnumerable<Country> countries = await _countryService.GetAll();
-            IEnumerable<CountryRes> response = countries.Select(_mapper.Map<CountryRes>).ToList();
+            IEnumerable<CountryResponse> response = countries.Select(_mapper.Map<CountryResponse>).ToList();
             return Ok(response);
         }
 
@@ -44,7 +44,7 @@ namespace TimeSheet.WebApi.Controllers
         public async Task<ActionResult> GetCountryById(Guid id)
         {
             Country country = await _countryService.GetById(id);
-            CountryRes response = _mapper.Map<CountryRes>(country);
+            CountryResponse response = _mapper.Map<CountryResponse>(country);
             return Ok(response);
         }
 

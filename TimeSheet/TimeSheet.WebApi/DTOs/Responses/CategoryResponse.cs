@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace TimeSheet.WebApi.DTOs.Responses
 {
-    public class CountryRes
+    public class CategoryResponse
     {
-        public string Id { get; set; }
+        public string Id {  get; set; }
         public string Name { get; set; }
+
     }
 }

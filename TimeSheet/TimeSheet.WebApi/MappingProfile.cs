@@ -32,17 +32,17 @@ public class MappingProfile : Profile
         CreateMap<CountryEntity, Country>()
            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.Parse(src.Id)));
 
-        CreateMap<CreateUserReq, User>()
+        CreateMap<CreateUserRequest, User>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(_ => Guid.NewGuid()));
-        CreateMap<CreateCategoryReq, Category>()
+        CreateMap<CreateCategoryRequest, Category>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(_ => Guid.NewGuid()));
-        CreateMap<CreateCountryReq, Country>()
+        CreateMap<CreateCountryRequest, Country>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(_ => Guid.NewGuid()));
-        CreateMap<CreateClientReq, Client>()
+        CreateMap<CreateClientRequest, Client>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(_ => Guid.NewGuid()));
-        CreateMap<CreateWorkHourReq, WorkHour>()
+        CreateMap<CreateWorkHourRequest, WorkHour>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(_ => Guid.NewGuid()));
-        CreateMap<CreateProjectReq, Project>()
+        CreateMap<CreateProjectRequest, Project>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(_ => Guid.NewGuid()));
 
         CreateMap<Report, ReportResponse>();
@@ -53,22 +53,22 @@ public class MappingProfile : Profile
 
 
 
-        CreateMap<User, UserRes>();
-        CreateMap<Category, CategoryRes>();
-        CreateMap<Country, CountryRes>();
-        CreateMap<Client, ClientRes>();
-        CreateMap<WorkHour, WorkHourRes>()
+        CreateMap<User, UserResponse>();
+        CreateMap<Category, CategoryResponse>();
+        CreateMap<Country, CountryResponse>();
+        CreateMap<Client, ClientResponse>();
+        CreateMap<WorkHour, WorkHourResponse>()
             .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.Name))
             .ForMember(dest => dest.ProjectName, opt => opt.MapFrom(src => src.Project.Name))
             .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name));
-        CreateMap<Project, ProjectRes>()
+        CreateMap<Project, ProjectResponse>()
             .ForMember(dest => dest.ClientId, opt => opt.MapFrom(src => src.Client.Id))
             .ForMember(dest => dest.ClientName, opt => opt.MapFrom(src => src.Client.Name))
             .ForMember(dest => dest.LeadId, opt => opt.MapFrom(src => src.Lead.Id))
             .ForMember(dest => dest.LeadName, opt => opt.MapFrom(src => src.Lead.Name));
 
 
-        CreateMap<UpdateUserReq, User>()
+        CreateMap<UpdateUserRequest, User>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.Parse(src.Id)));
 
         CreateMap<WorkHour, ReportInstance>()

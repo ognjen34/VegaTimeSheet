@@ -16,14 +16,14 @@ namespace TimeSheet.Application.Services
         {
             _workHourService = workHourService;
         }
-        public async Task<MonthlyHours> GetUsersMontlyHours(Guid userId,DateOnly startDate,DateOnly endDate) 
+        public async Task<MonthlyHours> GetUsersMontlyHours(Guid userId, DateOnly startDate, DateOnly endDate)
         {
 
-          
 
-            IEnumerable<WorkHour> workHours = await _workHourService.GetUsersWorkHoursForDateRange(userId, startDate,endDate);
+
+            IEnumerable<WorkHour> workHours = await _workHourService.GetUsersWorkHoursForDateRange(userId, startDate, endDate);
             MonthlyHours hours = new MonthlyHours();
-
+            var groupedWorkHours = workHours.GroupBy(x => x.Date);
             for (DateOnly currentDate = startDate; currentDate <= endDate; currentDate = currentDate.AddDays(1))
             {
 
@@ -31,15 +31,13 @@ namespace TimeSheet.Application.Services
 
                 WorkDay day = new WorkDay();
                 day.Date = currentDate;
-
-                if (workHourForCurrentDate.Count == 0) day.Hours = 0;
-                else day.Hours = workHourForCurrentDate.Sum(wh => wh.Time + wh.OverTime); 
+                day.Hours = workHourForCurrentDate.Count == 0 ? 0 : workHourForCurrentDate.Sum(wh => wh.Time + wh.OverTime);
 
                 hours.WorkDays.Add(day);
                 hours.TotalHours += day.Hours;
             }
 
-            
+
             return hours;
         }
     }

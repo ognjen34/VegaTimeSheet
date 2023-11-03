@@ -7,7 +7,7 @@ using TimeSheet.Domain.Models;
 
 namespace TimeSheet.WebApi.DTOs.Requests
 {
-    public class UpdateClientReq
+    public class UpdateClientRequest
     {
         public string Id { get; set; }
         public string Name { get; set; }

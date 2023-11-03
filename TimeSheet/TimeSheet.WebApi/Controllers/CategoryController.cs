@@ -24,18 +24,18 @@ namespace TimeSheet.WebApi.Controllers
         }
 
         [HttpPost("")]
-        public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryReq category)
+        public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryRequest category)
         {
             Category response = _mapper.Map<Category>(category);
             await _categoryService.Add(response);
-            return Ok(_mapper.Map<CategoryRes>(response));
+            return Ok(_mapper.Map<CategoryResponse>(response));
         }
 
         [HttpGet("")]
         public async Task<ActionResult> GetAllCategories()
         {
             IEnumerable<Category> categories = await _categoryService.GetAll();
-            IEnumerable<CategoryRes> response = categories.Select(_mapper.Map<CategoryRes>).ToList();
+            IEnumerable<CategoryResponse> response = categories.Select(_mapper.Map<CategoryResponse>).ToList();
             return Ok(response);
         }
 
@@ -43,7 +43,7 @@ namespace TimeSheet.WebApi.Controllers
         public async Task<ActionResult> GetCategoryById(Guid id)
         {
             Category category = await _categoryService.GetById(id);
-            CategoryRes response = _mapper.Map<CategoryRes>(category);
+            CategoryResponse response = _mapper.Map<CategoryResponse>(category);
             return Ok(response);
         }
 

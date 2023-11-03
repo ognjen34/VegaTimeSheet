@@ -25,15 +25,15 @@ namespace TimeSheet.WebApi.Controllers
         }
 
         [HttpPost("")]
-        public async Task<IActionResult> CreateClient([FromBody] CreateClientReq client)
+        public async Task<IActionResult> CreateClient([FromBody] CreateClientRequest client)
         {
             Client response = _mapper.Map<Client>(client);
             await _clientService.Add(response);
-            return Ok(_mapper.Map<ClientRes>(response));
+            return Ok(_mapper.Map<ClientResponse>(response));
         }
 
         [HttpPut("")]
-        public async Task<IActionResult> UpdateClient([FromBody] UpdateClientReq updatedClient)
+        public async Task<IActionResult> UpdateClient([FromBody] UpdateClientRequest updatedClient)
         {
             Client client = _mapper.Map<Client>(updatedClient);
             await _clientService.Update(client);
@@ -44,7 +44,7 @@ namespace TimeSheet.WebApi.Controllers
         public async Task<ActionResult> GetAllClients()
         {
             IEnumerable<Client> clients = await _clientService.GetAll();
-            IEnumerable<ClientRes> response = clients.Select(_mapper.Map<ClientRes>).ToList();
+            IEnumerable<ClientResponse> response = clients.Select(_mapper.Map<ClientResponse>).ToList();
             return Ok(response);
         }
 
@@ -52,7 +52,7 @@ namespace TimeSheet.WebApi.Controllers
         public async Task<ActionResult> GetClientById(Guid id)
         {
             Client client = await _clientService.GetById(id);
-            ClientRes response = _mapper.Map<ClientRes>(client);
+            ClientResponse response = _mapper.Map<ClientResponse>(client);
             return Ok(response);
         }
 

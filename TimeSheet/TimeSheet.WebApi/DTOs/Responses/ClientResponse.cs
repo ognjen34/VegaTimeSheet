@@ -7,13 +7,13 @@ using TimeSheet.Domain.Models;
 
 namespace TimeSheet.WebApi.DTOs.Responses
 {
-    public class ClientRes
+    public class ClientResponse
     {
         public string Id { get; set; }
         public string Name { get; set; }
         public string Adress { get; set; }
         public string City { get; set; }
         public string Zip { get; set; }
-        public CountryRes Country { get; set; }
+        public CountryResponse Country { get; set; }
     }
 }

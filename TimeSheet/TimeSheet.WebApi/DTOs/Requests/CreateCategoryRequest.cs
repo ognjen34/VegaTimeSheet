@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TimeSheet.WebApi.DTOs.Requests
 {
-    public class CreateCategoryReq
+    public class CreateCategoryRequest
     {
         public string Name {  get; set; }
     }

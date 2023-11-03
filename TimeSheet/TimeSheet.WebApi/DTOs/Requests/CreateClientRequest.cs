@@ -7,11 +7,12 @@ using TimeSheet.Domain.Models;
 
 namespace TimeSheet.WebApi.DTOs.Requests
 {
-    public class CreateProjectReq
+    public class CreateClientRequest
     {
         public string Name { get; set; }
-        public string Description { get; set; }
-        public string ClientId { get; set; }
-        public string LeadId { get; set; }
+        public string Adress { get; set; }
+        public string City { get; set; }
+        public string Zip { get; set; }
+        public string CountryId { get; set; }
     }
 }

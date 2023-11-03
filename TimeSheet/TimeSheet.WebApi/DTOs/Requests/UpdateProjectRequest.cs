@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TimeSheet.WebApi.DTOs.Requests
 {
-    public class UpdateProjectReq
+    public class UpdateProjectRequest
     {
         public string Name { get; set; }
         public string Description { get; set; }

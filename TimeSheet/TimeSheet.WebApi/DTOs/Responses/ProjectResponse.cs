@@ -7,7 +7,7 @@ using TimeSheet.Domain.Models;
 
 namespace TimeSheet.WebApi.DTOs.Responses
 {
-    public class ProjectRes
+    public class ProjectResponse
     {
         public string Id { get; set; }
         public string Name { get; set; }

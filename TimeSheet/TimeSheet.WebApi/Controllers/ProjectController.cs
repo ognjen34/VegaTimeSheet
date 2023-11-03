@@ -24,15 +24,15 @@ namespace TimeSheet.WebApi.Controllers
         }
 
         [HttpPost("")]
-        public async Task<IActionResult> CreateProject([FromBody] CreateProjectReq project)
+        public async Task<IActionResult> CreateProject([FromBody] CreateProjectRequest project)
         {
             Project response = _mapper.Map<Project>(project);
             await _projectService.Add(response);
-            return Ok(_mapper.Map<ProjectRes>(response));
+            return Ok(_mapper.Map<ProjectResponse>(response));
         }
 
         [HttpPut("")]
-        public async Task<IActionResult> UpdateProject([FromBody] UpdateProjectReq updatedProject)
+        public async Task<IActionResult> UpdateProject([FromBody] UpdateProjectRequest updatedProject)
         {
             Project project = _mapper.Map<Project>(updatedProject);
             await _projectService.Update(project);
@@ -43,7 +43,7 @@ namespace TimeSheet.WebApi.Controllers
         public async Task<ActionResult> GetAllProjects()
         {
             IEnumerable<Project> projects = await _projectService.GetAll();
-            IEnumerable<ProjectRes> response = projects.Select(_mapper.Map<ProjectRes>).ToList();
+            IEnumerable<ProjectResponse> response = projects.Select(_mapper.Map<ProjectResponse>).ToList();
             return Ok(response);
         }
 
@@ -51,7 +51,7 @@ namespace TimeSheet.WebApi.Controllers
         public async Task<ActionResult> GetProjectById(Guid id)
         {
             Project project = await _projectService.GetById(id);
-            ProjectRes response = _mapper.Map<ProjectRes>(project);
+            ProjectResponse response = _mapper.Map<ProjectResponse>(project);
             return Ok(response);
         }
 

@@ -23,8 +23,8 @@ namespace TimeSheet.WebApi.Controllers
             _pdfGenerationService = pdfGenerationService;
         }
 
-        [HttpPost("")]
-        public async Task<IActionResult> GetProductsByCategoryAndPrice([FromBody] CreateReportRequest reportRequest)
+        [HttpGet("")]
+        public async Task<IActionResult> GetProductsByCategoryAndPrice([FromQuery] CreateReportRequest reportRequest)
         {
             IEnumerable<WorkHour> workHours= await _workHourService.GetUsersWorkHoursForReports(reportRequest.UserId,reportRequest.ClientId,reportRequest.ProjectId, reportRequest.CategoryId,reportRequest.StartDate,reportRequest.EndDate);
             Report report = new Report();
@@ -32,12 +32,15 @@ namespace TimeSheet.WebApi.Controllers
             return Ok(_mapper.Map<ReportResponse>(report));
         }
 
-        [HttpPost("download")]
-        public async Task<IActionResult> DownloadPDF([FromBody] ReportResponse report)
+        [HttpGet("download")]
+        public async Task<IActionResult> DownloadPDF([FromQuery] CreateReportRequest reportRequest)
         {
 
+            IEnumerable<WorkHour> workHours = await _workHourService.GetUsersWorkHoursForReports(reportRequest.UserId, reportRequest.ClientId, reportRequest.ProjectId, reportRequest.CategoryId, reportRequest.StartDate, reportRequest.EndDate);
+            Report report = new Report();
+            report.ReportInstance = workHours.Select(workHour => _mapper.Map<ReportInstance>(workHour)).ToList();
 
-            var pdfBytes = _pdfGenerationService.GeneratePdf(_mapper.Map<Report>(report));
+            var pdfBytes = _pdfGenerationService.GeneratePdf(report);
 
             Response.Headers.Add("Content-Disposition", "attachment; filename=report.pdf");
             return File(pdfBytes, "application/pdf");

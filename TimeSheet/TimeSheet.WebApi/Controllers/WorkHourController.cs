@@ -24,15 +24,15 @@ namespace TimeSheet.WebApi.Controllers
         }
 
         [HttpPost("")]
-        public async Task<IActionResult> CreateWorkHour([FromBody] CreateWorkHourReq workHour)
+        public async Task<IActionResult> CreateWorkHour([FromBody] CreateWorkHourRequest workHour)
         {
             WorkHour response = _mapper.Map<WorkHour>(workHour);
             await _workHourService.Add(response);
-            return Ok(_mapper.Map<WorkHourRes>(response));
+            return Ok(_mapper.Map<WorkHourResponse>(response));
         }
 
         [HttpPut("")]
-        public async Task<IActionResult> UpdateWorkHour([FromBody] UpdateWorkHourReq updatedWorkHour)
+        public async Task<IActionResult> UpdateWorkHour([FromBody] UpdateWorkHourRequest updatedWorkHour)
         {
             WorkHour workHour = _mapper.Map<WorkHour>(updatedWorkHour);
             await _workHourService.Update(workHour);
@@ -43,7 +43,7 @@ namespace TimeSheet.WebApi.Controllers
         public async Task<ActionResult> GetAllWorkHours()
         {
             IEnumerable<WorkHour> workHours = await _workHourService.GetAll();
-            IEnumerable<WorkHourRes> response = workHours.Select(_mapper.Map<WorkHourRes>).ToList();
+            IEnumerable<WorkHourResponse> response = workHours.Select(_mapper.Map<WorkHourResponse>).ToList();
             return Ok(response);
         }
 
@@ -51,7 +51,7 @@ namespace TimeSheet.WebApi.Controllers
         public async Task<ActionResult> GetWorkHourById(Guid id)
         {
             WorkHour workHour = await _workHourService.GetById(id);
-            WorkHourRes response = _mapper.Map<WorkHourRes>(workHour);
+            WorkHourResponse response = _mapper.Map<WorkHourResponse>(workHour);
             return Ok(response);
         }
 

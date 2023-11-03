@@ -29,15 +29,15 @@ namespace TimeSheet.WebApi.Controllers
         }
 
         [HttpPost("")]
-        public async Task<IActionResult> AddUser([FromBody] CreateUserReq user)
+        public async Task<IActionResult> AddUser([FromBody] CreateUserRequest user)
         {
             User response = _mapper.Map<User>(user);
             await _userService.Add(response);
-            return Ok(_mapper.Map<UserRes>(response));
+            return Ok(_mapper.Map<UserResponse>(response));
         }
 
         [HttpPut("")]
-        public async Task<IActionResult> UpdateUser([FromBody] UpdateUserReq oldUser)
+        public async Task<IActionResult> UpdateUser([FromBody] UpdateUserRequest oldUser)
         {
             User user = _mapper.Map<User>(oldUser);
             await _userService.Update(user);
@@ -45,7 +45,7 @@ namespace TimeSheet.WebApi.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginReq credentials)
+        public async Task<IActionResult> Login([FromBody] LoginRequest credentials)
         {
             User user = await _userService.Login(credentials.Email, credentials.Password);
 
@@ -75,14 +75,14 @@ namespace TimeSheet.WebApi.Controllers
 
             var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
 
-            return Ok(new { Token = tokenString, User = _mapper.Map<UserRes>(user) });
+            return Ok(new { Token = tokenString, User = _mapper.Map<UserResponse>(user) });
         }
 
         [HttpGet()]
         public async Task<ActionResult> GetByAll()
         {
             IEnumerable<User> users = await _userService.GetAll();
-            IEnumerable<UserRes> response = users.Select(_mapper.Map<UserRes>).ToList();
+            IEnumerable<UserResponse> response = users.Select(_mapper.Map<UserResponse>).ToList();
             return Ok(response);
         }
 
@@ -90,7 +90,7 @@ namespace TimeSheet.WebApi.Controllers
         public async Task<ActionResult> GetById(Guid id)
         {
             User user = await _userService.GetById(id);
-            UserRes response = _mapper.Map<UserRes>(user);
+            UserResponse response = _mapper.Map<UserResponse>(user);
             return Ok(response);
         }
 
