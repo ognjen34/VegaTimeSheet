@@ -2817,6 +2817,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
+          "AutoMapper": "12.0.1",
           "DinkToPdf": "1.0.8",
           "TimeSheet.Domain": "1.0.0"
         },

@@ -13,5 +13,9 @@ namespace TimeSheet.Domain.Exceptions
             : base(message)
         {
         }
+        public ResourceNotFoundException()
+           : base("Resource not found!")
+        {
+        }
     }
 }

@@ -29,7 +29,6 @@ namespace TimeSheet.Data.Data
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            // Enable lazy loading
             optionsBuilder.UseLazyLoadingProxies();
         }
 

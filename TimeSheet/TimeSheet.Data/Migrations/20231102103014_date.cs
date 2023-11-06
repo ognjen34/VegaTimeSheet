@@ -11,7 +11,7 @@ namespace TimeSheet.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<DateOnly>(
+            migrationBuilder.AlterColumn<DateTime>(
                 name: "Date",
                 table: "WorkHours",
                 type: "date",
@@ -28,7 +28,7 @@ namespace TimeSheet.Data.Migrations
                 table: "WorkHours",
                 type: "datetime(6)",
                 nullable: false,
-                oldClrType: typeof(DateOnly),
+                oldClrType: typeof(DateTime),
                 oldType: "date");
         }
     }

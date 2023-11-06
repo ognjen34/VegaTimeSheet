@@ -8,7 +8,7 @@ namespace TimeSheet.Domain.Models
 {
     public class WorkDay
     {
-        public DateOnly Date {  get; set; }
+        public DateTime Date {  get; set; }
         public float Hours {  get; set; }
     }
 }

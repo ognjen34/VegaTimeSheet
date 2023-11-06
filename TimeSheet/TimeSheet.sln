@@ -3,13 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeSheet.WebApi", "TimeSheet.WebApi\TimeSheet.WebApi.csproj", "{B2AB4106-9568-4FD1-93A1-0F28A6910165}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeSheet.WebApi", "TimeSheet.WebApi\TimeSheet.WebApi.csproj", "{B2AB4106-9568-4FD1-93A1-0F28A6910165}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeSheet.Application", "TimeSheet.Application\TimeSheet.Application.csproj", "{6BE1429A-3409-4F05-9919-7036A7E42C02}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeSheet.Application", "TimeSheet.Application\TimeSheet.Application.csproj", "{6BE1429A-3409-4F05-9919-7036A7E42C02}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeSheet.Data", "TimeSheet.Data\TimeSheet.Data.csproj", "{947216E4-A732-4223-B652-07C850608A24}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeSheet.Data", "TimeSheet.Data\TimeSheet.Data.csproj", "{947216E4-A732-4223-B652-07C850608A24}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeSheet.Domain", "TimeSheet.Domain\TimeSheet.Domain.csproj", "{960C8EC2-0E81-4802-8BD6-28AEF71F9BCF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeSheet.Domain", "TimeSheet.Domain\TimeSheet.Domain.csproj", "{960C8EC2-0E81-4802-8BD6-28AEF71F9BCF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeSheet.RepositoryTests", "TimeSheet.RepositoryTests\TimeSheet.RepositoryTests.csproj", "{741DEA4C-E545-4600-A7AE-609C12AC322A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeSheet.ServiceTests", "TimeSheet.ServiceTests\TimeSheet.ServiceTests.csproj", "{F1B0D144-BE93-4C5F-9B91-258394F85F6A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeSheet.ControllerTests", "TimeSheet.ControllerTests\TimeSheet.ControllerTests.csproj", "{BD3A8599-07DD-49D2-A79D-0DC76FD95E83}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +39,18 @@ Global
 		{960C8EC2-0E81-4802-8BD6-28AEF71F9BCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{960C8EC2-0E81-4802-8BD6-28AEF71F9BCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{960C8EC2-0E81-4802-8BD6-28AEF71F9BCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{741DEA4C-E545-4600-A7AE-609C12AC322A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{741DEA4C-E545-4600-A7AE-609C12AC322A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{741DEA4C-E545-4600-A7AE-609C12AC322A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{741DEA4C-E545-4600-A7AE-609C12AC322A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1B0D144-BE93-4C5F-9B91-258394F85F6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1B0D144-BE93-4C5F-9B91-258394F85F6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1B0D144-BE93-4C5F-9B91-258394F85F6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1B0D144-BE93-4C5F-9B91-258394F85F6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD3A8599-07DD-49D2-A79D-0DC76FD95E83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD3A8599-07DD-49D2-A79D-0DC76FD95E83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD3A8599-07DD-49D2-A79D-0DC76FD95E83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD3A8599-07DD-49D2-A79D-0DC76FD95E83}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

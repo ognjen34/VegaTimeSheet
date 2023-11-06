@@ -78,6 +78,12 @@ public class MappingProfile : Profile
            .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name));
 
 
+        CreateMap<CreateReport, CreateReportRequestDTO>();
+        CreateMap<CreateReportRequestDTO, CreateReport>();
+
+
+
+
 
     }
 }

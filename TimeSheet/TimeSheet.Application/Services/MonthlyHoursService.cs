@@ -16,7 +16,7 @@ namespace TimeSheet.Application.Services
         {
             _workHourService = workHourService;
         }
-        public async Task<MonthlyHours> GetUsersMontlyHours(Guid userId, DateOnly startDate, DateOnly endDate)
+        public async Task<MonthlyHours> GetUsersMontlyHours(Guid userId, DateTime startDate, DateTime endDate)
         {
 
 
@@ -24,7 +24,7 @@ namespace TimeSheet.Application.Services
             IEnumerable<WorkHour> workHours = await _workHourService.GetUsersWorkHoursForDateRange(userId, startDate, endDate);
             MonthlyHours hours = new MonthlyHours();
             var groupedWorkHours = workHours.GroupBy(x => x.Date);
-            for (DateOnly currentDate = startDate; currentDate <= endDate; currentDate = currentDate.AddDays(1))
+            for (DateTime currentDate = startDate; currentDate <= endDate; currentDate = currentDate.AddDays(1))
             {
 
                 List<WorkHour> workHourForCurrentDate = workHours.Where(wh => wh.Date == currentDate).ToList();

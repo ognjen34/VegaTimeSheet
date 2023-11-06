@@ -13,5 +13,9 @@ namespace TimeSheet.Domain.Exceptions
             : base(message)
         {
         }
+        public EmailAlreadyExistException()
+            : base("Email Already Exists")
+        {
+        }
     }
 }

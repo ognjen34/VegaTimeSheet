@@ -3,10 +3,12 @@ using TimeSheet.Domain.Models;
 using TimeSheet.Domain.Interfaces.Services;
 using DinkToPdf.Contracts;
 using DinkToPdf;
+using TimeSheet.Application.Services.PdfGenerationStrategies;
+using TimeSheet.Domain.Strategy;
 
 namespace TimeSheet.Application.Services
 {
-    public class PdfGenerationService: IPdfGenerationService
+    public class PdfGenerationService : IPdfGenerationService
     {
         private readonly IConverter _converter;
 
@@ -15,10 +17,9 @@ namespace TimeSheet.Application.Services
             _converter = converter;
         }
 
-        public byte[] GeneratePdf(Report report)
+        public byte[] GeneratePdf<T>(IPdfGenerationStrategy<T> strategy)
         {
-            string html = string.Join("<br>", report.ReportInstance.Select(ri =>
-                    $"Date: {ri.Date.ToString()} Worker: {ri.TeamMember} Client: {ri.ProjectName} Category: {ri.CategoryName} Time: {ri.Time}"));
+            string html = strategy.GenerateHTML();
 
             var document = new HtmlToPdfDocument
             {

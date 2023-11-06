@@ -1,10 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "siQDOPvh1Qi96twrw0/DyArcIKGmwvZgPmwv9h2xZBqD5rgKJPkOCOesIuHfDFAVieAwsVrc/Yc4Hp3NpaieOQ==",
+  "dgSpecHash": "1b52+JJ17kQeavFPpKLfRxOv3bQKNOKjSMFflLNd3NVXRb2uYEwXwjKiJjuI1Oo5a8kwFBk+mcArm7qH/QRyTg==",
   "success": true,
   "projectFilePath": "C:\\Users\\ognjen.radovanovic\\Desktop\\PROJFINAL\\TimeSheet\\TimeSheet.Application\\TimeSheet.Application.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\ognjen.radovanovic\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\ognjen.radovanovic\\.nuget\\packages\\dinktopdf\\1.0.8\\dinktopdf.1.0.8.nupkg.sha512",
+    "C:\\Users\\ognjen.radovanovic\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\ognjen.radovanovic\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "C:\\Users\\ognjen.radovanovic\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
     "C:\\Users\\ognjen.radovanovic\\.nuget\\packages\\microsoft.win32.primitives\\4.0.1\\microsoft.win32.primitives.4.0.1.nupkg.sha512",

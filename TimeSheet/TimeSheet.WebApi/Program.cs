@@ -64,6 +64,8 @@ builder.Services.AddScoped<IWorkHourRepository, WorkHourRepository>();
 builder.Services.AddScoped<IWorkHourService, WorkHourService>();
 builder.Services.AddScoped<IMonthlyHoursService, MonthlyHoursService>();
 builder.Services.AddScoped<IPdfGenerationService, PdfGenerationService>();
+builder.Services.AddScoped<IReportService, ReportService>();
+
 
 
 
@@ -104,6 +106,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseMiddleware<ClaimsMiddleware>();
 
 app.UseAuthentication(); 
 app.UseAuthorization(); 

@@ -26,8 +26,8 @@ namespace TimeSheet.WebApi.Controllers
         [HttpPost("")]
         public async Task<ActionResult> GetUserMonthlyHours([FromBody] DateRangeDTO dates)
         {
-            string id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            MonthlyHours response = await _monthlyHoursService.GetUsersMontlyHours(Guid.Parse(id),dates.StartDate, dates.EndDate);
+            Guid id = (Guid)HttpContext.Items["UserId"];
+            MonthlyHours response = await _monthlyHoursService.GetUsersMontlyHours(id,dates.StartDate, dates.EndDate);
             return Ok(response);
         }
     }

@@ -36,14 +36,14 @@ namespace TimeSheet.Application.Services
             return _workHourRepository.GetById(id.ToString());
         }
 
-        public Task<IEnumerable<WorkHour>> GetUsersWorkHoursForDateRange(Guid userId, DateOnly startDate,DateOnly endDate)
+        public Task<IEnumerable<WorkHour>> GetUsersWorkHoursForDateRange(Guid userId, DateTime startDate,DateTime endDate)
         {
             return _workHourRepository.GetUsersWorkHoursForDateRange(userId, startDate,endDate);
         }
 
-        public Task<IEnumerable<WorkHour>> GetUsersWorkHoursForReports(string? userId, string? clientId, string? projectId, string? categoryId, DateOnly startDate, DateOnly endDate)
+        public Task<IEnumerable<WorkHour>> GetUsersWorkHoursForReports(CreateReport report)
         {
-            return _workHourRepository.GetUsersWorkHoursForReports(userId, clientId, projectId, categoryId, startDate, endDate);
+            return _workHourRepository.GetUsersWorkHoursForReports(report);
         }
 
         public  Task Update(WorkHour workHour)

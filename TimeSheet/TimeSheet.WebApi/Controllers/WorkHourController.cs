@@ -27,6 +27,7 @@ namespace TimeSheet.WebApi.Controllers
         public async Task<IActionResult> CreateWorkHour([FromBody] CreateWorkHourRequest workHour)
         {
             WorkHour response = _mapper.Map<WorkHour>(workHour);
+
             await _workHourService.Add(response);
             return Ok(_mapper.Map<WorkHourResponse>(response));
         }

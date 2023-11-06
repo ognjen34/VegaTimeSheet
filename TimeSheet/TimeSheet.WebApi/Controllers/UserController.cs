@@ -31,6 +31,10 @@ namespace TimeSheet.WebApi.Controllers
         [HttpPost("")]
         public async Task<IActionResult> AddUser([FromBody] CreateUserRequest user)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState); 
+            }
             User response = _mapper.Map<User>(user);
             await _userService.Add(response);
             return Ok(_mapper.Map<UserResponse>(response));
@@ -79,7 +83,7 @@ namespace TimeSheet.WebApi.Controllers
         }
 
         [HttpGet()]
-        public async Task<ActionResult> GetByAll()
+        public async Task<ActionResult> GetAll()
         {
             IEnumerable<User> users = await _userService.GetAll();
             IEnumerable<UserResponse> response = users.Select(_mapper.Map<UserResponse>).ToList();

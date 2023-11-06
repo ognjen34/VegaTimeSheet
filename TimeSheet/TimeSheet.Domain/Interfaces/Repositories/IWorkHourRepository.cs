@@ -14,7 +14,7 @@ namespace TimeSheet.Domain.Interfaces.Repositories
         Task Add(WorkHour workHour);
         Task Update(WorkHour workHour);
         Task Delete(string id);
-        Task<IEnumerable<WorkHour>> GetUsersWorkHoursForDateRange(Guid userId, DateOnly startDate, DateOnly endDate);
-        Task<IEnumerable<WorkHour>> GetUsersWorkHoursForReports(string? userId, string? clientId, string? projectId, string? categoryId,DateOnly startDate, DateOnly endDate);
+        Task<IEnumerable<WorkHour>> GetUsersWorkHoursForDateRange(Guid userId, DateTime startDate, DateTime endDate);
+        Task<IEnumerable<WorkHour>> GetUsersWorkHoursForReports(CreateReport report);
     }
 }

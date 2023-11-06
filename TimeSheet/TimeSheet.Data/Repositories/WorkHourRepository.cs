@@ -66,7 +66,7 @@ namespace TimeSheet.Data.Repositories
             }
         }
 
-        public async Task<IEnumerable<WorkHour>> GetUsersWorkHoursForDateRange(Guid userId, DateOnly startDate,DateOnly endDate)
+        public async Task<IEnumerable<WorkHour>> GetUsersWorkHoursForDateRange(Guid userId, DateTime startDate,DateTime endDate)
         {
             
 
@@ -81,28 +81,38 @@ namespace TimeSheet.Data.Repositories
             return result;
         }
 
-        public async Task<IEnumerable<WorkHour>> GetUsersWorkHoursForReports(string? userId, string? clientId, string? projectId, string? categoryId, DateOnly startDate, DateOnly endDate)
+        public async Task<IEnumerable<WorkHour>> GetUsersWorkHoursForReports(CreateReport report)
         {
-            var query = _workHours.Where(wh => wh.Date >= startDate && wh.Date <= endDate);
+            var query = _workHours.AsQueryable();
 
-            if (userId != null)
+            if (report.StartDate != null)
             {
-                query = query.Where(wh => wh.User.Id == userId.ToString());
+                query = query.Where(wh => wh.Date >= report.StartDate);
             }
 
-            if (clientId != null)
+            if (report.EndDate != null)
             {
-                query = query.Where(wh => wh.Project.Client.Id == clientId.ToString());
+                query = query.Where(wh => wh.Date <= report.EndDate);
             }
 
-            if (projectId != null)
+            if (!string.IsNullOrEmpty(report.UserId))
             {
-                query = query.Where(wh => wh.Project.Id == projectId.ToString());
+                query = query.Where(wh => wh.User.Id == report.UserId.ToString());
             }
 
-            if (categoryId != null)
+            if (!string.IsNullOrEmpty(report.ClientId))
             {
-                query = query.Where(wh => wh.Category.Id == categoryId.ToString());
+                query = query.Where(wh => wh.Project.Client.Id == report.ClientId.ToString());
+            }
+
+            if (!string.IsNullOrEmpty(report.ProjectId))
+            {
+                query = query.Where(wh => wh.Project.Id == report.ProjectId.ToString());
+            }
+
+            if (!string.IsNullOrEmpty(report.CategoryId))
+            {
+                query = query.Where(wh => wh.Category.Id == report.CategoryId.ToString());
             }
 
             List<WorkHourEntity> userWorkHoursEntity = await query.ToListAsync();
@@ -112,6 +122,7 @@ namespace TimeSheet.Data.Repositories
                 .ToList();
 
             return result;
+
         }
 
         public async Task Update(WorkHour workHour)

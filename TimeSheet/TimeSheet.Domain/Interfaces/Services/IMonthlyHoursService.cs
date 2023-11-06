@@ -9,6 +9,6 @@ namespace TimeSheet.Domain.Interfaces.Services
 {
     public interface IMonthlyHoursService
     {
-        Task<MonthlyHours> GetUsersMontlyHours(Guid userId, DateOnly startDate,DateOnly endDate);
+        Task<MonthlyHours> GetUsersMontlyHours(Guid userId, DateTime startDate,DateTime endDate);
     }
 }
