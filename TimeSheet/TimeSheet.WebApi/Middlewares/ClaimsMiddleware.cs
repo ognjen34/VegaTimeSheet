@@ -1,4 +1,6 @@
-﻿using System.Security.Claims;
+﻿using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
+using TimeSheet.Domain.Models;
 
 namespace TimeSheet.WebApi.Middlewares
 {
@@ -17,10 +19,14 @@ namespace TimeSheet.WebApi.Middlewares
             {
                 try
                 {
-                    context.Items["UserId"] = Guid.Parse(identity.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-                    context.Items["UserName"] = identity.FindFirst(ClaimTypes.Name)?.Value;
-                    context.Items["UserEmail"] = identity.FindFirst(ClaimTypes.Email)?.Value;
-                    context.Items["UserRole"] = identity.FindFirst(ClaimTypes.Role)?.Value;
+                    LoggedUser loggedUser = new LoggedUser();
+                    loggedUser.UserId = new Guid(identity.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+                    loggedUser.Name = identity.FindFirst(ClaimTypes.Name)?.Value;
+                    loggedUser.Email = identity.FindFirst(ClaimTypes.Email)?.Value;
+                    loggedUser.Role = Enum.Parse<Role>(identity.FindFirst(ClaimTypes.Role)?.Value);
+                    context.Items["loggedUser"] = loggedUser;
+                    
+
                 }
                 catch {
                 }

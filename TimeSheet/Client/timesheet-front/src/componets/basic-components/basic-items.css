@@ -1,0 +1,24 @@
+.basic-button 
+{
+    line-height: 26px;
+    color: #fff;
+    font-size: 13px;
+    display: inline-block;
+    padding: 0 20px;
+    border: solid 1px #f1592a;
+}
+.letter-button 
+{
+    text-transform: uppercase;
+    background: #eee;
+    border: 1px solid #bdbdbd;
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    text-align: center;
+    font-size: 14px;
+    line-height: 24px;
+    font-weight: bold;
+    color: #f67d34;
+ 
+}

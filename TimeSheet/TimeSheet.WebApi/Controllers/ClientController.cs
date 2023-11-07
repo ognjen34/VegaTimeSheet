@@ -13,15 +13,14 @@ namespace TimeSheet.WebApi.Controllers
 {
     [ApiController]
     [Route("clients")]
-    public class ClientController : ControllerBase
+    public class ClientController : BaseController
     {
         private readonly IClientService _clientService;
-        private readonly IMapper _mapper;
 
-        public ClientController(IClientService clientService, IMapper mapper)
+
+        public ClientController(IClientService clientService, IMapper mapper) : base(mapper)
         {
             _clientService = clientService;
-            _mapper = mapper;
         }
 
         [HttpPost("")]
@@ -41,10 +40,11 @@ namespace TimeSheet.WebApi.Controllers
         }
 
         [HttpGet("")]
-        public async Task<ActionResult> GetAllClients()
+        public async Task<ActionResult> GetAllClients([FromQuery] PaginationFilterRequest filter)
         {
-            IEnumerable<Client> clients = await _clientService.GetAll();
-            IEnumerable<ClientResponse> response = clients.Select(_mapper.Map<ClientResponse>).ToList();
+            PaginationReturnObject<Client> clients = await _clientService.Search(_mapper.Map<PaginationFilter>(filter));
+            var response = _mapper.Map<PaginationResponse<ClientResponse>>(clients);
+
             return Ok(response);
         }
 

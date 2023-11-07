@@ -10,7 +10,7 @@ namespace TimeSheet.Domain.Interfaces.Repositories
     public interface IUserRepository
     {
         Task<User> GetById(string id);
-        Task<IEnumerable<User>> GetAll();
+        Task<PaginationReturnObject<User>> Search(Pagination page);
         Task Add(User project);
         Task Update(User project);
         Task Delete(string id);

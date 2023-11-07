@@ -10,7 +10,7 @@ namespace TimeSheet.Domain.Interfaces.Services
     public interface IClientService
     {
         Task<Client> GetById(Guid id);
-        Task<IEnumerable<Client>> GetAll();
+        Task<PaginationReturnObject<Client>> Search(PaginationFilter page);
         Task Add(Client client);
         Task Update(Client client);
         Task Delete(Guid id);

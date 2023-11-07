@@ -10,7 +10,7 @@ namespace TimeSheet.Domain.Interfaces.Repositories
     public interface IProjectRepository
     {
         Task<Project> GetById(string id);
-        Task<IEnumerable<Project>> GetAll();
+        Task<PaginationReturnObject<Project>> Search(PaginationFilter page);
         Task Add(Project project);
         Task Update(Project project);
         Task Delete(string id);

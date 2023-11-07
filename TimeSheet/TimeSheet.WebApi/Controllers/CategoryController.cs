@@ -12,15 +12,13 @@ namespace TimeSheet.WebApi.Controllers
 {
     [ApiController]
     [Route("categories")]
-    public class CategoryController : ControllerBase
+    public class CategoryController : BaseController
     {
         private readonly ICategoryService _categoryService;
-        private readonly IMapper _mapper;
 
-        public CategoryController(ICategoryService categoryService, IMapper mapper)
+        public CategoryController(ICategoryService categoryService, IMapper mapper):base(mapper)
         {
             _categoryService = categoryService;
-            _mapper = mapper;
         }
 
         [HttpPost("")]
@@ -32,11 +30,12 @@ namespace TimeSheet.WebApi.Controllers
         }
 
         [HttpGet("")]
-        public async Task<ActionResult> GetAllCategories()
+        public async Task<ActionResult> GetAllCategories([FromQuery] PaginationFilterRequest filter)
         {
-            IEnumerable<Category> categories = await _categoryService.GetAll();
-            IEnumerable<CategoryResponse> response = categories.Select(_mapper.Map<CategoryResponse>).ToList();
-            return Ok(response);
+            PaginationReturnObject<Category> categories = await _categoryService.Search(_mapper.Map<PaginationFilter>(filter)); ;
+            
+
+            return Ok(_mapper.Map<PaginationResponse<CategoryResponse>>(categories));
         }
 
         [HttpGet("{id}")]

@@ -29,9 +29,9 @@ namespace TimeSheet.Application.Services
             await _categoryRepository.Delete(id.ToString());
         }
 
-        public Task<IEnumerable<Category>> GetAll()
+        public Task<PaginationReturnObject<Category>> Search(PaginationFilter page)
         {
-            return _categoryRepository.GetAll();
+            return _categoryRepository.Search(page);
         }
 
         public Task<Category> GetById(Guid id)

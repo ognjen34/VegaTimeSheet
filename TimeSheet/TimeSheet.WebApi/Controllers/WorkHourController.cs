@@ -12,15 +12,13 @@ namespace TimeSheet.WebApi.Controllers
 {
     [ApiController]
     [Route("workhours")]
-    public class WorkHourController : ControllerBase
+    public class WorkHourController : BaseController
     {
         private readonly IWorkHourService _workHourService;
-        private readonly IMapper _mapper;
 
-        public WorkHourController(IWorkHourService workHourService, IMapper mapper)
+        public WorkHourController(IWorkHourService workHourService, IMapper mapper):base(mapper) 
         {
             _workHourService = workHourService;
-            _mapper = mapper;
         }
 
         [HttpPost("")]

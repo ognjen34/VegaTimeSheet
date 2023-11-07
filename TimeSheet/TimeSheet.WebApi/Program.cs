@@ -13,6 +13,7 @@ using DinkToPdf.Contracts;
 using DinkToPdf;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddHttpContextAccessor();
 
 
 builder.Services.AddControllers();
@@ -48,6 +49,7 @@ builder.Services.AddScoped<DatabaseContext>();
 builder.Services.AddDbContext<DatabaseContext>(options =>
 {
     options.UseMySql("Server=localhost;Database=VegaSourcing;User=ognjen;Password=ognjen34;", new MySqlServerVersion(new Version(8, 0, 21)));
+
 });
 
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
@@ -106,10 +108,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseMiddleware<ExceptionHandlingMiddleware>();
-app.UseMiddleware<ClaimsMiddleware>();
+
 
 app.UseAuthentication(); 
-app.UseAuthorization(); 
-
+app.UseAuthorization();
+app.UseMiddleware<ClaimsMiddleware>();
 app.MapControllers();
 app.Run();

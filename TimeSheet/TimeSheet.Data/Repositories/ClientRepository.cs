@@ -47,11 +47,40 @@ namespace TimeSheet.Data.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Client>> GetAll()
+        public async Task<PaginationReturnObject<Client>> Search(PaginationFilter page)
         {
-            List<ClientEntity> clientEntities = await _clients.ToListAsync();
-            List<Client> result = clientEntities.Select(clientEntity => _mapper.Map<Client>(clientEntity)).ToList();
-            return result;
+            IQueryable<ClientEntity> query = _clients;
+
+            if (!string.IsNullOrEmpty(page.StringQuery))
+            {
+                query = query.Where(clientEntity => clientEntity.Name.Contains(page.StringQuery));
+            }
+
+            if (!string.IsNullOrEmpty(page.FirstLetter))
+            {
+                query = query.Where(clientEntity => clientEntity.Name.ToLower().StartsWith(page.FirstLetter.ToLower()));
+            }
+
+            int totalCount = await query.CountAsync();
+
+
+            var queryWithCountForClient = new
+            {
+                TotalCount = _clients.Count(), 
+                Clients = query
+                    .Skip((page.PageNumber - 1) * page.PageSize)
+                    .Take(page.PageSize)
+                    .ToList()
+            };
+
+            PaginationReturnObject<Client> clientResult = new PaginationReturnObject<Client>(
+                _mapper.Map<IEnumerable<Client>>(queryWithCountForClient.Clients),
+                page.PageNumber,
+                page.PageSize,
+                queryWithCountForClient.TotalCount
+            );
+
+            return clientResult;
         }
 
         public async Task<Client> GetById(string id)

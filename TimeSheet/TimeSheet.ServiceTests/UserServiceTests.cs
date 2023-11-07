@@ -94,10 +94,10 @@ namespace TimeSheet.ServiceTests
                     GenerateUser(),
                     GenerateUser()
                 };
+            var pagination = new Pagination();
+            _userRepositoryMock.Setup(repo => repo.Search(pagination)).ReturnsAsync(users);
 
-            _userRepositoryMock.Setup(repo => repo.GetAll()).ReturnsAsync(users);
-
-            var result = await _userService.GetAll();
+            var result = await _userService.Search(pagination);
 
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(IEnumerable<User>));

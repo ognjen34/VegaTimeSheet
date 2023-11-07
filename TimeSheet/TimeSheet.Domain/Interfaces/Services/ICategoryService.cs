@@ -10,7 +10,7 @@ namespace TimeSheet.Domain.Interfaces.Services
     public interface ICategoryService
     {
         Task<Category> GetById(Guid id);
-        Task<IEnumerable<Category>> GetAll();   
+        Task<PaginationReturnObject<Category>> Search(PaginationFilter page);   
         Task Add(Category category);
         Task Update(Category category);
         Task Delete(Guid guid);

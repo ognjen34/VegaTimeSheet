@@ -13,15 +13,13 @@ namespace TimeSheet.WebApi.Controllers
 {
     [ApiController]
     [Route("countries")]
-    public class CountryController : ControllerBase
+    public class CountryController : BaseController
     {
         private readonly ICountryService _countryService;
-        private readonly IMapper _mapper;
 
-        public CountryController(ICountryService countryService, IMapper mapper)
+        public CountryController(ICountryService countryService, IMapper mapper) : base(mapper)
         {
             _countryService = countryService;
-            _mapper = mapper;
         }
 
         [HttpPost("")]

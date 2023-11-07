@@ -12,15 +12,13 @@ namespace TimeSheet.WebApi.Controllers
 {
     [ApiController]
     [Route("projects")]
-    public class ProjectController : ControllerBase
+    public class ProjectController : BaseController
     {
         private readonly IProjectService _projectService;
-        private readonly IMapper _mapper;
 
-        public ProjectController(IProjectService projectService, IMapper mapper)
+        public ProjectController(IProjectService projectService, IMapper mapper) : base(mapper)
         {
             _projectService = projectService;
-            _mapper = mapper;
         }
 
         [HttpPost("")]
@@ -40,11 +38,11 @@ namespace TimeSheet.WebApi.Controllers
         }
 
         [HttpGet("")]
-        public async Task<ActionResult> GetAllProjects()
+        public async Task<ActionResult> GetAllProjects([FromQuery] PaginationFilterRequest filter)
         {
-            IEnumerable<Project> projects = await _projectService.GetAll();
-            IEnumerable<ProjectResponse> response = projects.Select(_mapper.Map<ProjectResponse>).ToList();
-            return Ok(response);
+            PaginationReturnObject<Project> response = await _projectService.Search(_mapper.Map<PaginationFilter>(filter));
+
+            return Ok(_mapper.Map<PaginationResponse<ProjectResponse>>(response));
         }
 
         [HttpGet("{id}")]

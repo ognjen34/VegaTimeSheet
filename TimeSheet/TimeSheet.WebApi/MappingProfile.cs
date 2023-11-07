@@ -50,6 +50,15 @@ public class MappingProfile : Profile
 
         CreateMap<ReportInstanceDTO, ReportInstance>();
         CreateMap<ReportInstance, ReportInstanceDTO>();
+        CreateMap<PaginationFilterRequest, PaginationFilter>();
+        CreateMap<PaginationRequest, Pagination>();
+        CreateMap<PaginationReturnObject<Project>, PaginationResponse<ProjectResponse>>();
+        CreateMap<PaginationReturnObject<Client>, PaginationResponse<ClientResponse>>();
+        CreateMap<PaginationReturnObject<Category>, PaginationResponse<CategoryResponse>>();
+        CreateMap<PaginationReturnObject<User>, PaginationResponse<UserResponse>>();
+
+
+
 
 
 

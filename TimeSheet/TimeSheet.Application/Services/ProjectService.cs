@@ -26,9 +26,9 @@ namespace TimeSheet.Application.Services
             return _projectRepository.Delete(id.ToString());
         }
 
-        public Task<IEnumerable<Project>> GetAll()
+        public Task<PaginationReturnObject<Project>> Search(PaginationFilter page)
         {
-            return _projectRepository.GetAll();
+            return _projectRepository.Search(page);
         }
 
         public Task<Project> GetById(Guid id)

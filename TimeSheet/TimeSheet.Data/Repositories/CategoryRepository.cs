@@ -43,10 +43,38 @@ namespace TimeSheet.Data.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Category>> GetAll()
+        public async Task<PaginationReturnObject<Category>> Search(PaginationFilter page)
         {
-            List<CategoryEntity> categoryEntities = await _categories.ToListAsync();
-            List<Category> result = categoryEntities.Select(categoryEntitie => _mapper.Map<Category>(categoryEntitie)).ToList();
+            IQueryable<CategoryEntity> query = _categories;
+
+            if (!string.IsNullOrEmpty(page.StringQuery))
+            {
+                query = query.Where(categoryEntity => categoryEntity.Name.Contains(page.StringQuery));
+            }
+
+            if (!string.IsNullOrEmpty(page.FirstLetter))
+            {
+                query = query.Where(categoryEntity => categoryEntity.Name.ToLower().StartsWith(page.FirstLetter.ToLower()));
+            }
+
+
+            var queryWithCountForCategory = new
+            {
+                TotalCount = _categories.Count(), 
+                Categories = query
+                    .Skip((page.PageNumber - 1) * page.PageSize)
+                    .Take(page.PageSize)
+                    .ToList()
+            };
+
+            PaginationReturnObject<Category> result = new PaginationReturnObject<Category>(
+                _mapper.Map<IEnumerable<Category>>(queryWithCountForCategory.Categories),
+                page.PageNumber,
+                page.PageSize,
+                queryWithCountForCategory.TotalCount
+            );
+
+
             return result;
         }
 

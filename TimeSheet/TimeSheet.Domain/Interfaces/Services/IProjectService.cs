@@ -10,7 +10,7 @@ namespace TimeSheet.Domain.Interfaces.Services
     public interface IProjectService
     {
         Task<Project> GetById(Guid id);
-        Task<IEnumerable<Project>> GetAll();
+        Task<PaginationReturnObject<Project>> Search(PaginationFilter page);
         Task Add(Project project);
         Task Update(Project project);
         Task Delete(Guid id);

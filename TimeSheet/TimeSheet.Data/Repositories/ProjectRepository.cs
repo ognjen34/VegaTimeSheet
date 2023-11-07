@@ -43,10 +43,34 @@ namespace TimeSheet.Data.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Project>> GetAll()
+        public async Task<PaginationReturnObject<Project>> Search(PaginationFilter page)
         {
-            List<ProjectEntity> projects = await _projects.ToListAsync();
-            List<Project> result = projects.Select(projectEntity => _mapper.Map<Project>(projectEntity)).ToList();
+            IQueryable<ProjectEntity> query = _projects;
+
+            if (!string.IsNullOrEmpty(page.StringQuery))
+            {
+                query = query.Where(projectEntity => projectEntity.Name.Contains(page.StringQuery));
+            }
+
+            if (!string.IsNullOrEmpty(page.FirstLetter))
+            {
+                query = query.Where(projectEntity => projectEntity.Name.ToLower().StartsWith(page.FirstLetter.ToLower()));
+            }
+
+            int totalCount = await query.CountAsync();
+
+
+            var queryWithCount = new
+            {
+                TotalCount = _projects.Count(),
+                Projects = query
+                .Skip((page.PageNumber - 1) * page.PageSize)
+                .Take(page.PageSize)
+                .ToList()
+            };
+            
+            PaginationReturnObject<Project> result = new PaginationReturnObject<Project>(_mapper.Map<IEnumerable<Project>>(queryWithCount.Projects), page.PageNumber, page.PageSize, queryWithCount.TotalCount);
+
 
             return result;
         }

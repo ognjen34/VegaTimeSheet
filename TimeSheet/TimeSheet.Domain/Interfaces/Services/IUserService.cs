@@ -10,7 +10,7 @@ namespace TimeSheet.Domain.Interfaces.Services
     public interface IUserService
     {
         Task<User> GetById(Guid id);
-        Task<IEnumerable<User>> GetAll();
+        Task<PaginationReturnObject<User>> Search(Pagination page);
         Task Add(User user);
         Task Update(User user);
         Task Delete(Guid id);

@@ -10,7 +10,7 @@ namespace TimeSheet.Domain.Interfaces.Repositories
     public interface IClientRepository
     {
         Task<Client> GetById(string id);
-        Task<IEnumerable<Client>> GetAll();
+        Task<PaginationReturnObject<Client>> Search(PaginationFilter page);
         Task Add(Client client);
         Task Update(Client client);
         Task Delete(string id);

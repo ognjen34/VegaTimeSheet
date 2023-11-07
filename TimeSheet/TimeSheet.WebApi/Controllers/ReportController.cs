@@ -10,15 +10,13 @@ namespace TimeSheet.WebApi.Controllers
 {
     [ApiController]
     [Route("reports")]
-    public class ReportController:ControllerBase
+    public class ReportController:BaseController
     {
-        private readonly IMapper _mapper;
         private readonly IReportService _reportService;
         
 
-        public ReportController(IMapper mapper, IReportService reportService)
+        public ReportController(IMapper mapper, IReportService reportService) : base(mapper)
         {
-            _mapper = mapper;
             _reportService = reportService;
         }
 

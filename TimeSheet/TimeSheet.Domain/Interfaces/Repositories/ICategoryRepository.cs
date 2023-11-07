@@ -13,7 +13,7 @@ namespace TimeSheet.Domain.Interfaces.Repositories
         Task Add(Category category);
         Task Update(Category category);
         Task Delete(string id);
-        Task<IEnumerable<Category>> GetAll();
+        Task<PaginationReturnObject<Category>> Search(PaginationFilter page);
 
     }
 }

@@ -17,15 +17,13 @@ namespace TimeSheet.WebApi.Controllers
 {
     [ApiController]
     [Route("users")]
-    public class UserController : ControllerBase
+    public class UserController : BaseController
     {
         private readonly IUserService _userService;
-        private readonly IMapper _mapper;
 
-        public UserController(IUserService userService, IMapper mapper)
+        public UserController(IUserService userService, IMapper mapper) : base(mapper)
         {
             _userService = userService;
-            _mapper = mapper;
         }
 
         [HttpPost("")]
@@ -83,11 +81,11 @@ namespace TimeSheet.WebApi.Controllers
         }
 
         [HttpGet()]
-        public async Task<ActionResult> GetAll()
+        public async Task<ActionResult> GetAll([FromQuery] PaginationRequest page)
         {
-            IEnumerable<User> users = await _userService.GetAll();
-            IEnumerable<UserResponse> response = users.Select(_mapper.Map<UserResponse>).ToList();
-            return Ok(response);
+            PaginationReturnObject<User> users = await _userService.Search(_mapper.Map<Pagination>(page));
+
+            return Ok(_mapper.Map<PaginationResponse<UserResponse>>(users));
         }
 
         [HttpGet("{id}")]

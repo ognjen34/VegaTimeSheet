@@ -50,10 +50,29 @@ namespace TimeSheet.Data.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<User>> GetAll()
+        public async Task<PaginationReturnObject<User>> Search(Pagination page)
+
         {
-            List<UserEntity> users = await _users.ToListAsync();
-            List<User> result = users.Select(userEntity => _mapper.Map<User>(userEntity)).ToList();
+            IQueryable<UserEntity> query = _users;
+
+
+            var queryWithCountForUser = new
+            {
+                TotalCount = _users.Count(), 
+                Users = query
+                    .Skip((page.PageNumber - 1) * page.PageSize)
+                    .Take(page.PageSize)
+                    .ToList()
+            };
+
+            PaginationReturnObject<User> result = new PaginationReturnObject<User>(
+                _mapper.Map<IEnumerable<User>>(queryWithCountForUser.Users),
+                page.PageNumber,
+                page.PageSize,
+                queryWithCountForUser.TotalCount
+            );
+
+
             return result;
         }
 

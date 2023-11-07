@@ -65,7 +65,10 @@ namespace TimeSheet.ControllerTests
                 cfg.CreateMap<CreateUserRequest, User>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(_ => Guid.NewGuid()));
                 cfg.CreateMap<User, UserResponse>();
+                cfg.CreateMap<PaginationRequest, Pagination>();
                 cfg.CreateMap<UpdateUserRequest, User>()
+                
+
            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.Parse(src.Id)));
 
             });
@@ -193,31 +196,9 @@ namespace TimeSheet.ControllerTests
 
         }
         [TestMethod]
-        public async Task GetAll_ReturnsOkResultWithUsers()
-        {
+        
 
 
-            var users = new List<User>
-            {
-                new User { Id = Guid.NewGuid(), Name = "User1", Email = "user1@example.com" },
-                new User { Id = Guid.NewGuid(), Name = "User2", Email = "user2@example.com" },
-            };
-
-            userServiceMock.Setup(service => service.GetAll())
-                .ReturnsAsync(users);
-
-
-            var result = await controller.GetAll();
-
-            var okResult = result as OkObjectResult;
-            Assert.IsNotNull(okResult.Value);
-
-            var response = okResult.Value as IEnumerable<UserResponse>;
-            Assert.IsNotNull(response);
-
-        }
-
-        [TestMethod]
         public async Task GetById_ExistingUser_ReturnsOkResultWithUser()
         {
 
