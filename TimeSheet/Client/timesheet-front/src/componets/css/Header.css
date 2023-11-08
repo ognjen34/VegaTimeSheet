@@ -1,0 +1,113 @@
+.header .top-bar {
+    height: 5px;
+    background: #f1592a;
+    width: 100%;
+    overflow: hidden;
+    border-bottom: 1px solid #fff;
+    margin-bottom: 20px;
+}
+
+
+
+.user {
+    margin-top: 2px;
+}
+.user li {
+    float: left;
+    margin-right: 10px;
+    padding-right: 10px;
+    border-right: 1px dotted #979696;
+    position: relative;
+}
+.user-name:hover + .user-menu {
+  display: block;
+}
+
+.user-menu {
+    position: absolute;
+    top: 34px;
+    right: -50px;
+    width: 150px;
+    padding: 10px;
+    background: #fff;
+    z-index: 9999;
+    border: 1px solid silver;
+    display: none;
+}
+.user-name:hover 
+{
+    color: #f67d34;
+    
+}
+.user {
+    cursor :pointer;
+}
+.user li .user-menu ul li {
+    display: block;
+    border: 0;
+    padding: 0;
+    margin: 0 0 5px;
+    float: none;
+    border-bottom: 1px dotted silver;
+    padding-bottom: 5px;
+    display: block;
+}
+.header .user li.last {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+.last 
+{
+    border-right: none !important;
+}
+.header nav {
+    width: 100%;
+    clear: both;
+    position: relative;
+    left: 0;
+    top: 0;
+}
+.header nav .menu {
+    float: right;
+    margin-top: -38px;
+    margin-right: 1px;
+
+}
+.header nav .menu li {
+    float: left;
+    margin-right: -1px;
+}
+.btn.nav.active {
+    height: 42px;
+    line-height: 42px;
+    margin-top: -4px;
+    background: #fff;
+}
+.btn.nav:hover, .btn.nav.active {
+    border-color: #ababab;
+    color: #f1592a;
+}
+.btn.nav {
+    height: 38px;
+    line-height: 36px;
+    border: solid 1px #BDBDBD;
+    background-color: #eee;
+    color: #979696;
+}
+.btn {
+    cursor: pointer;
+    height: 28px;
+    line-height: 26px;
+    color: #fff;
+    font-size: 13px;
+    display: inline-block;
+    padding: 0 20px;
+    border: solid 1px #f1592a;
+}
+.header nav .line {
+    border-bottom: 8px solid #BDBDBD;
+    width: 100%;
+    display: block;
+    margin-top: 10px;
+}

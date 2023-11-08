@@ -68,6 +68,19 @@ builder.Services.AddScoped<IMonthlyHoursService, MonthlyHoursService>();
 builder.Services.AddScoped<IPdfGenerationService, PdfGenerationService>();
 builder.Services.AddScoped<IReportService, ReportService>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Policy", builder =>
+    {
+        builder
+            .WithOrigins("http://localhost:3000", "https://accounts.google.com")
+            .AllowAnyHeader()
+           
+            .AllowAnyMethod().AllowCredentials();
+            
+    });
+});
+
 
 
 
@@ -85,6 +98,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("testvegatestvegatestvega"))
+        };
+
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                context.Token = context.Request.Cookies["jwtToken"];
+                return Task.CompletedTask;
+            }
         };
     });
 
@@ -109,6 +131,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
+app.UseCors("Policy");
 
 app.UseAuthentication(); 
 app.UseAuthorization();

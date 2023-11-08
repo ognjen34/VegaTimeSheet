@@ -77,16 +77,50 @@ namespace TimeSheet.WebApi.Controllers
 
             var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
 
-            return Ok(new { Token = tokenString, User = _mapper.Map<UserResponse>(user) });
+            Response.Cookies.Append("jwtToken", tokenString, new CookieOptions
+            {
+                HttpOnly = true,     
+                Secure = false,
+                Expires = DateTime.UtcNow.AddDays(30),
+
+            });
+
+            return Ok(_mapper.Map<UserResponse>(user));
+        }
+        [HttpPost("logout")]
+        public IActionResult Logout()
+        {
+            Response.Cookies.Append("jwtToken", "", new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = false, 
+                Expires = DateTime.UtcNow.AddYears(-1), 
+            });
+
+            return Ok(); 
         }
 
         [HttpGet()]
         public async Task<ActionResult> GetAll([FromQuery] PaginationRequest page)
         {
+
             PaginationReturnObject<User> users = await _userService.Search(_mapper.Map<Pagination>(page));
 
             return Ok(_mapper.Map<PaginationResponse<UserResponse>>(users));
         }
+        [HttpGet("authenticate")]
+        public async Task<ActionResult> Authenticate()
+        {
+            if (_user == null)
+            {
+                return Unauthorized();
+            }
+            else
+            {
+                return Ok(_user);
+            }
+        }
+
 
         [HttpGet("{id}")]
         public async Task<ActionResult> GetById(Guid id)

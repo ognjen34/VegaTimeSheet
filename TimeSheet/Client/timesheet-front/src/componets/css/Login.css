@@ -1,0 +1,66 @@
+.wrapper.centered {
+    max-width: 100% !important;
+    overflow: hidden;
+}
+.wrapper {
+    max-width: 960px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+.logo-wrap .inner img {
+    margin: 50px auto 0;
+}
+.logo-wrap {
+    width: 100%;
+    overflow: hidden;
+    background: url(../../assets/img/login-intro-wrap-bg.png) no-repeat center bottom;
+}
+.logo-wrap .inner {
+    width: 322px;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+}
+.centered-content-wrap {
+    width: 100%;
+    overflow: hidden;
+    background: url(../../assets/img/login-content-wrap-bg.png) no-repeat center bottom;
+    padding-bottom: 94px;
+}
+.centered-content-wrap .centered-block {
+    width: 322px;
+    margin: 20px auto;
+    padding: 10px;
+    background: #fff;
+    overflow: hidden;
+    border: solid 10px #E4E4E4;
+}
+.centered-block input[type='text'] {
+    background-repeat: no-repeat;
+    background-position: 7px 5px;
+    display: block;
+    padding-left: 30px;
+    width: 280px;
+}
+.centered-content-wrap .centered-block ul li {
+    margin-bottom: 15px;
+}
+.centered-content-wrap .centered-block ul li .link {
+    margin-right: 15px;
+}
+.in-pass, .in-search {
+    width: 280px;
+    
+    display: block;
+    padding-left: 30px;
+}
+.centered-content-wrap .centered-block ul li .in-label {
+    margin-right: 10px;
+}
+label {
+    cursor: pointer;
+}
+.centered-content-wrap .centered-block ul li.last {
+    height: 28px;
+    line-height: 28px;
+}
