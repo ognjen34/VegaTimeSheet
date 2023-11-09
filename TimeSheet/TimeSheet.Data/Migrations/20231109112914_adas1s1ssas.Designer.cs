@@ -11,8 +11,8 @@ using TimeSheet.Data.Data;
 namespace TimeSheet.Data.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20231101141916_tests22")]
-    partial class tests22
+    [Migration("20231109112914_adas1s1ssas")]
+    partial class adas1s1ssas
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,6 +20,9 @@ namespace TimeSheet.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.13")
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("TimeSheet.Data.Models.CategoryEntity", b =>
@@ -49,8 +52,9 @@ namespace TimeSheet.Data.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<Guid>("CountryId")
-                        .HasColumnType("char(36)");
+                    b.Property<string>("CountryId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -86,19 +90,24 @@ namespace TimeSheet.Data.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255)");
 
-                    b.Property<Guid>("ClientId")
-                        .HasColumnType("char(36)");
+                    b.Property<string>("ClientId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<Guid>("LeadId")
-                        .HasColumnType("char(36)");
+                    b.Property<string>("LeadId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -132,6 +141,9 @@ namespace TimeSheet.Data.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
+                    b.Property<float>("WorkingHours")
+                        .HasColumnType("float");
+
                     b.HasKey("Id");
 
                     b.ToTable("Users");
@@ -142,8 +154,9 @@ namespace TimeSheet.Data.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255)");
 
-                    b.Property<Guid>("CategoryId")
-                        .HasColumnType("char(36)");
+                    b.Property<string>("CategoryId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime(6)");
@@ -155,14 +168,16 @@ namespace TimeSheet.Data.Migrations
                     b.Property<float>("OverTime")
                         .HasColumnType("float");
 
-                    b.Property<Guid>("ProjectId")
-                        .HasColumnType("char(36)");
+                    b.Property<string>("ProjectId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
 
                     b.Property<float>("Time")
                         .HasColumnType("float");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("char(36)");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
 
                     b.HasKey("Id");
 
@@ -175,133 +190,9 @@ namespace TimeSheet.Data.Migrations
                     b.ToTable("WorkHours");
                 });
 
-            modelBuilder.Entity("TimeSheet.Domain.Models.Category", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Category");
-                });
-
-            modelBuilder.Entity("TimeSheet.Domain.Models.Client", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("Adress")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<Guid>("CountryId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Zip")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CountryId");
-
-                    b.ToTable("Client");
-                });
-
-            modelBuilder.Entity("TimeSheet.Domain.Models.Country", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Country");
-                });
-
-            modelBuilder.Entity("TimeSheet.Domain.Models.Project", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("ClientId")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<Guid>("ClientId1")
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<Guid>("LeadId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClientId1");
-
-                    b.HasIndex("LeadId");
-
-                    b.ToTable("Project");
-                });
-
-            modelBuilder.Entity("TimeSheet.Domain.Models.User", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("Role")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("User");
-                });
-
             modelBuilder.Entity("TimeSheet.Data.Models.ClientEntity", b =>
                 {
-                    b.HasOne("TimeSheet.Domain.Models.Country", "Country")
+                    b.HasOne("TimeSheet.Data.Models.CountryEntity", "Country")
                         .WithMany()
                         .HasForeignKey("CountryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -312,13 +203,13 @@ namespace TimeSheet.Data.Migrations
 
             modelBuilder.Entity("TimeSheet.Data.Models.ProjectEntity", b =>
                 {
-                    b.HasOne("TimeSheet.Domain.Models.Client", "Client")
+                    b.HasOne("TimeSheet.Data.Models.ClientEntity", "Client")
                         .WithMany()
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TimeSheet.Domain.Models.User", "Lead")
+                    b.HasOne("TimeSheet.Data.Models.UserEntity", "Lead")
                         .WithMany()
                         .HasForeignKey("LeadId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -331,19 +222,19 @@ namespace TimeSheet.Data.Migrations
 
             modelBuilder.Entity("TimeSheet.Data.Models.WorkHourEntity", b =>
                 {
-                    b.HasOne("TimeSheet.Domain.Models.Category", "Category")
+                    b.HasOne("TimeSheet.Data.Models.CategoryEntity", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TimeSheet.Domain.Models.Project", "Project")
+                    b.HasOne("TimeSheet.Data.Models.ProjectEntity", "Project")
                         .WithMany()
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TimeSheet.Domain.Models.User", "User")
+                    b.HasOne("TimeSheet.Data.Models.UserEntity", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -354,36 +245,6 @@ namespace TimeSheet.Data.Migrations
                     b.Navigation("Project");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("TimeSheet.Domain.Models.Client", b =>
-                {
-                    b.HasOne("TimeSheet.Domain.Models.Country", "Country")
-                        .WithMany()
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Country");
-                });
-
-            modelBuilder.Entity("TimeSheet.Domain.Models.Project", b =>
-                {
-                    b.HasOne("TimeSheet.Domain.Models.Client", "Client")
-                        .WithMany()
-                        .HasForeignKey("ClientId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TimeSheet.Domain.Models.User", "Lead")
-                        .WithMany()
-                        .HasForeignKey("LeadId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Client");
-
-                    b.Navigation("Lead");
                 });
 #pragma warning restore 612, 618
         }

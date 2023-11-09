@@ -258,7 +258,7 @@ namespace TimeSheet.ControllerTests
 
             var okResult = result as OkObjectResult;
             Assert.IsNotNull(okResult.Value);
-            Assert.AreEqual("User Deleted!", okResult.Value.ToString()); 
+            Assert.AreEqual("LoggedUser Deleted!", okResult.Value.ToString()); 
         }
         [TestMethod]
         public async Task UpdateUser_ExistingUser_ReturnsOkResult()
@@ -283,7 +283,7 @@ namespace TimeSheet.ControllerTests
 
             var okResult = result as OkObjectResult;
             Assert.IsNotNull(okResult.Value);
-            Assert.AreEqual("User Updated!", okResult.Value.ToString());
+            Assert.AreEqual("LoggedUser Updated!", okResult.Value.ToString());
         }
 
     }

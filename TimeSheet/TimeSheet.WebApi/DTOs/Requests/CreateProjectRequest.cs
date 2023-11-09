@@ -20,5 +20,7 @@ namespace TimeSheet.WebApi.DTOs.Requests
         public string ClientId { get; set; }
         [Required]
         public string LeadId { get; set; }
+        public ProjectStatus Status { get; set; }
+
     }
 }

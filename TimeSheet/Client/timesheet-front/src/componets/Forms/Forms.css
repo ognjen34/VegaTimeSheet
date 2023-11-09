@@ -1,0 +1,48 @@
+.form {
+    float: left;
+    width: 255px;
+    margin-right: 15px;
+}
+.form label {
+    display: block;
+    margin-bottom: 5px;
+    color: #666;
+}
+.form .in-text {
+    width: 95%;
+}
+.form select {
+    width: 100%;
+}
+select {
+    background: #fff;
+    border: solid 1px silver;
+    padding: 5px;
+}
+.form li {
+    margin-bottom: 10px;
+    width: 100%;
+    float: left;
+}
+.form li.inline label {
+    display: inline-block;
+    float: left;
+    width: 50px;
+}
+.form li.inline .radio {
+    margin: 0;
+}
+.form li .radio {
+    width: 90px;
+    float: left;
+    margin-top: 5px;
+}
+.details .buttons {
+    width: 100%;
+    float: left;
+    margin-bottom: 6px;
+}
+.form-wrap
+{
+    padding: 10px;
+}

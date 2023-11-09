@@ -14,9 +14,12 @@ namespace TimeSheet.Data.Models
         public string Description { get; set; }
         public string ClientId {  get; set; }
         public  string LeadId {  get; set; }
+        public ProjectStatus Status { get; set; }
         public virtual ClientEntity Client { get; set; }
         public virtual UserEntity Lead { get; set; }
-       
+        
+
+
 
     }
 }

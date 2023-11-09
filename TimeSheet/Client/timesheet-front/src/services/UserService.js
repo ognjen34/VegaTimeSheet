@@ -3,6 +3,19 @@ import axios from "axios";
 
 const host = "http://localhost:5168/";
 
+function getCookie(name) {
+  const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+  return cookieValue ? cookieValue.pop() : null;
+  
+}
+
+export function getJWT()
+{
+  const jwtToken = getCookie('jwtToken');
+
+  console.log('JWT Token:', jwtToken);
+}
+
 export const SignIn = async (user) => {
     try {
       const response = await axios.post(host + 'users/login', user, {
@@ -33,3 +46,18 @@ export const Logout = async () => {
         console.log("Error logging out")
     }
   };
+
+  export const GetUsers = async (queryParams) => {
+    try {
+      const response = await axios.get(host + 'users/', {
+        withCredentials: true,
+        params: queryParams, 
+      });
+  
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      throw error; 
+    }
+  };
+  

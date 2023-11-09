@@ -48,7 +48,7 @@ builder.Services.AddScoped<DatabaseContext>();
 
 builder.Services.AddDbContext<DatabaseContext>(options =>
 {
-    options.UseMySql("Server=localhost;Database=VegaSourcing;User=ognjen;Password=ognjen34;", new MySqlServerVersion(new Version(8, 0, 21)));
+    options.UseMySql("Server=localhost;Database=Timesheet;User=ognjen;Password=ognjen34;", new MySqlServerVersion(new Version(8, 0, 21)));
 
 });
 
@@ -73,7 +73,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("Policy", builder =>
     {
         builder
-            .WithOrigins("http://localhost:3000", "https://accounts.google.com")
+            .WithOrigins("http://localhost:3000")
             .AllowAnyHeader()
            
             .AllowAnyMethod().AllowCredentials();

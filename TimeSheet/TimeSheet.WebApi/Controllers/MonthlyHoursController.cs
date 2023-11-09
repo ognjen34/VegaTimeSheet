@@ -26,7 +26,7 @@ namespace TimeSheet.WebApi.Controllers
         public async Task<ActionResult> GetUserMonthlyHours([FromBody] DateRangeDTO dates)
         {
             
-            MonthlyHours response = await _monthlyHoursService.GetUsersMontlyHours(_user.UserId, dates.StartDate, dates.EndDate);
+            MonthlyHours response = await _monthlyHoursService.GetUsersMontlyHours(LoggedUser.UserId, dates.StartDate, dates.EndDate);
             return Ok(response);
         }
     }

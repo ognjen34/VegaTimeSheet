@@ -10,6 +10,8 @@ namespace TimeSheet.Domain.Models
         public User Lead {  get; set; }
         public Guid LeadId { get; set; }
         public Guid ClientId {  get; set; }
+        public ProjectStatus Status {  get; set; }
 
     }
+    public enum ProjectStatus { Inactive, Active }
 }

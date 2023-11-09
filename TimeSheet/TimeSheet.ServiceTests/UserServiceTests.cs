@@ -85,24 +85,7 @@ namespace TimeSheet.ServiceTests
 
             userRepositoryMock.Verify(repo => repo.Delete(userId.ToString()), Times.Once);
         }
-        [TestMethod]
-        public async Task GetAll_ReturnsListOfUsers()
-        {
-            var users = new List<User>
-                {
-                    GenerateUser(),
-                    GenerateUser(),
-                    GenerateUser()
-                };
-            var pagination = new Pagination();
-            _userRepositoryMock.Setup(repo => repo.Search(pagination)).ReturnsAsync(users);
-
-            var result = await _userService.Search(pagination);
-
-            Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(IEnumerable<User>));
-            CollectionAssert.AreEqual(users.ToList(), result.ToList());
-        }
+       
         [TestMethod]
         public async Task GetById_ExistingUser_ReturnsUser()
         {

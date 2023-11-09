@@ -101,6 +101,11 @@ namespace TimeSheet.Data.Repositories
             projectEntity.Description = project.Description;
             projectEntity.Client = _mapper.Map<ClientEntity>(project.Client);
             projectEntity.Lead = _mapper.Map<UserEntity>(project.Lead);
+            projectEntity.LeadId = project.LeadId.ToString();
+            projectEntity.ClientId = project.ClientId.ToString();
+
+            projectEntity.Status = project.Status;
+
 
             await _context.SaveChangesAsync();
         }

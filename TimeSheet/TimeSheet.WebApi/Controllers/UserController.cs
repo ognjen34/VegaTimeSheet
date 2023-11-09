@@ -43,7 +43,7 @@ namespace TimeSheet.WebApi.Controllers
         {
             User user = _mapper.Map<User>(oldUser);
             await _userService.Update(user);
-            return Ok("User Updated!");
+            return Ok("LoggedUser Updated!");
         }
 
         [HttpPost("login")]
@@ -79,7 +79,7 @@ namespace TimeSheet.WebApi.Controllers
 
             Response.Cookies.Append("jwtToken", tokenString, new CookieOptions
             {
-                HttpOnly = true,     
+                HttpOnly = false,     
                 Secure = false,
                 Expires = DateTime.UtcNow.AddDays(30),
 
@@ -111,13 +111,13 @@ namespace TimeSheet.WebApi.Controllers
         [HttpGet("authenticate")]
         public async Task<ActionResult> Authenticate()
         {
-            if (_user == null)
+            if (LoggedUser == null)
             {
                 return Unauthorized();
             }
             else
             {
-                return Ok(_user);
+                return Ok(LoggedUser);
             }
         }
 
@@ -134,7 +134,7 @@ namespace TimeSheet.WebApi.Controllers
         public async Task<ActionResult> DeleteUser(Guid id)
         {
             await _userService.Delete(id);
-            return Ok("User Deleted!");
+            return Ok("LoggedUser Deleted!");
         }
     }
 }

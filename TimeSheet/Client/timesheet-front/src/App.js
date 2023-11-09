@@ -1,7 +1,7 @@
 import React, { useEffect,useState } from 'react';
 import {Routes, Route, Navigate, useNavigate} from 'react-router-dom';
 
-import { Authenticate } from './services/UserService';
+import { Authenticate,getJWT } from './services/UserService';
 import Login from './componets/Login';
 import HomePage from './componets/HomePage';
 import TimeSheet from './componets/Pages/TimeSheet';
@@ -10,6 +10,8 @@ import Categories from './componets/Pages/Categories';
 import Members from './componets/Pages/Members';
 import Reports from './componets/Pages/Reports';
 import Projects from './componets/Pages/Projects';
+import EntityBar from './componets/basic-components/EntityBar';
+import Test from './componets/Test';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -35,6 +37,8 @@ function App() {
 
   useEffect(() => {
     console.log("Updated user:", user);
+    getJWT();
+
 
 
   }, [user]);
@@ -64,7 +68,8 @@ function App() {
                   <Route path="members" element={<Members/>}/>
                   <Route path="reports" element={<Reports/>}/>
                   </Route>
-                
+                  <Route path="test" element={<Test/>}/>
+
               </Routes>
               
 

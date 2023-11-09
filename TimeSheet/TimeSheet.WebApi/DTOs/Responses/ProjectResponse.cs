@@ -16,5 +16,7 @@ namespace TimeSheet.WebApi.DTOs.Responses
         public string ClientId { get; set; }
         public string LeadName { get; set; }
         public string LeadId { get; set;}
+        public ProjectStatus Status { get; set; }
+
     }
 }
