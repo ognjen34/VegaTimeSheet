@@ -27,3 +27,14 @@ export const UpdateProject = async (project) => {
       throw error;
     }
   };
+  export const AddProject = async (project) => {
+    try {
+      const response = await axios.post(host + 'projects/', project, {
+        withCredentials: true, 
+      });
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };

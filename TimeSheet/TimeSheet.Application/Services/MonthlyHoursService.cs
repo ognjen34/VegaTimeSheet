@@ -27,10 +27,12 @@ namespace TimeSheet.Application.Services
             for (DateTime currentDate = startDate; currentDate <= endDate; currentDate = currentDate.AddDays(1))
             {
 
-                List<WorkHour> workHourForCurrentDate = workHours.Where(wh => wh.Date == currentDate).ToList();
+                List<WorkHour> workHourForCurrentDate = workHours.Where(wh => wh.Date.Date == currentDate.Date).ToList();
 
                 WorkDay day = new WorkDay();
-                day.Date = currentDate;
+                day.Date = currentDate.Day.ToString();
+                day.FullDate = currentDate;
+
                 day.Hours = workHourForCurrentDate.Count == 0 ? 0 : workHourForCurrentDate.Sum(wh => wh.Time + wh.OverTime);
 
                 hours.WorkDays.Add(day);

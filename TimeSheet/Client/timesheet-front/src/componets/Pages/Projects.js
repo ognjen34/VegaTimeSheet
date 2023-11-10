@@ -6,8 +6,9 @@ import EntityBar from '../basic-components/EntityBar';
 import UpdateProjectForm from '../Forms/UpdateProjectForm';
 import Search from '../basic-components/Search';
 import PaginationBar from '../basic-components/PaginationBar';
+import CreateProjectForm from '../Forms/CreateProjectForm';
 
-const Projects = ({ color, text, onClick }) => {
+const Projects = ({  }) => {
   const [projects, setProjects] = useState([]);
   const [users, setUsers] = useState([]);
   const [clients, setClients] = useState([]);
@@ -19,7 +20,7 @@ const Projects = ({ color, text, onClick }) => {
     async function fetchData() {
       try {
         stringQuery.PageNumber = currentPage;
-        stringQuery.PageSize = 4;
+        stringQuery.PageSize = 3;
         const response = await GetProjects(stringQuery);
         setProjects(response.items);
         setNumberOfPages(Math.ceil(response.totalItems / response.pageSize));
@@ -39,7 +40,7 @@ const Projects = ({ color, text, onClick }) => {
 
   return (
     <div>
-      <Search setQuery={setStringQuery}></Search>
+      <Search setQuery={setStringQuery} title = {"Create Porject"} createForm ={<CreateProjectForm users = {users} clients={clients}/>} ></Search>
       {projects.map((item, index) => (
         <EntityBar
           key={index}

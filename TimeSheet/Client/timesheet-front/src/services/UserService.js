@@ -60,4 +60,27 @@ export const Logout = async () => {
       throw error; 
     }
   };
+  export const UpdateUser = async (user) => {
+    try {
+      const response = await axios.put(host + 'users/', user, {
+        withCredentials: true, 
+      });
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
+  export const AddUser = async (user) => {
+    try {
+      const response = await axios.post(host + 'users/', user, {
+        withCredentials: true, 
+      });
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
+  
   

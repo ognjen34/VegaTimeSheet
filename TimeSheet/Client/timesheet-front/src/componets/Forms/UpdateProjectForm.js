@@ -11,8 +11,6 @@ const UpdateProjectForm = ({ project, users, clients }) => {
   const [name, setName] = useState(project.name);
   const [clientName, setClientName] = useState(project.clientName);
 
-
-
   const handleNameChange = (value) => {
     setName(value);
   };
@@ -31,31 +29,25 @@ const UpdateProjectForm = ({ project, users, clients }) => {
 
   const handleClientChange = (value) => {
     setClient(value);
-    setClientName(value.innerText)
-    console.log(value)
+    setClientName(value.innerText);
+    console.log(value);
   };
   const handleSaveClick = async () => {
-    let updatedProject = 
-    {
-      id : project.id,
-      name :name,
-      description :description,
-      clientId:client,
-      leadId:lead,
-      status :status
-      
-    }
-    console.log(updatedProject)
+    let updatedProject = {
+      id: project.id,
+      name: name,
+      description: description,
+      clientId: client,
+      leadId: lead,
+      status: status,
+    };
+    console.log(updatedProject);
     try {
       await UpdateProject(updatedProject);
       window.location.reload();
-      
-
     } catch (error) {
       console.error("Error during update:", error);
     }
-
-    
   };
 
   return (
@@ -63,13 +55,19 @@ const UpdateProjectForm = ({ project, users, clients }) => {
       <ul className="form">
         <li>
           <label>Project name:</label>
-          <input type="text" className="in-text" value={name}
-          onChange={(e) => handleNameChange(e.target.value)}
-           />
+          <input
+            type="text"
+            className="in-text"
+            value={name}
+            onChange={(e) => handleNameChange(e.target.value)}
+          />
         </li>
         <li>
           <label>Lead:</label>
-          <select value={lead} onChange={(e) => handleLeadChange(e.target.value)}>
+          <select
+            value={lead}
+            onChange={(e) => handleLeadChange(e.target.value)}
+          >
             {users.map((user, index) => (
               <option key={index} value={user.id}>
                 {user.name}
@@ -92,10 +90,15 @@ const UpdateProjectForm = ({ project, users, clients }) => {
       <ul className="form last">
         <li>
           <label>Customer:</label>
-          <select value={client} onChange={(e) => handleClientChange(e.target.value)}>
+          <select
+            value={client}
+            onChange={(e) => handleClientChange(e.target.value)}
+          >
             {clients.map((item, index) => (
-              <option key={index} value={item.id}
-              selected = {item.name == clientName}
+              <option
+                key={index}
+                value={item.id}
+                selected={item.name == clientName}
               >
                 {item.name}
               </option>

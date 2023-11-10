@@ -108,10 +108,8 @@ namespace TimeSheet.Data.Repositories
             {
                 throw new ResourceNotFoundException("User not found");
             }
-            string salt = "$2a$12$abcdefghijklmno1234567";
             userEntity.Name = user.Name;
             userEntity.Email = user.Email;
-            userEntity.Password = BCrypt.Net.BCrypt.HashPassword(user.Password, salt);
             userEntity.Status = user.Status;
             userEntity.Role = user.Role;
             userEntity.WorkingHours = user.WorkingHours;

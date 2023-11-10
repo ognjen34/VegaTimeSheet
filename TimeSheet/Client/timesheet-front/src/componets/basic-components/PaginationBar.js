@@ -20,7 +20,6 @@ const PaginationBar = ({ number, onClick }) => {
       <ul>
         {renderPageNumbers()}
         <li className="last">
-          <a className='link'>Next</a>
         </li>
       </ul>
     </div>

@@ -47,6 +47,7 @@ function App() {
   return (
     <div className="App">
               <Routes>
+              
               <Route
                 path="/login"
                 element={
@@ -68,6 +69,15 @@ function App() {
                   <Route path="members" element={<Members/>}/>
                   <Route path="reports" element={<Reports/>}/>
                   </Route>
+                  <Route
+                path="/"
+                element={
+                    isAuthenticated ? 
+                      <Navigate to="/home/timesheet"/>
+                      : 
+                      <Navigate to="/login"/>
+                }
+            />
                   <Route path="test" element={<Test/>}/>
 
               </Routes>

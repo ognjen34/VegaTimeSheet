@@ -1,0 +1,63 @@
+.month-table {
+    width: 100%;
+    float: left;
+    margin-bottom: 10px;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+.month-table tr.mobile-head {
+    display: none;
+}
+.month-table tr th {
+    text-transform: uppercase;
+}
+.month-table tr th span {
+    display: inline-block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+}
+.month-table tr th {
+    text-transform: uppercase;
+}
+.month-table tr td {
+    width: 14%;
+    border: 1px solid #BDBDBD;
+}
+td {
+    vertical-align: top;
+}
+.month-table tr td.previous .date, .month-table tr td.next .date {
+    color: #9e9e9e;
+}
+.month-table tr td .date {
+    width: 100%;
+    padding: 5px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #323232;
+}
+.month-table tr td .hours {
+    width: 100%;
+    padding: 10px 5px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.month-table tr td .hours a {
+    color: #666;
+    font-weight: bold;
+}
+.month-table tr td.positive .hours {
+    background-color: #f6f9e6;
+}
+.month-table tr td.disable {
+    background: #ececec;
+}
+.month-table tr td.disable .date {
+    color: #BDBDBD;
+}
+.month-table tr td.disable .hours a {
+    color: #BDBDBD;
+    cursor: default;
+}

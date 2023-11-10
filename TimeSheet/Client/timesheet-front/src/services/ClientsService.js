@@ -28,3 +28,15 @@ export const UpdateClient = async (client) => {
       throw error;
     }
   };
+
+  export const AddClient = async (client) => {
+    try {
+      const response = await axios.post(host + 'clients/', client, {
+        withCredentials: true, 
+      });
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };

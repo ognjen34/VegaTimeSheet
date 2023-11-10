@@ -1,13 +1,12 @@
 import React from "react";
-import EntityBar from "./basic-components/EntityBar";
-import UpdateProjectForm from "./Forms/UpdateProjectForm";
-import UpdateClientForm from "./Forms/UpdateClientForm";
-import Search from "./basic-components/Search";
+
+import CreateUserForm from "./Forms/CreateUserForm";
+import CreateProjectForm from "./Forms/CreateProjectForm";
 
 const Test = ({ color, text, onClick }) => {
   return (
     <div>
-      <Search/>
+      <CreateProjectForm users = {[]} clients={[]}/>
       
     </div>
   );
