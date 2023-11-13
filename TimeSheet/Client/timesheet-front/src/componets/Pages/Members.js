@@ -15,7 +15,7 @@ const Members = ({ color, text, onClick }) => {
   useEffect(() => {
     async function fetchData() {
       try {
-        let query = {}
+        let query = {};
         query.PageNumber = currentPage;
         query.PageSize = 3;
         const responseUser = await GetUsers(query);
@@ -30,15 +30,21 @@ const Members = ({ color, text, onClick }) => {
     fetchData();
   }, [currentPage]);
 
-  return <div>
-    <Search  setQuery = {setStringQuery}createForm ={<CreateUserForm/>} title ={"Create New User"} isUser = {true}></Search>
+  return (
+    <div>
+      <Search
+        setQuery={setStringQuery}
+        createForm={<CreateUserForm />}
+        title={"Create New User"}
+        isUser={true}
+      ></Search>
 
-    {users.map((item, index) => (
-        <EntityBar text = {item.name}  form ={<UpdateUserForm user = {item}  />}/>
+      {users.map((item, index) => (
+        <EntityBar text={item.name} form={<UpdateUserForm user={item} />} />
       ))}
-      <PaginationBar number={numberOfPages} onClick = {setCurrentPage} />
-
-  </div>;
+      <PaginationBar number={numberOfPages} onClick={setCurrentPage} />
+    </div>
+  );
 };
 
 export default Members;

@@ -65,6 +65,21 @@ namespace TimeSheet.Data.Repositories
                 throw new ResourceNotFoundException("Work hour not found");
             }
         }
+ 
+
+        public async Task<IEnumerable<WorkHour>> GetUserCurrentDate(Guid userId, DateTime date)
+        {
+            var userWorkHoursEntity = await _context.WorkHours
+                .Where(wh => wh.UserId == userId.ToString() && wh.Date.Date == date.Date)
+                .ToListAsync();
+
+            IEnumerable<WorkHour> result = userWorkHoursEntity
+                .Select(workHourEntity => _mapper.Map<WorkHour>(workHourEntity))
+                .ToList();
+            return result;
+        }
+
+
 
         public async Task<IEnumerable<WorkHour>> GetUsersWorkHoursForDateRange(Guid userId, DateTime startDate,DateTime endDate)
         {
@@ -141,5 +156,7 @@ namespace TimeSheet.Data.Repositories
 
             await _context.SaveChangesAsync();
         }
+
+        
     }
 }

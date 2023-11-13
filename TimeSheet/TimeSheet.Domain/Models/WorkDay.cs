@@ -11,6 +11,7 @@ namespace TimeSheet.Domain.Models
         public string Date {  get; set; }
         public float Hours {  get; set; }
         public DateTime FullDate { get; set; }
+        public Boolean Flag {  get; set; }
 
     }
 }

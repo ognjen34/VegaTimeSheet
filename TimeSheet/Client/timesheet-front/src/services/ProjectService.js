@@ -38,3 +38,16 @@ export const UpdateProject = async (project) => {
       throw error;
     }
   };
+
+  export const GetClientProjects = async (id) => {
+    try {
+      const response = await axios.get(host + 'projects/client/'+id, {
+        withCredentials: true, 
+      });
+      console.log(response);
+      return response
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };

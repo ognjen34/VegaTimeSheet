@@ -1,29 +1,36 @@
 import React, { useState } from "react";
-import './css/HomePage.css'
-import Header from './Header';
-import Footer from "./Footer";
 import { Outlet } from "react-router-dom";
+import Header from "./Header";
+import Footer from "./Footer";
+import "./css/HomePage.css";
 
-const HomePage = ({user}) => {
+const HomePage = ({ user }) => {
   const [currentPage, setCurrentPage] = useState("TimeSheet");
 
-
   const handleDataFromHeader = (page) => {
-  setCurrentPage(page)  
+    setCurrentPage(page);
+  };
+
+  return (
+    <>
+      <Header
+        username={user.name}
+        role={user.role}
+        onNavClick={handleDataFromHeader}
+        index={0}
+      />
+      <div className="wrapper">
+        <section className="content">
+          <h2>
+            <i className="ico timesheet"></i>
+            {currentPage}
+          </h2>
+          <Outlet />
+        </section>
+      </div>
+      <Footer />
+    </>
+  );
 };
 
-    return (
-  <div>
-    <Header username = {user.name} role = {user.role} onNavClick = {handleDataFromHeader} index = {0}></Header>
-    <div className="wrapper">
-    <section className="content">
-				<h2><i className="ico timesheet"></i>{currentPage}</h2>
-        <Outlet />
-        </section>
-    </div>
-    <Footer></Footer>
-  </div>
-    );
-  };
-  
-  export default HomePage;
+export default HomePage;

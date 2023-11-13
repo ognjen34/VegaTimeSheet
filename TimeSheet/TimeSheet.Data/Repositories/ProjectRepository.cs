@@ -109,5 +109,13 @@ namespace TimeSheet.Data.Repositories
 
             await _context.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<Project>> GetProjectsFromClient(Guid id)
+        {
+            var projectsEntities = await _context.Projects.Where(p => p.ClientId == id.ToString())
+                .ToListAsync();
+            IEnumerable<Project> projects = _mapper.Map<IEnumerable<Project>>(projectsEntities);
+            return projects;
+        }
     }
 }

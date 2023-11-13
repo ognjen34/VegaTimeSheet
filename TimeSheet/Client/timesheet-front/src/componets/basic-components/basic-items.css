@@ -104,3 +104,21 @@
     float: left;
     margin: 0 5px 15px 0;
 }
+.work-day td:first-child {
+    padding-left: 0;
+}
+.work-day tr td {
+    padding: 10px 5px 0;
+    color: #666;
+}
+.in-text.xsmall {
+    width: 45px;
+}
+.work-day select 
+{
+    width: 100%;
+}
+.work-day tr
+{
+    width: 100%;
+}

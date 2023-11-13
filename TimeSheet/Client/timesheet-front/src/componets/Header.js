@@ -1,11 +1,13 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import "./css/Header.css";
 import Logo from "../assets/img/logo.png";
 import { Logout } from "../services/UserService";
-import { useNavigate ,Link} from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { useCallback } from "react";
 
-const Header = ({ username,role ,onNavClick,index}) => {
-  const items = ["Change password", "Settings", "Export all data"];
+const items = ["Change password", "Settings", "Export all data"];
+
+const Header = ({ username, role, onNavClick, index }) => {
   const [isUserMenuVisible, setUserMenuVisible] = useState(false);
   const navigate = useNavigate();
 
@@ -18,34 +20,51 @@ const Header = ({ username,role ,onNavClick,index}) => {
   const handleUserLeave = () => {
     setUserMenuVisible(false);
   };
+
   const handleLogout = async () => {
     try {
       await Logout();
       setLoggedOut(true);
-
     } catch (error) {
       console.error("Error during login:", error);
     }
   };
 
   useEffect(() => {
-    if (loggedOut) {
-      console.log("bla")
-      window.location.reload()
-    }
-    
+    if (!loggedOut) return;
+
+    window.location.reload();
   }, [loggedOut]);
 
-  const secondListItems = role === 0 ? ["TimeSheet", "Clients", "Projects", "Categories", "Team members", "Reports"] : ["TimeSheet"];
-  const Links = role === 0 ? ["timesheet", "clients", "projects", "categories", "members", "reports"] : ["timesheet"];
+  const secondListItems = useMemo(
+    () =>
+      role === 0
+        ? [
+            "TimeSheet",
+            "Clients",
+            "Projects",
+            "Categories",
+            "Team members",
+            "Reports",
+          ]
+        : ["TimeSheet"],
+    [role]
+  );
 
+  const Links =
+    role === 0
+      ? ["timesheet", "clients", "projects", "categories", "members", "reports"]
+      : ["timesheet"];
 
   const [activeIndex, setActiveIndex] = useState(index);
 
-  const handleItemClick = (index) => {
-    setActiveIndex(index);
-    onNavClick(secondListItems[index])
-  };
+  const handleItemClick = useCallback(
+    (index) => {
+      setActiveIndex(index);
+      onNavClick(secondListItems[index]);
+    },
+    [secondListItems, onNavClick]
+  );
 
   return (
     <header className="header">
@@ -66,16 +85,14 @@ const Header = ({ username,role ,onNavClick,index}) => {
               <ul>
                 {items.map((item, index) => (
                   <li key={index}>
-                    <a className='link'>{item}</a>
+                    <a className="link">{item}</a>
                   </li>
                 ))}
               </ul>
             </div>
           </li>
           <li className="last">
-            <a
-            onClick={() => handleLogout()}
-            >Logout</a>
+            <a onClick={() => handleLogout()}>Logout</a>
           </li>
         </ul>
         <nav>
@@ -83,12 +100,14 @@ const Header = ({ username,role ,onNavClick,index}) => {
             {Links.map((item, index) => (
               <li key={index}>
                 <Link to={item}>
-                <a
-                  className={`btn nav ${activeIndex === index ? "active" : ""}`}
-                  onClick={() => handleItemClick(index)}
-                >
-                  {secondListItems[index]}
-                </a>
+                  <a
+                    className={`btn nav ${
+                      activeIndex === index ? "active" : ""
+                    }`}
+                    onClick={() => handleItemClick(index)}
+                  >
+                    {secondListItems[index]}
+                  </a>
                 </Link>
               </li>
             ))}

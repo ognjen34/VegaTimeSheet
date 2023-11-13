@@ -40,5 +40,10 @@ namespace TimeSheet.Application.Services
         {
             await _projectRepository.Update(project);
         }
+
+        public Task<IEnumerable<Project>> GetProjectsFromClient(Guid id)
+        {
+            return _projectRepository.GetProjectsFromClient(id);
+        }
     }
 }

@@ -51,6 +51,9 @@ td {
 .month-table tr td.positive .hours {
     background-color: #f6f9e6;
 }
+.month-table tr td.negative .hours {
+    background-color: #f9e6e6;
+}
 .month-table tr td.disable {
     background: #ececec;
 }
@@ -60,4 +63,69 @@ td {
 .month-table tr td.disable .hours a {
     color: #BDBDBD;
     cursor: default;
+}
+.grey-box-wrap-timesheet {
+    overflow: hidden;
+    width: 100%;
+    margin-bottom: 15px;
+    background: #ececec;
+}
+.grey-box-wrap-timesheet .top {
+    height: 40px;
+    line-height: 40px;
+    padding: 0 10px;
+    overflow: hidden;
+    border-bottom: 1px solid #fff;
+    margin-bottom: 10px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.grey-box-wrap-timesheet .top .prev {
+    float: left;
+}
+.grey-box-wrap-timesheet .top .center {
+    text-align: center;
+    width: 48%;
+    display: block;
+    float: left;
+    color: #323232;
+    font-size: 14px;
+}
+.grey-box-wrap-timesheet .top .prev i {
+    margin-right: 10px;
+}
+.grey-box-wrap-timesheet .top .next {
+    float: right;
+    text-align: right;
+}
+.grey-box-wrap-timesheet .top .next i {
+    margin-left: 10px;
+}
+.grey-box-wrap-timesheet .top .prev, .grey-box-wrap-timesheet .top .next {
+    width: 25%;
+    color: #f1592a;
+    display: inline-block;
+    font-weight: bold;
+    cursor: pointer;
+}
+.total {
+    overflow: hidden;
+    background: #ececec;
+    height: 40px;
+    line-height: 40px;
+    padding: 0 10px;
+}
+.total span {
+    float: right;
+    font-weight: 700;
+    font-size: 13px;
+}
+.total span em {
+    color: #f67d34;
+    font-style: normal;
+}
+.default-table {
+    width: 100%;
+    border-bottom: 1px solid #999;
+    margin-bottom: 15px;
 }

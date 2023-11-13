@@ -14,5 +14,6 @@ namespace TimeSheet.Domain.Interfaces.Services
         Task Add(Project project);
         Task Update(Project project);
         Task Delete(Guid id);
+        Task <IEnumerable<Project>> GetProjectsFromClient(Guid id);
     }
 }

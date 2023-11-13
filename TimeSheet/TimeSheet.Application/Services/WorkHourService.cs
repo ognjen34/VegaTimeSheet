@@ -36,6 +36,11 @@ namespace TimeSheet.Application.Services
             return _workHourRepository.GetById(id.ToString());
         }
 
+        public Task<IEnumerable<WorkHour>> GetUserCurrentDate(Guid userId, DateTime date)
+        {
+            return _workHourRepository.GetUserCurrentDate(userId, date);
+        }
+
         public Task<IEnumerable<WorkHour>> GetUsersWorkHoursForDateRange(Guid userId, DateTime startDate,DateTime endDate)
         {
             return _workHourRepository.GetUsersWorkHoursForDateRange(userId, startDate,endDate);

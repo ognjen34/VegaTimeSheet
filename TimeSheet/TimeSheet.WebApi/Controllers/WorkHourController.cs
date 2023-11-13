@@ -60,5 +60,11 @@ namespace TimeSheet.WebApi.Controllers
             await _workHourService.Delete(id);
             return Ok("Work Hour Deleted!");
         }
+        [HttpGet("workday/{date}")]
+        public async Task<ActionResult> GetUserCurrentDay(DateTime date)
+        {
+            IEnumerable<WorkHour> response = await _workHourService.GetUserCurrentDate(LoggedUser.UserId, date);
+            return Ok(_mapper.Map<IEnumerable<WorkDayResponse>>(response));
+        }
     }
 }

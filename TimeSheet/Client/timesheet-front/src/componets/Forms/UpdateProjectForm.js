@@ -2,44 +2,31 @@ import React, { useState } from "react";
 import "./Forms.css";
 import BasicButton from "../basic-components/BasicButton";
 import { UpdateProject } from "../../services/ProjectService";
-
+import BasicSelect from "../basic-components/BasicSelect";
+import BasicInput from "../basic-components/BasicInput";
+import BasicRadioButton from "../basic-components/BasicRadioButton";
 const UpdateProjectForm = ({ project, users, clients }) => {
-  const [status, setStatus] = useState(project.status);
-  const [lead, setLead] = useState(project.leadId);
-  const [description, setDescription] = useState(project.description);
-  const [client, setClient] = useState(project.clientId);
-  const [name, setName] = useState(project.name);
-  const [clientName, setClientName] = useState(project.clientName);
+  const [newProject, setNewProject] = useState(project);
 
-  const handleNameChange = (value) => {
-    setName(value);
-  };
+  const handleProjectChange = (value, inputType) => {
 
-  const handleStatusChange = (value) => {
-    setStatus(value);
+    setNewProject((prevProject) => ({
+      ...prevProject,
+      [inputType]: value,
+    }));
   };
+  
 
-  const handleLeadChange = (value) => {
-    setLead(value);
-  };
 
-  const handleDescriptionChange = (value) => {
-    setDescription(value);
-  };
 
-  const handleClientChange = (value) => {
-    setClient(value);
-    setClientName(value.innerText);
-    console.log(value);
-  };
   const handleSaveClick = async () => {
     let updatedProject = {
       id: project.id,
-      name: name,
-      description: description,
-      clientId: client,
-      leadId: lead,
-      status: status,
+      name: newProject.name,
+      description: newProject.description,
+      clientId: newProject.clientId,
+      leadId: newProject.leadId,
+      status: newProject.status,
     };
     console.log(updatedProject);
     try {
@@ -53,94 +40,43 @@ const UpdateProjectForm = ({ project, users, clients }) => {
   return (
     <div className="form-wrap">
       <ul className="form">
-        <li>
-          <label>Project name:</label>
-          <input
-            type="text"
-            className="in-text"
-            value={name}
-            onChange={(e) => handleNameChange(e.target.value)}
-          />
-        </li>
-        <li>
-          <label>Lead:</label>
-          <select
-            value={lead}
-            onChange={(e) => handleLeadChange(e.target.value)}
-          >
-            {users.map((user, index) => (
-              <option key={index} value={user.id}>
-                {user.name}
-              </option>
-            ))}
-          </select>
-        </li>
+      <BasicInput
+          type={"text"}
+          label={"Project Name: "}
+          callback={(e) => handleProjectChange(e.target.value,"name")}
+          value={newProject.name}
+        />
+        <BasicSelect
+          label={"Lead"}
+          collection={users}
+          value={newProject.leadId}
+          selected={newProject.leadName}
+          callback={(e) => handleProjectChange(e.target.value,"leadId")}
+        />
       </ul>
       <ul className="form">
-        <li>
-          <label>Description:</label>
-          <input
-            type="text"
-            className="in-text"
-            value={description}
-            onChange={(e) => handleDescriptionChange(e.target.value)}
-          />
-        </li>
+      <BasicInput
+          type={"text"}
+          label={"Description: "}
+          callback={(e) => handleProjectChange(e.target.value,"description")}
+          value={newProject.description}
+        />
       </ul>
       <ul className="form last">
-        <li>
-          <label>Customer:</label>
-          <select
-            value={client}
-            onChange={(e) => handleClientChange(e.target.value)}
-          >
-            {clients.map((item, index) => (
-              <option
-                key={index}
-                value={item.id}
-                selected={item.name == clientName}
-              >
-                {item.name}
-              </option>
-            ))}
-          </select>
-        </li>
-        <li className="inline">
-          <label>Status:</label>
-          <span className="radio">
-            <label htmlFor={"active" + project.id}>Active:</label>
-            <input
-              type="radio"
-              value="0"
-              name={"status-" + project.id}
-              id={"active" + project.id}
-              checked={status == 0}
-              onChange={() => handleStatusChange(0)}
-            />
-          </span>
-          <span className="radio">
-            <label htmlFor={"inactive" + project.id}>Inactive:</label>
-            <input
-              type="radio"
-              value="1"
-              name={"status-" + project.id}
-              id={"inactive" + project.id}
-              checked={status == 1}
-              onChange={() => handleStatusChange(1)}
-            />
-          </span>
-          <span className="radio">
-            <label htmlFor={"archive" + project.id}>Archive:</label>
-            <input
-              type="radio"
-              value="2"
-              name={"status-" + project.id}
-              id={"archive" + project.id}
-              checked={status == 2}
-              onChange={() => handleStatusChange(2)}
-            />
-          </span>
-        </li>
+        <BasicSelect
+          label={"Customer"}
+          collection={clients}
+          value={newProject.client}
+          selected={newProject.clientName}
+          callback={(e) => handleProjectChange(e.target.value,"clientId")}
+        />
+        <BasicRadioButton
+          label={"Status: "}
+          choices={["Inactive", "Active","Archive"]}
+          value={newProject.status}
+          identificator={newProject.id}
+          callback={(status) => handleProjectChange(status,"status")}
+        />
       </ul>
       <BasicButton color="#52a552" text="Save" onClick={handleSaveClick} />
       <BasicButton color="#be3730" text="Delete" />

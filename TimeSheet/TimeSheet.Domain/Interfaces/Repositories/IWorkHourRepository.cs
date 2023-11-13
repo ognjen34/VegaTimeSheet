@@ -16,5 +16,6 @@ namespace TimeSheet.Domain.Interfaces.Repositories
         Task Delete(string id);
         Task<IEnumerable<WorkHour>> GetUsersWorkHoursForDateRange(Guid userId, DateTime startDate, DateTime endDate);
         Task<IEnumerable<WorkHour>> GetUsersWorkHoursForReports(CreateReport report);
+        Task<IEnumerable<WorkHour>> GetUserCurrentDate(Guid userId, DateTime date);
     }
 }

@@ -83,11 +83,17 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.Parse(src.Id)));
         CreateMap<UpdateClientRequest, Client>()
            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.Parse(src.Id)));
+        CreateMap<Project, WorkDayProjectReponse>();
 
         CreateMap<WorkHour, ReportInstance>()
            .ForMember(dest => dest.TeamMember, opt => opt.MapFrom(src => src.User.Name))
            .ForMember(dest => dest.ProjectName, opt => opt.MapFrom(src => src.Project.Name))
            .ForMember(dest => dest.Time, opt => opt.MapFrom(src => src.Time + src.OverTime))
+           .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name));
+        CreateMap<WorkHour, WorkDayResponse>()
+           .ForMember(dest => dest.ClientName, opt => opt.MapFrom(src => src.Project.Client.Name))
+           .ForMember(dest => dest.ClientId, opt => opt.MapFrom(src => src.Project.Client.Id))
+           .ForMember(dest => dest.ProjectName, opt => opt.MapFrom(src => src.Project.Name))
            .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name));
 
 

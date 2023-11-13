@@ -29,5 +29,6 @@ namespace TimeSheet.WebApi.Controllers
             MonthlyHours response = await _monthlyHoursService.GetUsersMontlyHours(LoggedUser.UserId, dates.StartDate, dates.EndDate);
             return Ok(response);
         }
+
     }
 }

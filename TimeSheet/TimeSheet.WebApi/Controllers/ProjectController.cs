@@ -59,5 +59,11 @@ namespace TimeSheet.WebApi.Controllers
             await _projectService.Delete(id);
             return Ok("Project Deleted!");
         }
+        [HttpGet("client/{id}")]
+        public async Task<ActionResult> GetProjectsFromClient(Guid id)
+        {
+            var projects = await _projectService.GetProjectsFromClient(id);
+            return Ok(_mapper.Map<IEnumerable<WorkDayProjectReponse>>(projects));
+        }
     }
 }
