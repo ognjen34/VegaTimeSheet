@@ -5,19 +5,17 @@ import { UpdateProject } from "../../services/ProjectService";
 import BasicSelect from "../basic-components/BasicSelect";
 import BasicInput from "../basic-components/BasicInput";
 import BasicRadioButton from "../basic-components/BasicRadioButton";
+
+
 const UpdateProjectForm = ({ project, users, clients }) => {
   const [newProject, setNewProject] = useState(project);
 
   const handleProjectChange = (value, inputType) => {
-
     setNewProject((prevProject) => ({
       ...prevProject,
       [inputType]: value,
     }));
   };
-  
-
-
 
   const handleSaveClick = async () => {
     let updatedProject = {
@@ -40,10 +38,10 @@ const UpdateProjectForm = ({ project, users, clients }) => {
   return (
     <div className="form-wrap">
       <ul className="form">
-      <BasicInput
+        <BasicInput
           type={"text"}
           label={"Project Name: "}
-          callback={(e) => handleProjectChange(e.target.value,"name")}
+          callback={(e) => handleProjectChange(e.target.value, "name")}
           value={newProject.name}
         />
         <BasicSelect
@@ -51,14 +49,14 @@ const UpdateProjectForm = ({ project, users, clients }) => {
           collection={users}
           value={newProject.leadId}
           selected={newProject.leadName}
-          callback={(e) => handleProjectChange(e.target.value,"leadId")}
+          callback={(e) => handleProjectChange(e.target.value, "leadId")}
         />
       </ul>
       <ul className="form">
-      <BasicInput
+        <BasicInput
           type={"text"}
           label={"Description: "}
-          callback={(e) => handleProjectChange(e.target.value,"description")}
+          callback={(e) => handleProjectChange(e.target.value, "description")}
           value={newProject.description}
         />
       </ul>
@@ -68,14 +66,14 @@ const UpdateProjectForm = ({ project, users, clients }) => {
           collection={clients}
           value={newProject.client}
           selected={newProject.clientName}
-          callback={(e) => handleProjectChange(e.target.value,"clientId")}
+          callback={(e) => handleProjectChange(e.target.value, "clientId")}
         />
         <BasicRadioButton
           label={"Status: "}
-          choices={["Inactive", "Active","Archive"]}
+          choices={["Inactive", "Active", "Archive"]}
           value={newProject.status}
           identificator={newProject.id}
-          callback={(status) => handleProjectChange(status,"status")}
+          callback={(status) => handleProjectChange(status, "status")}
         />
       </ul>
       <BasicButton color="#52a552" text="Save" onClick={handleSaveClick} />

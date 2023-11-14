@@ -65,5 +65,31 @@ export const GetWorkDays = async (currentDate) => {
   } catch (error) {
     console.error(error);
     throw error;
+    
+  }
+  
+};
+export const UpdateWorkHour = async (wh) => {
+  try {
+    const response = await axios.put(host + 'workhours', wh, {
+      withCredentials: true, 
+    });
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+export const AddWorkHour = async (wh) => {
+  try {
+    const response = await axios.post(host + 'workhours', wh, {
+      withCredentials: true, 
+    });
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
   }
 };

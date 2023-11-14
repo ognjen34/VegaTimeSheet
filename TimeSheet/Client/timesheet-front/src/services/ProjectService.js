@@ -40,6 +40,7 @@ export const UpdateProject = async (project) => {
   };
 
   export const GetClientProjects = async (id) => {
+    console.log(id)
     try {
       const response = await axios.get(host + 'projects/client/'+id, {
         withCredentials: true, 

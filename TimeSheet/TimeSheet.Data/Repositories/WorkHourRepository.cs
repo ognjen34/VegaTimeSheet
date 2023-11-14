@@ -149,10 +149,15 @@ namespace TimeSheet.Data.Repositories
             }
 
             workHourEntity.Project = _mapper.Map<ProjectEntity>(workHour.Project);
+            workHourEntity.ProjectId = workHour.ProjectId.ToString();
             workHourEntity.User = _mapper.Map<UserEntity>(workHour.User);
+            workHourEntity.UserId = workHour.UserId.ToString();
             workHourEntity.Description = workHour.Description;
             workHourEntity.Date = workHour.Date;   
             workHourEntity.Category = _mapper.Map<CategoryEntity>(workHour.Category);
+            workHourEntity.CategoryId = workHour.CategoryId.ToString();
+            workHourEntity.Time = workHour.Time;
+            workHourEntity.OverTime = workHour.OverTime;
 
             await _context.SaveChangesAsync();
         }

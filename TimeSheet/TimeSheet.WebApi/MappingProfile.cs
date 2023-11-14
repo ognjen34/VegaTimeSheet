@@ -83,6 +83,8 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.Parse(src.Id)));
         CreateMap<UpdateClientRequest, Client>()
            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.Parse(src.Id)));
+        CreateMap<UpdateWorkHourRequest, WorkHour>()
+           .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.Parse(src.Id)));
         CreateMap<Project, WorkDayProjectReponse>();
 
         CreateMap<WorkHour, ReportInstance>()

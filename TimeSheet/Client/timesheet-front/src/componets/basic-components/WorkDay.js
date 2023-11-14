@@ -1,116 +1,139 @@
-import { React, useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./basic-items.css";
 import { GetClientProjects } from "../../services/ProjectService";
 import BasicSelect from "./BasicSelect";
+import useFetch from "../../services/useFetch";
+import LoadingScreen from "./LetterButton";
+import { ConvertDate, UpdateWorkHour } from "../../services/WorkHoursService";
+
 const WorkDay = ({ workDay, clients, categories }) => {
-  const [client, setClient] = useState(workDay ? workDay.clientId : "");
-  const [project, setProject] = useState(workDay ? workDay.projectId : "");
-  const [category, setCategory] = useState(workDay ? workDay.clientId : "");
-  const [description, setDescription] = useState(
-    workDay ? workDay.description : ""
+  const [newWorkDay, setNewWorkDay] = useState(
+    workDay ? workDay : { clientId: "" }
   );
-  const [time, setTime] = useState(workDay ? workDay.time : 0);
-  const [overtime, setOvertime] = useState(workDay ? workDay.overtime : 0);
+  const [changes, setChanges] = useState(false);
   const [projects, setProjects] = useState([]);
-  console.log(workDay);
+
+  const timeoutIdRef = useRef(null);
 
   useEffect(() => {
     if (workDay) {
-      setClient(workDay.clientId)
-      setProject(workDay.projectId);
-      setCategory(workDay.categoryId);
-      setDescription(workDay.description);
-      setTime(workDay.time);
-      setOvertime(workDay.overtime);
+      setNewWorkDay(workDay);
     }
   }, [workDay]);
 
-
+  const {
+    projectData,
+    isLoading: dataLoading,
+    error: dataError,
+  } = useFetch(
+    {
+      projectData: () => GetClientProjects(newWorkDay.clientId),
+    },
+    [newWorkDay.clientId]
+  );
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        if (client == "") return;
-
-        const response = await GetClientProjects(client);
-
-        setProjects(response.data);
-      } catch (error) {}
+    if (!dataLoading) {
+      console.log(projectData);
+      console.log(workDay);
+      if (projectData) {
+        setProjects(projectData.data);
+      }
     }
+  }, [projectData, dataLoading]);
 
-    fetchData();
-  }, [client]);
+  useEffect(() => {
+    if (!changes) return;
+    clearTimeout(timeoutIdRef.current);
 
-  const handleClientChange = (value) => {
-    setClient(value);
+    timeoutIdRef.current = setTimeout(() => {
+      saveWorkDay(newWorkDay);
+    }, 1500);
+  }, [newWorkDay]);
+
+  const saveWorkDay = async (t) => {
+    console.log(workDay);
+
+    let saveWorkDay = {
+      id : t.id,
+      projectId: t.projectId,
+      categoryId: t.categoryId,
+      description: t.description,
+      date: t.date,
+      time: t.time,
+      overtime: t.overtime,
+      userId: t.userId,
+    };
+    await UpdateWorkHour(saveWorkDay);
+    console.log(saveWorkDay);
   };
-  const handleProjectChange = (value) => {
-    setProject(value);
+
+  const handleDataChange = (value, inputType) => {
+    setChanges(true);
+    setNewWorkDay({
+      ...newWorkDay,
+      [inputType]: value,
+    });
   };
-  const handleCategoryChange = (value) => {
-    setCategory(value);
-  };
-  const handleDescriptionChange = (value) => {
-    setDescription(value);
-  };
-  const handleTimeChange = (value) => {
-    setTime(value);
-  };
-  const handleOvertimeChange = (value) => {
-    setOvertime(value);
-  };
+
+  if (dataLoading) {
+    return <LoadingScreen />;
+  }
+
   return (
     <div className="work-day">
       <tr>
         <td>
-        <BasicSelect
-          def = {"Select Customer"}
-          collection={clients}
-          value={client}
-          selected={client.name}
-          callback={(e) => setClient(e.target.value)}
-        />
+          <BasicSelect
+            def={"Select Customer"}
+            collection={clients}
+            value={newWorkDay.clientId}
+            selected={newWorkDay.clientName}
+            callback={(e) => handleDataChange(e.target.value, "clientId")}
+          />
         </td>
         <td>
-        <BasicSelect
-          def = {"Select Project"}
-          collection={projects}
-          value={project}
-          selected={project.name}
-          callback={(e) => setProject(e.target.value)}
-        />
+          <BasicSelect
+            def={"Select Project"}
+            collection={projects}
+            value={newWorkDay.projectId}
+            selected={newWorkDay.projectName}
+            callback={(e) => handleDataChange(e.target.value, "projectId")}
+          />
         </td>
         <td>
-        <BasicSelect
-          def = {"Select Category"}
-          collection={categories}
-          value={category}
-          selected={category.name}
-          callback={(e) => setCategory(e.target.value)}
-        />
+          <BasicSelect
+            def={"Select Category"}
+            collection={categories}
+            value={newWorkDay.categoryId}
+            selected={newWorkDay.categoryName}
+            callback={(e) =>
+              handleDataChange(e.target.value + "1", "categoryId")
+            }
+          />
         </td>
         <td>
           <input
             type="text"
             className="in-text medium"
-            value={description}
-            onChange={(e) => handleDescriptionChange(e.target.value)}
+            value={newWorkDay.description}
+            onChange={(e) => handleDataChange(e.target.value, "description")}
           />
         </td>
         <td class="small">
           <input
             type="text"
             className="in-text xsmall"
-            value={time}
-            onChange={(e) => handleTimeChange(e.target.value)}
+            value={newWorkDay.time}
+            onChange={(e) => handleDataChange(e.target.value, "time")}
           />
         </td>
         <td class="small">
           <input
             type="text"
             className="in-text xsmall"
-            value={overtime}
-            onChange={(e) => handleOvertimeChange(e.target.value)}
+            value={newWorkDay.overtime}
+            onChange={(e) => handleDataChange(e.target.value, "overtime")}
           />
         </td>
       </tr>

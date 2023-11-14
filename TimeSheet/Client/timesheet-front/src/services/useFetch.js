@@ -1,25 +1,34 @@
+import { useEffect, useState } from "react";
 
-function useFetch() {
-    const [user, setUser] = useState(null);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-  
-    useEffect(() => {
-      async function fetchData() {
-        try {
-          const response = await Authenticate();
-          setUser(response);
-          if (response) {
-            setIsAuthenticated(true);
-            await setUser(response);
-          }
-        } catch (error) {
-          console.error("Error during login:", error);
-        }
+const useFetch = (callbacks, dependencies = []) => {
+  const [data, setData] = useState({});
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const dataPromises = Object.keys(callbacks).map(async (key) => {
+          return { [key]: await callbacks[key]() };
+        });
+
+        const dataResults = await Promise.all(dataPromises);
+
+        const mergedData = Object.assign({}, ...dataResults);
+
+        setData(mergedData);
+        console.log(data);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setIsLoading(false);
       }
-      fetchData();
-  
-      return () => console.log("asdasd");
-    }, []);
-  
-    return [user, isAuthenticated, setIsAuthenticated];
-}
+    };
+    console.log(data);
+    fetchData();
+  }, dependencies);
+
+  return { ...data, isLoading, error };
+};
+
+export default useFetch;

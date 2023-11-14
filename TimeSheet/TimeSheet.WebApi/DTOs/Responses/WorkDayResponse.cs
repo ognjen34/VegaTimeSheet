@@ -12,5 +12,8 @@
         public string Description {  get; set; }
         public float Time {  get; set; }
         public float Overtime {  get; set; }
+        public string UserId { get; set; }
+        public DateTime Date { get; set; }
+
     }
 }
