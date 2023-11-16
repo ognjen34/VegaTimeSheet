@@ -16,9 +16,9 @@ namespace TimeSheet.Application.Services
             _workHourRepository = workHourRepository;
         }
 
-        public async Task Add(WorkHour workHour)
+        public async Task Add(Guid userId,WorkHour workHour)
         {
-            await _workHourRepository.Add(workHour);
+            await _workHourRepository.Add(userId,workHour);
         }
 
         public  Task Delete(Guid id)
@@ -51,9 +51,9 @@ namespace TimeSheet.Application.Services
             return _workHourRepository.GetUsersWorkHoursForReports(report);
         }
 
-        public  Task Update(WorkHour workHour)
+        public  Task Update(Guid userId, WorkHour workHour)
         {
-            return _workHourRepository.Update(workHour);
+            return _workHourRepository.Update(userId,workHour);
         }
     }
 }

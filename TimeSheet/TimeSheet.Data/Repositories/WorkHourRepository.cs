@@ -25,9 +25,10 @@ namespace TimeSheet.Data.Repositories
             _mapper = mapper;
         }
 
-        public async Task Add(WorkHour workHour)
+        public async Task Add(Guid userId,WorkHour workHour)
         {
             WorkHourEntity workHourEntity = _mapper.Map<WorkHourEntity>(workHour);
+            workHourEntity.UserId = userId.ToString();
             await _workHours.AddAsync(workHourEntity);
             await _context.SaveChangesAsync();
         }
@@ -140,7 +141,7 @@ namespace TimeSheet.Data.Repositories
 
         }
 
-        public async Task Update(WorkHour workHour)
+        public async Task Update(Guid userId, WorkHour workHour)
         {
             WorkHourEntity workHourEntity = await _workHours.FirstOrDefaultAsync(w => w.Id == workHour.Id.ToString());
             if (workHourEntity == null)
@@ -151,7 +152,7 @@ namespace TimeSheet.Data.Repositories
             workHourEntity.Project = _mapper.Map<ProjectEntity>(workHour.Project);
             workHourEntity.ProjectId = workHour.ProjectId.ToString();
             workHourEntity.User = _mapper.Map<UserEntity>(workHour.User);
-            workHourEntity.UserId = workHour.UserId.ToString();
+            workHourEntity.UserId = userId.ToString();
             workHourEntity.Description = workHour.Description;
             workHourEntity.Date = workHour.Date;   
             workHourEntity.Category = _mapper.Map<CategoryEntity>(workHour.Category);

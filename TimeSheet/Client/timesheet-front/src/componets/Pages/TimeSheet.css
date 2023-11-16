@@ -129,3 +129,10 @@ td {
     border-bottom: 1px solid #999;
     margin-bottom: 15px;
 }
+.work-day tr 
+{
+    margin-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}

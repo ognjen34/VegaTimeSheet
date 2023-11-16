@@ -11,8 +11,8 @@ namespace TimeSheet.Domain.Interfaces.Services
     {
         Task<WorkHour> GetById(Guid id);
         Task<IEnumerable<WorkHour>> GetAll();
-        Task Add(WorkHour workHour);
-        Task Update(WorkHour workHour);
+        Task Add(Guid userId,WorkHour workHour);
+        Task Update(Guid userId, WorkHour workHour);
         Task Delete(Guid id);
         Task<IEnumerable<WorkHour>> GetUsersWorkHoursForDateRange(Guid userId, DateTime startDate, DateTime endDate);
         Task<IEnumerable<WorkHour>> GetUsersWorkHoursForReports(CreateReport report);

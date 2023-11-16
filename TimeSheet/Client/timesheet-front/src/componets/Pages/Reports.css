@@ -1,0 +1,20 @@
+.default-table {
+    width: 100%;
+    border-bottom: 1px solid #999;
+    margin-bottom: 15px;
+}
+.default-table tr th {
+    text-align: left;
+    border-top: 1px solid #999;
+    border-bottom: 1px solid #999;
+    padding: 10px 0;
+    color: #666;
+    font-weight: bold;
+}
+.default-table tr td:first-child {
+    padding-left: 0;
+}
+.default-table tr td {
+    padding: 10px 5px 0;
+    color: #666;
+}

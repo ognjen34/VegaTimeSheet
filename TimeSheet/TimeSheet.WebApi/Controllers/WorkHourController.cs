@@ -26,7 +26,7 @@ namespace TimeSheet.WebApi.Controllers
         {
             WorkHour response = _mapper.Map<WorkHour>(workHour);
 
-            await _workHourService.Add(response);
+            await _workHourService.Add(LoggedUser.UserId,response);
             return Ok(_mapper.Map<WorkHourResponse>(response));
         }
 
@@ -34,7 +34,7 @@ namespace TimeSheet.WebApi.Controllers
         public async Task<IActionResult> UpdateWorkHour([FromBody] UpdateWorkHourRequest updatedWorkHour)
         {
             WorkHour workHour = _mapper.Map<WorkHour>(updatedWorkHour);
-            await _workHourService.Update(workHour);
+            await _workHourService.Update(LoggedUser.UserId,workHour);
             return Ok("Work Hour Updated!");
         }
 

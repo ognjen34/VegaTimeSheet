@@ -17,6 +17,5 @@ namespace TimeSheet.WebApi.DTOs.Requests
         public DateTime Date { get; set; }
         public float Time { get; set; }
         public float OverTime { get; set; }
-        public string UserId { get; set; }
     }
 }
